@@ -1,0 +1,37 @@
+<Project Sdk='Microsoft.NET.Sdk'>
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.0</TargetFramework>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <PackageId>PeterO.URIUtility</PackageId>
+    <Title>URIUtility Library</Title>
+    <Owners>Peter Occil</Owners>
+    <Authors>Peter Occil</Authors>
+    <PackageLicenseExpression>CC0-1.0</PackageLicenseExpression>
+    <PackageProjectUrl>https://github.com/peteroupc/URIUtility</PackageProjectUrl>
+    <Description>A portable library for .NET for text strings and reading and writing to them.
+    </Description>
+    <PackageReleaseNotes>
+Version 1.0:
+
+- First release
+    </PackageReleaseNotes>
+    <Copyright>Written by Peter O. in 2019.  Any copyright is released to the Public Domain.</Copyright>
+    <PackOnBuild>true</PackOnBuild>
+    <Version>1.0.0</Version>
+    <Summary>A library with functions for text strings and reading and writing them.</Summary>
+    <PackageTags>text strings</PackageTags>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>PeterO.snk</AssemblyOriginatorKeyFile>
+  <CodeAnalysisRuleSet>rules.ruleset</CodeAnalysisRuleSet></PropertyGroup>
+
+  <PropertyGroup Condition=' &apos;$(Configuration)|$(Platform)&apos; == &apos;Debug|AnyCPU&apos; '>
+    <DocumentationFile>bin\Debug\netstandard1.0\URIUtility.xml</DocumentationFile>
+  <CodeAnalysisRuleSet>rules.ruleset</CodeAnalysisRuleSet></PropertyGroup>
+  <PropertyGroup Condition=' &apos;$(Configuration)|$(Platform)&apos; == &apos;Release|AnyCPU&apos; '>
+    <DebugType/>
+    <DocumentationFile>bin\Release\netstandard1.0\URIUtility.xml</DocumentationFile>
+  <CodeAnalysisRuleSet>rules.ruleset</CodeAnalysisRuleSet></PropertyGroup>
+  <ItemGroup>
+  <PackageReference Include='StyleCop.Analyzers' PrivateAssets='All' Version='1.1.118'/><AdditionalFiles Include='stylecop.json'/><AdditionalFiles Include='rules.ruleset'/><PackageReference Include='Microsoft.CodeAnalysis.FxCopAnalyzers' PrivateAssets='All' Version='2.9.4'></PackageReference></ItemGroup>
+</Project>
