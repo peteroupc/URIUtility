@@ -1188,34 +1188,36 @@ namespace PeterO {
   /// IRI.</summary>
   /// <param name='refValue'>A string representing a URI or IRI
   /// reference. Example: <c>dir/file.txt</c>.</param>
-  /// <param name='baseURI'>A string representing an absolute URI
-  /// reference. Example: <c>http://example.com/my/path/</c>.</param>
+  /// <param name='absoluteBase'>A string representing an absolute URI or
+  /// IRI reference. Can be null. Example:
+  /// <c>http://example.com/my/path/</c>.</param>
   /// <returns>The resolved IRI, or null if <paramref name='refValue'/>
-  /// is null or is not a valid IRI. If <paramref name='baseURI'/> is
-  /// null or is not a valid IRI, returns refValue. Example:
+  /// is null or is not a valid IRI. If <paramref name='absoluteBase'/>
+  /// is null or is not a valid IRI, returns refValue. Example:
   /// <c>http://example.com/my/path/dir/file.txt</c>.</returns>
-    public static string RelativeResolve(string refValue, string baseURI) {
-      return RelativeResolve(refValue, baseURI, ParseMode.IRIStrict);
+    public static string RelativeResolve(string refValue, string absoluteBase) {
+      return RelativeResolve(refValue, absoluteBase, ParseMode.IRIStrict);
     }
 
   /// <summary>Resolves a URI or IRI relative to another URI or
   /// IRI.</summary>
   /// <param name='refValue'>A string representing a URI or IRI
   /// reference. Example: <c>dir/file.txt</c>. Can be null.</param>
-  /// <param name='baseURI'>A string representing an absolute URI
-  /// reference. Example: <c>http://example.com/my/path/</c>.</param>
+  /// <param name='absoluteBase'>A string representing an absolute URI or
+  /// IRI reference. Can be null. Example:
+  /// <c>http://example.com/my/path/</c>.</param>
   /// <param name='parseMode'>Parse mode that specifies whether certain
   /// characters are allowed when parsing IRIs and URIs.</param>
   /// <returns>The resolved IRI, or null if <paramref name='refValue'/>
-  /// is null or is not a valid IRI. If <paramref name='baseURI'/> is
-  /// null or is not a valid IRI, returns refValue.</returns>
+  /// is null or is not a valid IRI. If <paramref name='absoluteBase'/>
+  /// is null or is not a valid IRI, returns refValue.</returns>
   /// <exception cref='ArgumentNullException'>The parameter <paramref
-  /// name='refValue'/> or <paramref name='baseURI'/> or <paramref
-  /// name='refValue'/> or <paramref name='baseURI'/> is
+  /// name='refValue'/> or <paramref name='absoluteBase'/> or <paramref
+  /// name='refValue'/> or <paramref name='refValue'/> is
   /// null.</exception>
     public static string RelativeResolve(
       string refValue,
-      string baseURI,
+      string absoluteBase,
       ParseMode parseMode) {
       int[] segments = (refValue == null) ? null : SplitIRI(
         refValue,
@@ -1226,10 +1228,10 @@ namespace PeterO {
         return null;
       }
       int[] segmentsBase = (
-        baseURI == null) ? null : SplitIRI(
-  baseURI,
+        absoluteBase == null) ? null : SplitIRI(
+  absoluteBase,
   0,
-  baseURI.Length,
+  absoluteBase.Length,
   parseMode);
       if (segmentsBase == null) {
         return refValue;
@@ -1237,7 +1239,7 @@ namespace PeterO {
       var builder = new StringBuilder();
       if (segments[0] >= 0) { // scheme present
         if (refValue == null) {
-          throw new ArgumentNullException(nameof(refValue));
+          throw new InvalidOperationException();
         }
         AppendScheme(builder, refValue, segments);
         AppendAuthority(builder, refValue, segments);
@@ -1245,10 +1247,10 @@ namespace PeterO {
         AppendQuery(builder, refValue, segments);
         AppendFragment(builder, refValue, segments);
       } else if (segments[2] >= 0) { // authority present
-        if (baseURI == null) {
-          throw new ArgumentNullException(nameof(baseURI));
+        if (absoluteBase == null) {
+          throw new InvalidOperationException();
         }
-        AppendScheme(builder, baseURI, segmentsBase);
+        AppendScheme(builder, absoluteBase, segmentsBase);
         if (refValue == null) {
           throw new ArgumentNullException(nameof(refValue));
         }
@@ -1257,42 +1259,48 @@ namespace PeterO {
         AppendQuery(builder, refValue, segments);
         AppendFragment(builder, refValue, segments);
       } else if (segments[4] == segments[5]) {
-        if (baseURI == null) {
-          throw new ArgumentNullException(nameof(baseURI));
+        if (absoluteBase == null) {
+          throw new ArgumentNullException(nameof(absoluteBase));
         }
-        AppendScheme(builder, baseURI, segmentsBase);
-        AppendAuthority(builder, baseURI, segmentsBase);
-        AppendPath(builder, baseURI, segmentsBase);
+        AppendScheme(builder, absoluteBase, segmentsBase);
+        AppendAuthority(builder, absoluteBase, segmentsBase);
+        AppendPath(builder, absoluteBase, segmentsBase);
         if (segments[6] >= 0) {
           if (refValue == null) {
             throw new ArgumentNullException(nameof(refValue));
           }
           AppendQuery(builder, refValue, segments);
         } else {
-          AppendQuery(builder, baseURI, segmentsBase);
+          AppendQuery(builder, absoluteBase, segmentsBase);
         }
         if (refValue == null) {
           throw new ArgumentNullException(nameof(refValue));
         }
         AppendFragment(builder, refValue, segments);
       } else {
-        if (baseURI == null) {
-          throw new ArgumentNullException(nameof(baseURI));
+        if (absoluteBase == null) {
+          throw new InvalidOperationException();
         }
-        AppendScheme(builder, baseURI, segmentsBase);
-        AppendAuthority(builder, baseURI, segmentsBase);
+        AppendScheme(builder, absoluteBase, segmentsBase);
+        AppendAuthority(builder, absoluteBase, segmentsBase);
+        if (refValue == null) {
+          throw new InvalidOperationException();
+        }
         if (segments[4] < segments[5] && refValue[segments[4]] == '/') {
           AppendNormalizedPath(builder, refValue, segments);
         } else {
           var merged = new StringBuilder();
           if (segmentsBase[2] >= 0 && segmentsBase[4] == segmentsBase[5]) {
             merged.Append('/');
+            if (absoluteBase == null) {
+              throw new InvalidOperationException();
+            }
             AppendPath(merged, refValue, segments);
             builder.Append(NormalizePath(merged.ToString()));
           } else {
             merged.Append(
               PathParent(
-                baseURI,
+                absoluteBase,
                 segmentsBase[4],
                 segmentsBase[5]));
             AppendPath(merged, refValue, segments);
@@ -1768,36 +1776,38 @@ namespace PeterO {
   /// (up to and including the last "/" in the path if any) from the
   /// given URI or IRI, using the IRIStrict parse mode to check the URI
   /// or IRI. Any "./" or "../" in the path is not condensed.</summary>
-  /// <param name='uri'>A text string representing a URI or IRI. Can be
+  /// <param name='uref'>A text string representing a URI or IRI. Can be
   /// null.</param>
   /// <returns>The directory path of the URI or IRI. Returns null if
-  /// <paramref name='uri'/> is null or not a valid URI or IRI.</returns>
+  /// <paramref name='uref'/> is null or not a valid URI or
+  /// IRI.</returns>
   /// <exception cref='ArgumentNullException'>The parameter <paramref
-  /// name='uri'/> is null.</exception>
-    public static string DirectoryPath(string uri) {
-      return DirectoryPath(uri, ParseMode.IRIStrict);
+  /// name='uref'/> is null.</exception>
+    public static string DirectoryPath(string uref) {
+      return DirectoryPath(uref, ParseMode.IRIStrict);
     }
 
   /// <summary>Extracts the scheme, the authority, and the path component
   /// (up to and including the last "/" in the path if any) from the
   /// given URI or IRI, using the given parse mode to check the URI or
   /// IRI. Any "./" or "../" in the path is not condensed.</summary>
-  /// <param name='uri'>A text string representing a URI or IRI. Can be
+  /// <param name='uref'>A text string representing a URI or IRI. Can be
   /// null.</param>
   /// <param name='parseMode'>The parse mode to use to check the URI or
   /// IRI.</param>
   /// <returns>The directory path of the URI or IRI. Returns null if
-  /// <paramref name='uri'/> is null or not a valid URI or IRI.</returns>
-    public static string DirectoryPath(string uri, ParseMode parseMode) {
-      int[] indexes = SplitIRI(uri, parseMode);
+  /// <paramref name='uref'/> is null or not a valid URI or
+  /// IRI.</returns>
+    public static string DirectoryPath(string uref, ParseMode parseMode) {
+      int[] indexes = SplitIRI(uref, parseMode);
       if (indexes == null) {
         return null;
       }
-      if (uri == null) {
+      if (uref == null) {
         throw new InvalidOperationException();
       }
-      string schemeAndAuthority = uri.Substring(0, indexes[4]);
-      string path = uri.Substring(indexes[4], indexes[5] - indexes[4]);
+      string schemeAndAuthority = uref.Substring(0, indexes[4]);
+      string path = uref.Substring(indexes[4], indexes[5] - indexes[4]);
       if (path.Length > 0) {
         for (int i = path.Length - 1; i >= 0; --i) {
           if (path[i] == '/') {
@@ -1816,25 +1826,25 @@ namespace PeterO {
   /// second URI or IRI.</summary>
   /// <param name='refValue'>A string representing a URI or IRI
   /// reference. Example: <c>dir/file.txt</c>.</param>
-  /// <param name='absoluteBaseURI'>A string representing an absolute URI
+  /// <param name='absoluteBase'>A string representing an absolute URI
   /// reference. Example: <c>http://example.com/my/path/</c>.</param>
   /// <returns>The resolved IRI, or null if <paramref name='refValue'/>
   /// is null or is not a valid IRI, or <paramref name='refValue'/> if
-  /// <paramref name='absoluteBaseURI'/> is null or an empty string, or
-  /// null if <paramref name='absoluteBaseURI'/> is neither null nor
-  /// empty and is not a valid IRI. Returns null instead if the resolved
-  /// IRI has no "." or ".." component in its path or if the resolved
-  /// URI's directory path does not match that of <paramref
-  /// name='absoluteBaseURI'/>. Example:
+  /// <paramref name='absoluteBase'/> is null or an empty string, or null
+  /// if <paramref name='absoluteBase'/> is neither null nor empty and is
+  /// not a valid IRI. Returns null instead if the resolved IRI has no
+  /// "." or ".." component in its path or if the resolved URI's
+  /// directory path does not match that of <paramref
+  /// name='absoluteBase'/>. Example:
   /// <c>http://example.com/my/path/dir/file.txt</c>.</returns>
     public static string RelativeResolveWithinBaseURI(
       string refValue,
-      string absoluteBaseURI) {
-      if (!String.IsNullOrEmpty(absoluteBaseURI) &&
-         SplitIRI(absoluteBaseURI, ParseMode.IRIStrict) == null) {
+      string absoluteBase) {
+      if (!String.IsNullOrEmpty(absoluteBase) &&
+         SplitIRI(absoluteBase, ParseMode.IRIStrict) == null) {
         return null;
       }
-      string rel = RelativeResolve(refValue, absoluteBaseURI);
+      string rel = RelativeResolve(refValue, absoluteBase);
       if (rel == null) {
         return null;
       }
@@ -1847,7 +1857,7 @@ namespace PeterO {
        // because that component is percent-encoded)
         return null;
       }
-      string absuri = DirectoryPath(absoluteBaseURI);
+      string absuri = DirectoryPath(absoluteBase);
       string reluri = DirectoryPath(rel);
       return (absuri == null || reluri == null ||
          !absuri.Equals(reluri, StringComparison.Ordinal)) ? null : rel;
