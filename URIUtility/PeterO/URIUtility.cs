@@ -1,12 +1,52 @@
 using System;
 using System.Text;
 
-namespace PeterO.Cbor {
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
+namespace PeterO {
+  /// <summary>Contains utility methods for processing Uniform Resource
+  /// Identifiers (URIs) and Internationalized Resource Identifiers
+  /// (IRIs) under RFC3986 and RFC3987, respectively. In the following
+  /// documentation, URIs and IRIs include URI references and IRI
+  /// references, for convenience.
+  /// <para>There are five components to a URI: scheme, authority, path,
+  /// query, and fragment identifier. The generic syntax to these
+  /// components is defined in RFC3986 and extended in RFC3987. According
+  /// to RFC3986, different URI schemes can further restrict the syntax
+  /// of the authority, path, and query component (see also RFC 7320).
+  /// However, the syntax of fragment identifiers depends on the media
+  /// type (also known as MIME type) of the resource a URI references
+  /// (see also RFC 3986 and RFC 7320). As of September 3, 2019, only the
+  /// following media types specify a syntax for fragment
+  /// identifiers:</para>
+  /// <list>
+  /// <item>The following application/* media types: epub + zip, pdf,
+  /// senml + cbor, senml + json, senml-exi, sensml + cbor, sensml +
+  /// json, sensml-exi, smil, vnd.3gpp-v2x-local-service-information,
+  /// vnd.3gpp.mcdata-signalling, vnd.collection.doc + json, vnd.hc +
+  /// json, vnd.hyper + json, vnd.hyper-item + json, vnd.mason + json,
+  /// vnd.microsoft.portable-executable, vnd.oma.bcast.sgdu,
+  /// vnd.shootproof + json</item>
+  /// <item>The following image/* media types: avci, avcs, heic,
+  /// heic-sequence, heif, heif-sequence, hej2k, hsj2, jxra, jxrs, jxsi,
+  /// jxss</item>
+  /// <item>The XML media types: application/xml,
+  /// application/xml-external-parsed-entity, text/xml,
+  /// text/xml-external-parsed-entity, application/xml-dtd</item>
+  /// <item>All media types with subtypes ending in "+xml" (see RFC 7303)
+  /// use XPointer Framework syntax as fragment identifiers, except the
+  /// following application/* media types: dicom + xml (syntax not
+  /// defined), senml + xml (own syntax), sensml + xml (own syntax), ttml
+  /// + xml (own syntax), xliff + xml (own syntax), yang-data + xml
+  /// (syntax not defined)</item>
+  /// <item>font/collection</item>
+  /// <item>multipart/x-mixed-replace</item>
+  /// <item>text/plain</item>
+  /// <item>text/csv</item>
+  /// <item>text/html</item>
+  /// <item>text/markdown</item>
+  /// <item>text/vnd.a</item></list></summary>
   public static class URIUtility {
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
+  /// <summary>Specifies whether certain characters are allowed when
+  /// parsing IRIs and URIs.</summary>
     public enum ParseMode {
     /// <summary>The rules follow the syntax for parsing IRIs. In
     /// particular, many code points outside the Basic Latin range (U+0000
@@ -115,11 +155,20 @@ namespace PeterO.Cbor {
       }
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='s'>Not documented yet.</param>
-  /// <param name='mode'>Not documented yet.</param>
-  /// <returns/>
+  /// <summary>Escapes characters that can't appear in URIs or IRIs. The
+  /// function is idempotent; that is, calling the function again on the
+  /// result with the same mode doesn't change the result.</summary>
+  /// <param name='s'>A string to escape.</param>
+  /// <param name='mode'>Has the following meaning: 0 = Encode reserved
+  /// code points, code points below U+0021, code points above U+007E,
+  /// and square brackets within the authority component, and do the
+  /// IRISurrogateLenient check. 1 = Encode code points above U+007E, and
+  /// square brackets within the authority component, and do the
+  /// IRIStrict check. 2 = Same as 1, except the check is
+  /// IRISurrogateLenient. 3 = Same as 0, except that percent characters
+  /// that begin illegal percent-encoding are also encoded.</param>
+  /// <returns>A string possibly containing escaped characters, or null
+  /// if s is null.</returns>
     public static string EscapeURI(string s, int mode) {
       if (s == null) {
         return null;
@@ -180,16 +229,10 @@ namespace PeterO.Cbor {
             if (components != null && index >= components[2] && index <
                 components[3]) {
              // within the authority component, so don't percent-encode
-              if (c <= 0xffff) {
-                builder.Append((char)c);
-              } else if (c <= 0x10ffff) {
-                builder.Append((char)((((c - 0x10000) >> 10) & 0x3ff) |
-0xd800));
-                builder.Append((char)(((c - 0x10000) & 0x3ff) | 0xdc00));
-              }
-            } else {
+             builder.Append((char)c);
+           } else {
              // percent encode
-              PercentEncodeUtf8(builder, c);
+             PercentEncodeUtf8(builder, c);
             }
           } else {
             if (c <= 0xffff) {
@@ -206,14 +249,8 @@ namespace PeterO.Cbor {
             if (components != null && index >= components[2] && index <
                 components[3]) {
              // within the authority component, so don't percent-encode
-              if (c <= 0xffff) {
-                builder.Append((char)c);
-              } else if (c <= 0x10ffff) {
-                builder.Append((char)((((c - 0x10000) >> 10) & 0x3ff) |
-0xd800));
-                builder.Append((char)(((c - 0x10000) & 0x3ff) | 0xdc00));
-              }
-            } else {
+             builder.Append((char)c);
+           } else {
              // percent encode
               PercentEncodeUtf8(builder, c);
             }
@@ -231,10 +268,22 @@ namespace PeterO.Cbor {
       return builder.ToString();
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='refValue'>Not documented yet.</param>
-  /// <returns/>
+  /// <summary>
+  ///  Determines whether the string is a valid IRI with a
+  /// scheme component. This can be used to check for
+  /// relative IRI references.
+  /// <para>The following cases return true:</para>
+  /// <code>xx-x:mm example:/ww</code>
+  ///  The following cases return false:
+  /// <code>x@y:/z /x/y/z example.xyz</code>
+  ///  .
+  /// </summary>
+  /// <param name='refValue'>A string representing an IRI to
+  /// check.</param>
+  /// <returns><c>true</c>
+  ///  if the string is a valid IRI with a scheme
+  /// component; otherwise, <c>false</c>
+  /// .</returns>
     public static bool HasScheme(string refValue) {
       int[] segments = (refValue == null) ? null : SplitIRI(
         refValue,
@@ -244,10 +293,22 @@ namespace PeterO.Cbor {
       return segments != null && segments[0] >= 0;
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='refValue'>Not documented yet.</param>
-  /// <returns/>
+  /// <summary>
+  ///  Determines whether the string is a valid URI with a
+  /// scheme component. This can be used to check for
+  /// relative URI references. The following cases return
+  /// true:
+  /// <code>http://example/z xx-x:mm example:/ww</code>
+  ///  The following cases return false:
+  /// <code>x@y:/z /x/y/z example.xyz</code>
+  ///  .
+  /// </summary>
+  /// <param name='refValue'>A string representing an IRI to
+  /// check.</param>
+  /// <returns><c>true</c>
+  ///  if the string is a valid URI with a scheme
+  /// component; otherwise, <c>false</c>
+  /// .</returns>
     public static bool HasSchemeForURI(string refValue) {
       int[] segments = (refValue == null) ? null : SplitIRI(
         refValue,
@@ -272,20 +333,31 @@ namespace PeterO.Cbor {
       }
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='str'>Not documented yet.</param>
-  /// <returns/>
+  /// <summary>Decodes percent-encoding (of the form "%XX" where X is a
+  /// hexadecimal digit) in the given string. Successive percent-encoded
+  /// bytes are assumed to form characters in UTF-8.</summary>
+  /// <param name='str'>A string that may contain percent encoding. May
+  /// be null.</param>
+  /// <returns>The string in which percent-encoding was
+  /// decoded.</returns>
     public static string PercentDecode(string str) {
       return (str == null) ? null : PercentDecode(str, 0, str.Length);
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='str'>Not documented yet.</param>
-  /// <param name='index'>Not documented yet.</param>
-  /// <param name='endIndex'>Not documented yet.</param>
-  /// <returns/>
+  /// <summary>Decodes percent-encoding (of the form "%XX" where X is a
+  /// hexadecimal digit) in the given portion of a string. Successive
+  /// percent-encoded bytes are assumed to form characters in
+  /// UTF-8.</summary>
+  /// <param name='str'>A string a portion of which may contain percent
+  /// encoding. May be null.</param>
+  /// <param name='index'>Index starting at 0 showing where the desired
+  /// portion of <paramref name='str'/> begins.</param>
+  /// <param name='endIndex'>Index starting at 0 showing where the
+  /// desired portion of <paramref name='str'/> ends. The character
+  /// before this index is the last character.</param>
+  /// <returns>The portion of the given string in which percent-encoding
+  /// was decoded. Returns null if <paramref name='str'/> is
+  /// ull.</returns>
     public static string PercentDecode(string str, int index, int endIndex) {
       if (str == null) {
         return null;
@@ -423,10 +495,10 @@ namespace PeterO.Cbor {
       return retString.ToString();
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='s'>Not documented yet.</param>
-  /// <returns/>
+  /// <summary>Encodes characters other than "unreserved" characters for
+  /// URIs.</summary>
+  /// <param name='s'>A string to encode.</param>
+  /// <returns>The encoded string.</returns>
   /// <exception cref='ArgumentNullException'>The parameter <paramref
   /// name='s'/> is null.</exception>
     public static string EncodeStringForURI(string s) {
@@ -515,12 +587,25 @@ namespace PeterO.Cbor {
         (c & 0xfffe) != 0xfffe);
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='s'>Not documented yet.</param>
-  /// <param name='offset'>Not documented yet.</param>
-  /// <param name='length'>Not documented yet.</param>
-  /// <returns/>
+  /// <summary>Determines whether the substring is a valid CURIE
+  /// reference under RDFA 1.1. (The CURIE reference is the part after
+  /// the colon.).</summary>
+  /// <param name='s'>A string containing a CURIE reference. Can be
+  /// null.</param>
+  /// <param name='offset'>A Index starting at 0 showing where the
+  /// desired portion of "s" begins.</param>
+  /// <param name='length'>The number of elements in the desired portion
+  /// of "s" (but not more than "s" 's length).</param>
+  /// <returns><c>true</c> if the substring is a valid CURIE reference
+  /// under RDFA 1; otherwise, <c>false</c>. Returns false if <paramref
+  /// name='s'/> is null.</returns>
+  /// <exception cref='ArgumentException'>Either <paramref
+  /// name='offset'/> or <paramref name='length'/> is less than 0 or
+  /// greater than <paramref name='s'/> 's length, or <paramref
+  /// name='s'/> ' s length minus <paramref name='offset'/> is less than
+  /// <paramref name='length'/>.</exception>
+  /// <exception cref='ArgumentNullException'>The parameter <paramref
+  /// name='s'/> is null.</exception>
     public static bool IsValidCurieReference(string s, int offset, int length) {
       if (s == null) {
         return false;
@@ -604,17 +689,20 @@ namespace PeterO.Cbor {
       return true;
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='schemeAndAuthority'>Not documented yet.</param>
-  /// <param name='path'>Not documented yet.</param>
-  /// <param name='query'>Not documented yet.</param>
-  /// <param name='fragment'>Not documented yet.</param>
-  /// <returns/>
-  /// <exception cref='ArgumentNullException'>The parameter <paramref
-  /// name='query'/> or <paramref name='fragment'/> is null.</exception>
-  /// <exception cref='ArgumentException'>invalid schemeAndAuthority; The
-  /// arguments result in an invalid IRI.</exception>
+  /// <summary>Builds an internationalized resource identifier (IRI) from
+  /// its components.</summary>
+  /// <param name='schemeAndAuthority'>String representing a scheme
+  /// component, an authority component, or both. Examples of this
+  /// parameter include "example://example", "example:", and "//example",
+  /// but not "example". Can be null or empty.</param>
+  /// <param name='path'>A string representing a path component. Can be
+  /// null or empty.</param>
+  /// <param name='query'>The query string. Can be null or empty.</param>
+  /// <param name='fragment'>The fragment identifier. Can be null or
+  /// empty.</param>
+  /// <returns>A URI built from the given components.</returns>
+  /// <exception cref='ArgumentException'>Invalid schemeAndAuthority
+  /// parameter, or the arguments result in an invalid IRI.</exception>
     public static string BuildIRI(
       string schemeAndAuthority,
       string path,
@@ -649,11 +737,8 @@ namespace PeterO.Cbor {
           builder.Append('#');
         }
         var index = 0;
-        if (query == null) {
-          throw new ArgumentNullException(nameof(query));
-        }
-        if (fragment == null) {
-          throw new ArgumentNullException(nameof(fragment));
+        if (query == null || fragment == null) {
+          continue;
         }
         while (index < s.Length) {
           int c = s[index];
@@ -679,7 +764,7 @@ namespace PeterO.Cbor {
               ++index;
             }
           } else if ((c & 0x7f) == c &&
-     ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') ||
+              ((c >= 'A' && c <= 'Z') || (c >= 'a' && c <= 'z') ||
               (c >= '0' && c <= '9') ||
               "-_.~/(=):!$&'*+,;@".IndexOf((char)c) >= 0)) {
            // NOTE: Question mark will be percent encoded even though
@@ -699,10 +784,11 @@ namespace PeterO.Cbor {
       return ret;
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='s'>Not documented yet.</param>
-  /// <returns/>
+  /// <summary>Returns whether a string is a valid IRI according to the
+  /// IRIStrict parse mode.</summary>
+  /// <param name='s'>A text string. Can be null.</param>
+  /// <returns>True if the string is not null and is a valid IRI;
+  /// otherwise, false.</returns>
     public static bool IsValidIRI(string s) {
       return ((s == null) ?
   null : SplitIRI(
@@ -712,11 +798,13 @@ namespace PeterO.Cbor {
     ParseMode.IRIStrict)) != null;
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='s'>Not documented yet.</param>
-  /// <param name='mode'>Not documented yet.</param>
-  /// <returns/>
+  /// <summary>Returns whether a string is a valid IRI according to the
+  /// given parse mode.</summary>
+  /// <param name='s'>A text string. Can be null.</param>
+  /// <param name='mode'>The parse mode to use when checking for a valid
+  /// IRI.</param>
+  /// <returns>True if the string is not null and is a valid IRI;
+  /// otherwise, false.</returns>
     public static bool IsValidIRI(string s, ParseMode mode) {
       return ((s == null) ?
   null : SplitIRI(
@@ -732,7 +820,7 @@ namespace PeterO.Cbor {
     private static string NormalizePath(string path) {
       int len = path.Length;
       if (len == 0 || path.Equals("..", StringComparison.Ordinal) ||
-path.Equals(".", StringComparison.Ordinal)) {
+          path.Equals(".", StringComparison.Ordinal)) {
         return String.Empty;
       }
       if (path.IndexOf(ValueSlashDot, StringComparison.Ordinal) < 0 &&
@@ -1096,21 +1184,31 @@ path.Equals(".", StringComparison.Ordinal)) {
       }
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='refValue'>Not documented yet.</param>
-  /// <param name='baseURI'>Not documented yet.</param>
-  /// <returns/>
+  /// <summary>Resolves a URI or IRI relative to another URI or
+  /// IRI.</summary>
+  /// <param name='refValue'>A string representing a URI or IRI
+  /// reference. Example: <c>dir/file.txt</c>.</param>
+  /// <param name='baseURI'>A string representing an absolute URI
+  /// reference. Example: <c>http://example.com/my/path/</c>.</param>
+  /// <returns>The resolved IRI, or null if <paramref name='refValue'/>
+  /// is null or is not a valid IRI. If <paramref name='baseURI'/> is
+  /// null or is not a valid IRI, returns refValue. Example:
+  /// <c>http://example.com/my/path/dir/file.txt</c>.</returns>
     public static string RelativeResolve(string refValue, string baseURI) {
       return RelativeResolve(refValue, baseURI, ParseMode.IRIStrict);
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='refValue'>Not documented yet.</param>
-  /// <param name='baseURI'>Not documented yet.</param>
-  /// <param name='parseMode'>Not documented yet.</param>
-  /// <returns/>
+  /// <summary>Resolves a URI or IRI relative to another URI or
+  /// IRI.</summary>
+  /// <param name='refValue'>A string representing a URI or IRI
+  /// reference. Example: <c>dir/file.txt</c>. Can be null.</param>
+  /// <param name='baseURI'>A string representing an absolute URI
+  /// reference. Example: <c>http://example.com/my/path/</c>.</param>
+  /// <param name='parseMode'>Parse mode that specifies whether certain
+  /// characters are allowed when parsing IRIs and URIs.</param>
+  /// <returns>The resolved IRI, or null if <paramref name='refValue'/>
+  /// is null or is not a valid IRI. If <paramref name='baseURI'/> is
+  /// null or is not a valid IRI, returns refValue.</returns>
   /// <exception cref='ArgumentNullException'>The parameter <paramref
   /// name='refValue'/> or <paramref name='baseURI'/> or <paramref
   /// name='refValue'/> or <paramref name='baseURI'/> is
@@ -1166,12 +1264,21 @@ path.Equals(".", StringComparison.Ordinal)) {
         AppendAuthority(builder, baseURI, segmentsBase);
         AppendPath(builder, baseURI, segmentsBase);
         if (segments[6] >= 0) {
+          if (refValue == null) {
+            throw new ArgumentNullException(nameof(refValue));
+          }
           AppendQuery(builder, refValue, segments);
         } else {
           AppendQuery(builder, baseURI, segmentsBase);
         }
+        if (refValue == null) {
+          throw new ArgumentNullException(nameof(refValue));
+        }
         AppendFragment(builder, refValue, segments);
       } else {
+        if (baseURI == null) {
+          throw new ArgumentNullException(nameof(baseURI));
+        }
         AppendScheme(builder, baseURI, segmentsBase);
         AppendAuthority(builder, baseURI, segmentsBase);
         if (segments[4] < segments[5] && refValue[segments[4]] == '/') {
@@ -1227,19 +1334,26 @@ path.Equals(".", StringComparison.Ordinal)) {
       return builder.ToString();
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='s'>Not documented yet.</param>
-  /// <returns/>
-  /// <exception cref='ArgumentNullException'>The parameter <paramref
-  /// name='s'/> is null.</exception>
+  /// <summary>Parses an Internationalized Resource Identifier (IRI)
+  /// reference under RFC3987. If the IRI reference is syntactically
+  /// valid, splits the string into its components and returns an array
+  /// containing those components.</summary>
+  /// <param name='s'>A string that contains an IRI. Can be null.</param>
+  /// <returns>If the string is a valid IRI reference, returns an array
+  /// of five strings. Each of the five pairs corresponds to the IRI's
+  /// scheme, authority, path, query, or fragment identifier,
+  /// respectively. If a component is absent, the corresponding element
+  /// will be null. If the string is null or is not a valid IRI, returns
+  /// null.</returns>
     public static string[] SplitIRIToStrings(string s) {
       int[] indexes = SplitIRI(s);
       if (indexes == null) {
         return null;
       }
       if (s == null) {
-        throw new ArgumentNullException(nameof(s));
+        // Should not happen because indexes would be null
+        // if s is null
+        throw new InvalidOperationException();
       }
       string s1 = indexes[0] < 0 ? null : s.Substring(
         indexes[0],
@@ -1262,21 +1376,50 @@ path.Equals(".", StringComparison.Ordinal)) {
       };
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='s'>Not documented yet.</param>
-  /// <returns/>
+  /// <summary>Parses an Internationalized Resource Identifier (IRI)
+  /// reference under RFC3987. If the IRI reference is syntactically
+  /// valid, splits the string into its components and returns an array
+  /// containing the indices into the components.</summary>
+  /// <param name='s'>A string that contains an IRI. Can be null.</param>
+  /// <returns>If the string is a valid IRI reference, returns an array
+  /// of 10 integers. Each of the five pairs corresponds to the start and
+  /// end index of the IRI's scheme, authority, path, query, or fragment
+  /// identifier, respectively. The scheme, authority, query, and
+  /// fragment identifier, if present, will each be given without the
+  /// ending colon, the starting "//", the starting "?", and the starting
+  /// "#", respectively. If a component is absent, both indices in that
+  /// pair will be -1. If the string is null or is not a valid IRI,
+  /// returns null.</returns>
     public static int[] SplitIRI(string s) {
       return (s == null) ? null : SplitIRI(s, 0, s.Length, ParseMode.IRIStrict);
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='s'>Not documented yet.</param>
-  /// <param name='offset'>Not documented yet.</param>
-  /// <param name='length'>Not documented yet.</param>
-  /// <param name='parseMode'>Not documented yet.</param>
-  /// <returns/>
+  /// <summary>Parses a substring that represents an Internationalized
+  /// Resource Identifier (IRI) under RFC3987. If the IRI is
+  /// syntactically valid, splits the string into its components and
+  /// returns an array containing the indices into the
+  /// components.</summary>
+  /// <param name='s'>A string that contains an IRI. Can be null.</param>
+  /// <param name='offset'>A Index starting at 0 showing where the
+  /// desired portion of "s" begins.</param>
+  /// <param name='length'>The length of the desired portion of "s" (but
+  /// not more than "s" 's length).</param>
+  /// <param name='parseMode'>Parse mode that specifies whether certain
+  /// characters are allowed when parsing IRIs and URIs.</param>
+  /// <returns>If the string is a valid IRI, returns an array of 10
+  /// integers. Each of the five pairs corresponds to the start and end
+  /// index of the IRI's scheme, authority, path, query, or fragment
+  /// component, respectively. The scheme, authority, query, and fragment
+  /// components, if present, will each be given without the ending
+  /// colon, the starting "//", the starting "?", and the starting "#",
+  /// respectively. If a component is absent, both indices in that pair
+  /// will be -1 (an index won't be less than 0 in any other case). If
+  /// the string is null or is not a valid IRI, returns null.</returns>
+  /// <exception cref='ArgumentException'>Either <paramref
+  /// name='offset'/> or <paramref name='length'/> is less than 0 or
+  /// greater than <paramref name='s'/> 's length, or <paramref
+  /// name='s'/> ' s length minus <paramref name='offset'/> is less than
+  /// <paramref name='length'/>.</exception>
   /// <exception cref='ArgumentNullException'>The parameter <paramref
   /// name='s'/> is null.</exception>
     public static int[] SplitIRI(
@@ -1286,9 +1429,6 @@ path.Equals(".", StringComparison.Ordinal)) {
       ParseMode parseMode) {
       if (s == null) {
         return null;
-      }
-      if (s == null) {
-        throw new ArgumentNullException(nameof(s));
       }
       if (offset < 0) {
         throw new ArgumentException("offset (" + offset +
@@ -1531,11 +1671,22 @@ path.Equals(".", StringComparison.Ordinal)) {
       return retval;
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='s'>Not documented yet.</param>
-  /// <param name='parseMode'>Not documented yet.</param>
-  /// <returns/>
+  /// <summary>Parses an Internationalized Resource Identifier (IRI)
+  /// reference under RFC3987. If the IRI is syntactically valid, splits
+  /// the string into its components and returns an array containing the
+  /// indices into the components.</summary>
+  /// <param name='s'>A string representing an IRI. Can be null.</param>
+  /// <param name='parseMode'>The parameter <paramref name='parseMode'/>
+  /// is a ParseMode object.</param>
+  /// <returns>If the string is a valid IRI reference, returns an array
+  /// of 10 integers. Each of the five pairs corresponds to the start and
+  /// end index of the IRI's scheme, authority, path, query, or fragment
+  /// identifier, respectively. The scheme, authority, query, and
+  /// fragment identifier, if present, will each be given without the
+  /// ending colon, the starting "//", the starting "?", and the starting
+  /// "#", respectively. If a component is absent, both indices in that
+  /// pair will be -1. If the string is null or is not a valid IRI,
+  /// returns null.</returns>
     public static int[] SplitIRI(string s, ParseMode parseMode) {
       return (s == null) ? null : SplitIRI(s, 0, s.Length, parseMode);
     }
@@ -1613,28 +1764,37 @@ path.Equals(".", StringComparison.Ordinal)) {
        indexes[5] - indexes[4]);
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='uri'>Not documented yet.</param>
-  /// <returns/>
+  /// <summary>Extracts the scheme, the authority, and the path component
+  /// (up to and including the last "/" in the path if any) from the
+  /// given URI or IRI, using the IRIStrict parse mode to check the URI
+  /// or IRI. Any "./" or "../" in the path is not condensed.</summary>
+  /// <param name='uri'>A text string representing a URI or IRI. Can be
+  /// null.</param>
+  /// <returns>The directory path of the URI or IRI. Returns null if
+  /// <paramref name='uri'/> is null or not a valid URI or IRI.</returns>
+  /// <exception cref='ArgumentNullException'>The parameter <paramref
+  /// name='uri'/> is null.</exception>
     public static string DirectoryPath(string uri) {
       return DirectoryPath(uri, ParseMode.IRIStrict);
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='uri'>Not documented yet.</param>
-  /// <param name='parseMode'>Not documented yet.</param>
-  /// <returns/>
-  /// <exception cref='ArgumentNullException'>The parameter <paramref
-  /// name='uri'/> is null.</exception>
+  /// <summary>Extracts the scheme, the authority, and the path component
+  /// (up to and including the last "/" in the path if any) from the
+  /// given URI or IRI, using the given parse mode to check the URI or
+  /// IRI. Any "./" or "../" in the path is not condensed.</summary>
+  /// <param name='uri'>A text string representing a URI or IRI. Can be
+  /// null.</param>
+  /// <param name='parseMode'>The parse mode to use to check the URI or
+  /// IRI.</param>
+  /// <returns>The directory path of the URI or IRI. Returns null if
+  /// <paramref name='uri'/> is null or not a valid URI or IRI.</returns>
     public static string DirectoryPath(string uri, ParseMode parseMode) {
       int[] indexes = SplitIRI(uri, parseMode);
       if (indexes == null) {
         return null;
       }
       if (uri == null) {
-        throw new ArgumentNullException(nameof(uri));
+        throw new InvalidOperationException();
       }
       string schemeAndAuthority = uri.Substring(0, indexes[4]);
       string path = uri.Substring(indexes[4], indexes[5] - indexes[4]);
@@ -1650,22 +1810,36 @@ path.Equals(".", StringComparison.Ordinal)) {
       }
     }
 
-  /// <summary>Not documented yet.</summary>
-  /// <summary>Not documented yet.</summary>
-  /// <param name='refValue'>Not documented yet.</param>
-  /// <param name='absoluteBaseURI'>Not documented yet.</param>
-  /// <returns/>
-  /// <exception cref='ArgumentNullException'>The parameter <paramref
-  /// name='refValue'/> is null.</exception>
+  /// <summary>Resolves a URI or IRI relative to another URI or IRI, but
+  /// only if the resolved URI has no "." or ".." component in its path
+  /// and only if resolved URI's directory path matches that of the
+  /// second URI or IRI.</summary>
+  /// <param name='refValue'>A string representing a URI or IRI
+  /// reference. Example: <c>dir/file.txt</c>.</param>
+  /// <param name='absoluteBaseURI'>A string representing an absolute URI
+  /// reference. Example: <c>http://example.com/my/path/</c>.</param>
+  /// <returns>The resolved IRI, or null if <paramref name='refValue'/>
+  /// is null or is not a valid IRI, or <paramref name='refValue'/> if
+  /// <paramref name='absoluteBaseURI'/> is null or an empty string, or
+  /// null if <paramref name='absoluteBaseURI'/> is neither null nor
+  /// empty and is not a valid IRI. Returns null instead if the resolved
+  /// IRI has no "." or ".." component in its path or if the resolved
+  /// URI's directory path does not match that of <paramref
+  /// name='absoluteBaseURI'/>. Example:
+  /// <c>http://example.com/my/path/dir/file.txt</c>.</returns>
     public static string RelativeResolveWithinBaseURI(
       string refValue,
       string absoluteBaseURI) {
+      if (!String.IsNullOrEmpty(absoluteBaseURI) &&
+         SplitIRI(absoluteBaseURI, ParseMode.IRIStrict) == null) {
+        return null;
+      }
       string rel = RelativeResolve(refValue, absoluteBaseURI);
       if (rel == null) {
         return null;
       }
       if (refValue == null) {
-        throw new ArgumentNullException(nameof(refValue));
+        throw new InvalidOperationException();
       }
       string relpath = UriPath(refValue, ParseMode.IRIStrict);
       if (PathHasDotComponent(relpath)) {
