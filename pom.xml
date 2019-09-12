@@ -4,9 +4,9 @@
   <groupId>com.github.peteroupc</groupId>
   <artifactId>uriutility</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.0</version>
-  <name>Data Utilities</name>
-  <description>1.0.0</description>
+  <version>1.0.1</version>
+  <name>URIUtility Library</name>
+  <description>A portable library for .NET for processing URIs (uniform resource identifiers) and IRIs (internationalized resource identifiers).</description>
   <url>https://github.com/peteroupc/URIUtility</url>
   <profiles>
     <profile>
