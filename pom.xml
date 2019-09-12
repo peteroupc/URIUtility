@@ -4,9 +4,9 @@
   <groupId>com.github.peteroupc</groupId>
   <artifactId>uriutility</artifactId>
   <packaging>jar</packaging>
-  <version>1.0.0-SNAPSHOT</version>
+  <version>1.0.0</version>
   <name>Data Utilities</name>
-  <description>A Java library for text strings and reading and writing to them.</description>
+  <description>1.0.0</description>
   <url>https://github.com/peteroupc/URIUtility</url>
   <profiles>
     <profile>

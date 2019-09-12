@@ -12,13 +12,13 @@ If you like this software, consider donating to me at this link: [http://peterou
 
 How to Install
 ---------
-The C# implementation is expected to be available in the
+The C# implementation is available in the
 NuGet Package Gallery under the name
 [PeterO.URIUtility](https://www.nuget.org/packages/PeterO.URIUtility). To install
 this library as a NuGet package, enter `Install-Package PeterO.URIUtility` in the
 NuGet Package Manager Console.
 
-The Java implementation is expected to available
+The Java implementation is available
 as an [artifact](https://search.maven.org/#search|ga|1|g%3A%22com.github.peteroupc%22%20AND%20a%3A%22uriutility%22) in the Central Repository. To add this library to a Maven
 project, add the following to the `dependencies` section in your `pom.xml` file:
 
