@@ -322,7 +322,7 @@ Resolves a URI or IRI relative to another URI or IRI.
 * The resolved IRI, or null if <code>refValue</code> is null or is not a
  valid IRI. If <code>absoluteBase</code> is null or is not a valid IRI,
  returns refValue. Example: <code>
- http://example.com/my/path/dir/file.txt</code>.
+ [http://example.com/my/path/dir/file.txt</code>.](http://example.com/my/path/dir/file.txt</code>.)
 
 ### RelativeResolve
     public static java.lang.String RelativeResolve​(java.lang.String refValue, java.lang.String absoluteBase, URIUtility.ParseMode parseMode)

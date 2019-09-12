@@ -25,7 +25,7 @@ project, add the following to the `dependencies` section in your `pom.xml` file:
     <dependency>
       <groupId>com.github.peteroupc</groupId>
       <artifactId>uriutility</artifactId>
-      <version>1.0.0</version>
+      <version>1.0.1</version>
     </dependency>
 
 In other Java-based environments, the library can be referred to by its

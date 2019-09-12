@@ -4,13 +4,13 @@
 
 Contains utility methods for processing Uniform Resource Identifiers (URIs) and Internationalized Resource Identifiers (IRIs) under RFC3986 and RFC3987, respectively. In the following documentation, URIs and IRIs include URI references and IRI references, for convenience. There are five components to a URI: scheme, authority, path, query, and fragment identifier. The generic syntax to these components is defined in RFC3986 and extended in RFC3987. According to RFC3986, different URI schemes can further restrict the syntax of the authority, path, and query component (see also RFC 7320). However, the syntax of fragment identifiers depends on the media type (also known as MIME type) of the resource a URI references (see also RFC 3986 and RFC 7320). As of September 3, 2019, only the following media types specify a syntax for fragment identifiers:
 
- * The following application/* media types: epub+zip, pdf, senml+cbor, senml+json, senml-exi, sensml+cbor, sensml+json, sensml-exi, smil, vnd.3gpp-v2x-local-service-information, vnd.3gpp.mcdata-signalling, vnd.collection.doc+json, vnd.hc+json, vnd.hyper+json, vnd.hyper-item+json, vnd.mason+json, vnd.microsoft.portable-executable, vnd.oma.bcast.sgdu, vnd.shootproof+json
+ * The following application/* media types: epub + zip, pdf, senml + cbor, senml + json, senml-exi, sensml + cbor, sensml + json, sensml-exi, smil, vnd.3gpp-v2x-local-service-information, vnd.3gpp.mcdata-signalling, vnd.collection.doc + json, vnd.hc + json, vnd.hyper + json, vnd.hyper-item + json, vnd.mason + json, vnd.microsoft.portable-executable, vnd.oma.bcast.sgdu, vnd.shootproof + json
 
  * The following image/* media types: avci, avcs, heic, heic-sequence, heif, heif-sequence, hej2k, hsj2, jxra, jxrs, jxsi, jxss
 
  * The XML media types: application/xml, application/xml-external-parsed-entity, text/xml, text/xml-external-parsed-entity, application/xml-dtd
 
- * All media types with subtypes ending in "+xml" (see RFC 7303) use XPointer Framework syntax as fragment identifiers, except the following application/* media types: dicom+xml (syntax not defined), senml+xml (own syntax), sensml+xml (own syntax), ttml+xml (own syntax), xliff+xml (own syntax), yang-data+xml (syntax not defined)
+ * All media types with subtypes ending in "+xml" (see RFC 7303) use XPointer Framework syntax as fragment identifiers, except the following application/* media types: dicom + xml (syntax not defined), senml + xml (own syntax), sensml + xml (own syntax), ttml + xml (own syntax), xliff + xml (own syntax), yang-data + xml (syntax not defined)
 
  * font/collection
 
@@ -81,22 +81,23 @@ Invalid schemeAndAuthority parameter, or the arguments result in an invalid IRI.
 ### DirectoryPath
 
     public static string DirectoryPath(
-        string uri);
+        string uref);
 
 Extracts the scheme, the authority, and the path component (up to and including the last "/" in the path if any) from the given URI or IRI, using the IRIStrict parse mode to check the URI or IRI. Any "./" or "../" in the path is not condensed.
 
 <b>Parameters:</b>
 
- * <i>uri</i>: A text string representing a URI or IRI. Can be null.
+ * <i>uref</i>: A text string representing a URI or IRI. Can be null.
 
 <b>Return Value:</b>
 
-The directory path of the URI or IRI. Returns null if "uri" is null or not a valid URI or IRI.
+The directory path of the URI or IRI. Returns null if  <i>uref</i>
+ is null or not a valid URI or IRI.
 
 <b>Exceptions:</b>
 
  * System.ArgumentNullException:
-The parameter  <i>uri</i>
+The parameter  <i>uref</i>
  is null.
 
 <a id="EncodeStringForURI_string"></a>
@@ -134,7 +135,7 @@ Escapes characters that can't appear in URIs or IRIs. The function is idempotent
 
  * <i>s</i>: A string to escape.
 
- * <i>mode</i>:  Has the following meaning: 0 = Encode reserved code points, code points below U+0021, code points above U+007E, and square brackets within the authority component, and do the IRISurrogateLenient check. 1 = Encode code points above U+007E, and square brackets within the authority component, and do the IRIStrict check. 2 = Same as 1, except the check is IRISurrogateLenient. 3 = Same as 0, except that percent characters that begin illegal percent-encoding are also encoded.
+ * <i>mode</i>: Has the following meaning: 0 = Encode reserved code points, code points below U+0021, code points above U+007E, and square brackets within the authority component, and do the IRISurrogateLenient check. 1 = Encode code points above U+007E, and square brackets within the authority component, and do the IRIStrict check. 2 = Same as 1, except the check is IRISurrogateLenient. 3 = Same as 0, except that percent characters that begin illegal percent-encoding are also encoded.
 
 <b>Return Value:</b>
 
@@ -146,7 +147,7 @@ A string possibly containing escaped characters, or null if s is null.
     public static bool HasScheme(
         string refValue);
 
-Determines whether the string is a valid IRI with a scheme component. This can be used to check for relative IRI references. The following cases return true:
+ Determines whether the string is a valid IRI with a scheme component. This can be used to check for relative IRI references. The following cases return true:
 
     xx-x:mm example:/ww
 
@@ -170,7 +171,7 @@ Determines whether the string is a valid IRI with a scheme component. This can b
     public static bool HasSchemeForURI(
         string refValue);
 
-Determines whether the string is a valid URI with a scheme component. This can be used to check for relative URI references. The following cases return true:
+ Determines whether the string is a valid URI with a scheme component. This can be used to check for relative URI references. The following cases return true:
 
     http://example/z xx-x:mm example:/ww
 
@@ -208,7 +209,7 @@ Determines whether the substring is a valid CURIE reference under RDFA 1.1. (The
 
 <b>Return Value:</b>
 
- `true`  if the substring is a valid CURIE reference under RDFA 1; otherwise,  `false`  . Returns false if  <i>s</i>
+ `true`  if the substring is a valid CURIE reference under RDFA 1; otherwise,  `false` . Returns false if  <i>s</i>
  is null.
 
 <b>Exceptions:</b>
@@ -220,7 +221,7 @@ Either  <i>offset</i>
  's length, or  <i>s</i>
  ' s length minus  <i>offset</i>
  is less than  <i>length</i>
- .
+.
 
  * System.ArgumentNullException:
 The parameter  <i>s</i>
@@ -288,43 +289,45 @@ The portion of the given string in which percent-encoding was decoded. Returns n
 
     public static string RelativeResolve(
         string refValue,
-        string baseURI);
+        string absoluteBase);
 
 Resolves a URI or IRI relative to another URI or IRI.
 
 <b>Parameters:</b>
 
- * <i>refValue</i>: A string representing a URI or IRI reference. Example:  `dir/file.txt`  .
+ * <i>refValue</i>: A string representing a URI or IRI reference. Example:  `dir/file.txt` .
 
- * <i>baseURI</i>: A string representing an absolute URI reference. Example:  `http://example.com/my/path/`  .
+ * <i>absoluteBase</i>: A string representing an absolute URI or IRI reference. Can be null. Example:  `http://example.com/my/path/` .
 
 <b>Return Value:</b>
 
 The resolved IRI, or null if  <i>refValue</i>
- is null or is not a valid IRI. If  <i>baseURI</i>
- is null or is not a valid IRI, returns refValue. Example:  `http://example.com/my/path/dir/file.txt`  .
+ is null or is not a valid IRI. If  <i>absoluteBase</i>
+ is null or is not a valid IRI, returns refValue. Example:  `http://example.com/my/path/dir/file.txt` .
 
 <a id="RelativeResolveWithinBaseURI_string_string"></a>
 ### RelativeResolveWithinBaseURI
 
     public static string RelativeResolveWithinBaseURI(
         string refValue,
-        string absoluteBaseURI);
+        string absoluteBase);
 
 Resolves a URI or IRI relative to another URI or IRI, but only if the resolved URI has no "." or ".." component in its path and only if resolved URI's directory path matches that of the second URI or IRI.
 
 <b>Parameters:</b>
 
- * <i>refValue</i>: A string representing a URI or IRI reference. Example:  `dir/file.txt`  .
+ * <i>refValue</i>: A string representing a URI or IRI reference. Example:  `dir/file.txt` .
 
- * <i>absoluteBaseURI</i>: A string representing an absolute URI reference. Example:  `http://example.com/my/path/`  .
+ * <i>absoluteBase</i>: A string representing an absolute URI reference. Example:  `http://example.com/my/path/` .
 
 <b>Return Value:</b>
 
 The resolved IRI, or null if  <i>refValue</i>
  is null or is not a valid IRI, or  <i>refValue</i>
- if  <i>absoluteBaseURI</i>
- is null or an empty string, or null if "absoluteBaseURI" is neither null nor empty and is not a valid IRI. Returns null instead if the resolved IRI has no "." or ".." component in its path or if the resolved URI's directory path does not match that of "absoluteBaseURI". Example:  `http://example.com/my/path/dir/file.txt`  .
+ if  <i>absoluteBase</i>
+ is null or an empty string, or null if  <i>absoluteBase</i>
+ is neither null nor empty and is not a valid IRI. Returns null instead if the resolved IRI has no "." or ".." component in its path or if the resolved URI's directory path does not match that of  <i>absoluteBase</i>
+. Example:  `http://example.com/my/path/dir/file.txt` .
 
 <a id="SplitIRI_string"></a>
 ### SplitIRI
