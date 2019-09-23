@@ -594,7 +594,7 @@ namespace PeterO {
   /// the colon.).</summary>
   /// <param name='s'>A string containing a CURIE reference. Can be
   /// null.</param>
-  /// <param name='offset'>A Index starting at 0 showing where the
+  /// <param name='offset'>An index starting at 0 showing where the
   /// desired portion of "s" begins.</param>
   /// <param name='length'>The number of elements in the desired portion
   /// of "s" (but not more than "s" 's length).</param>
@@ -1410,7 +1410,7 @@ namespace PeterO {
   /// returns an array containing the indices into the
   /// components.</summary>
   /// <param name='s'>A string that contains an IRI. Can be null.</param>
-  /// <param name='offset'>A Index starting at 0 showing where the
+  /// <param name='offset'>An index starting at 0 showing where the
   /// desired portion of "s" begins.</param>
   /// <param name='length'>The length of the desired portion of "s" (but
   /// not more than "s" 's length).</param>

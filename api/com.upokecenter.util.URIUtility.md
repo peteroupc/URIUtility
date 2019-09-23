@@ -235,8 +235,8 @@ Determines whether the substring is a valid CURIE reference under RDFA 1.1.
 
 * <code>s</code> - A string containing a CURIE reference. Can be null.
 
-* <code>offset</code> - A Index starting at 0 showing where the desired portion of "s"
- begins.
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+  "s" begins.
 
 * <code>length</code> - The number of elements in the desired portion of "s" (but not
   more than "s" 's length).
@@ -404,8 +404,8 @@ Parses a substring that represents an Internationalized Resource Identifier
 
 * <code>s</code> - A string that contains an IRI. Can be null.
 
-* <code>offset</code> - A Index starting at 0 showing where the desired portion of "s"
- begins.
+* <code>offset</code> - An index starting at 0 showing where the desired portion of
+  "s" begins.
 
 * <code>length</code> - The length of the desired portion of "s" (but not more than
   "s" 's length).

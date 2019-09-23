@@ -580,8 +580,8 @@ private URIUtility() {
    * Determines whether the substring is a valid CURIE reference under RDFA 1.1.
    * (The CURIE reference is the part after the colon.).
    * @param s A string containing a CURIE reference. Can be null.
-   * @param offset A Index starting at 0 showing where the desired portion of "s"
-   * begins.
+   * @param offset An index starting at 0 showing where the desired portion of
+   *  "s" begins.
    * @param length The number of elements in the desired portion of "s" (but not
    *  more than "s" 's length).
    * @return {@code true} if the substring is a valid CURIE reference under RDFA
@@ -1391,8 +1391,8 @@ private URIUtility() {
    * string into its components and returns an array containing the indices
    * into the components.
    * @param s A string that contains an IRI. Can be null.
-   * @param offset A Index starting at 0 showing where the desired portion of "s"
-   * begins.
+   * @param offset An index starting at 0 showing where the desired portion of
+   *  "s" begins.
    * @param length The length of the desired portion of "s" (but not more than
    *  "s" 's length).
    * @param parseMode Parse mode that specifies whether certain characters are
