@@ -157,10 +157,11 @@ private URIUtility() {
     }
 
   /**
-   * Escapes characters that can't appear in URIs or IRIs. The function is
-   * idempotent; that is, calling the function again on the result with the
-   * same mode doesn't change the result.
-   * @param s A string to escape.
+   * Checks a text string representing a URI or IRI and escapes characters it has
+   * that can't appear in URIs or IRIs. The function is idempotent; that
+   * is, calling the function again on the result with the same mode
+   * doesn't change the result.
+   * @param s A text string representing a URI or IRI. Can be null.
    * @param mode Has the following meaning: 0 = Encode reserved code points, code
    * points below U+0021, code points above U+007E, and square brackets
    * within the authority component, and do the IRISurrogateLenient check.
@@ -168,8 +169,8 @@ private URIUtility() {
    * authority component, and do the IRIStrict check. 2 = Same as 1, except
    * the check is IRISurrogateLenient. 3 = Same as 0, except that percent
    * characters that begin illegal percent-encoding are also encoded.
-   * @return A string possibly containing escaped characters, or null if s is
-   * null.
+   * @return A form of the URI or IRI that possibly contains escaped characters,
+   * or null if s is null.
    */
     public static String EscapeURI(String s, int mode) {
       if (s == null) {

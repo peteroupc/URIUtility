@@ -57,7 +57,8 @@ Contains utility methods for processing Uniform Resource Identifiers (URIs)
  Encodes characters other than "unreserved" characters for URIs.
 * `static java.lang.String EscapeURI​(java.lang.String s,
          int mode)`<br>
- Escapes characters that can't appear in URIs or IRIs.
+ Checks a text string representing a URI or IRI and escapes characters it has
+ that can't appear in URIs or IRIs.
 * `static boolean HasScheme​(java.lang.String refValue)`<br>
  Determines whether the string is a valid IRI with a scheme component.
 * `static boolean HasSchemeForURI​(java.lang.String refValue)`<br>
@@ -118,13 +119,14 @@ Contains utility methods for processing Uniform Resource Identifiers (URIs)
 
 ### EscapeURI
     public static java.lang.String EscapeURI​(java.lang.String s, int mode)
-Escapes characters that can't appear in URIs or IRIs. The function is
- idempotent; that is, calling the function again on the result with the
- same mode doesn't change the result.
+Checks a text string representing a URI or IRI and escapes characters it has
+ that can't appear in URIs or IRIs. The function is idempotent; that
+ is, calling the function again on the result with the same mode
+ doesn't change the result.
 
 **Parameters:**
 
-* <code>s</code> - A string to escape.
+* <code>s</code> - A text string representing a URI or IRI. Can be null.
 
 * <code>mode</code> - Has the following meaning: 0 = Encode reserved code points, code
  points below U+0021, code points above U+007E, and square brackets
@@ -136,8 +138,8 @@ Escapes characters that can't appear in URIs or IRIs. The function is
 
 **Returns:**
 
-* A string possibly containing escaped characters, or null if s is
- null.
+* A form of the URI or IRI that possibly contains escaped characters,
+ or null if s is null.
 
 ### HasScheme
     public static boolean HasScheme​(java.lang.String refValue)
@@ -322,7 +324,7 @@ Resolves a URI or IRI relative to another URI or IRI.
 * The resolved IRI, or null if <code>refValue</code> is null or is not a
  valid IRI. If <code>absoluteBase</code> is null or is not a valid IRI,
  returns refValue. Example: <code>
- [http://example.com/my/path/dir/file.txt</code>.](http://example.com/my/path/dir/file.txt</code>.)
+ http://example.com/my/path/dir/file.txt</code>.
 
 ### RelativeResolve
     public static java.lang.String RelativeResolve​(java.lang.String refValue, java.lang.String absoluteBase, URIUtility.ParseMode parseMode)

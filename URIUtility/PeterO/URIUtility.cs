@@ -155,10 +155,12 @@ namespace PeterO {
       }
     }
 
-  /// <summary>Escapes characters that can't appear in URIs or IRIs. The
-  /// function is idempotent; that is, calling the function again on the
-  /// result with the same mode doesn't change the result.</summary>
-  /// <param name='s'>A string to escape.</param>
+  /// <summary>Checks a text string representing a URI or IRI and escapes
+  /// characters it has that can't appear in URIs or IRIs. The function
+  /// is idempotent; that is, calling the function again on the result
+  /// with the same mode doesn't change the result.</summary>
+  /// <param name='s'>A text string representing a URI or IRI. Can be
+  /// null.</param>
   /// <param name='mode'>Has the following meaning: 0 = Encode reserved
   /// code points, code points below U+0021, code points above U+007E,
   /// and square brackets within the authority component, and do the
@@ -167,8 +169,8 @@ namespace PeterO {
   /// IRIStrict check. 2 = Same as 1, except the check is
   /// IRISurrogateLenient. 3 = Same as 0, except that percent characters
   /// that begin illegal percent-encoding are also encoded.</param>
-  /// <returns>A string possibly containing escaped characters, or null
-  /// if s is null.</returns>
+  /// <returns>A form of the URI or IRI that possibly contains escaped
+  /// characters, or null if s is null.</returns>
     public static string EscapeURI(string s, int mode) {
       if (s == null) {
         return null;
