@@ -31,7 +31,7 @@ Contains utility methods for processing Uniform Resource Identifiers (URIs) and 
 * <code>[DirectoryPath(string)](#DirectoryPath_string)</code> - Extracts the scheme, the authority, and the path component (up to and including the last "/" in the path if any) from the given URI or IRI, using the IRIStrict parse mode to check the URI or IRI.
 * <code>[DirectoryPath(string, PeterO.ParseMode)](#DirectoryPath_string_PeterO_ParseMode)</code> -
 * <code>[EncodeStringForURI(string)](#EncodeStringForURI_string)</code> - Encodes characters other than "unreserved" characters for URIs.
-* <code>[EscapeURI(string, int)](#EscapeURI_string_int)</code> - Escapes characters that can't appear in URIs or IRIs.
+* <code>[EscapeURI(string, int)](#EscapeURI_string_int)</code> - Checks a text string representing a URI or IRI and escapes characters it has that can't appear in URIs or IRIs.
 * <code>[HasScheme(string)](#HasScheme_string)</code> - Determines whether the string is a valid IRI with a scheme component.
 * <code>[HasSchemeForURI(string)](#HasSchemeForURI_string)</code> - Determines whether the string is a valid URI with a scheme component.
 * <code>[IsValidCurieReference(string, int, int)](#IsValidCurieReference_string_int_int)</code> - Determines whether the substring is a valid CURIE reference under RDFA 1.
@@ -129,17 +129,17 @@ The parameter  <i>s</i>
         string s,
         int mode);
 
-Escapes characters that can't appear in URIs or IRIs. The function is idempotent; that is, calling the function again on the result with the same mode doesn't change the result.
+Checks a text string representing a URI or IRI and escapes characters it has that can't appear in URIs or IRIs. The function is idempotent; that is, calling the function again on the result with the same mode doesn't change the result.
 
 <b>Parameters:</b>
 
- * <i>s</i>: A string to escape.
+ * <i>s</i>: A text string representing a URI or IRI. Can be null.
 
  * <i>mode</i>: Has the following meaning: 0 = Encode reserved code points, code points below U+0021, code points above U+007E, and square brackets within the authority component, and do the IRISurrogateLenient check. 1 = Encode code points above U+007E, and square brackets within the authority component, and do the IRIStrict check. 2 = Same as 1, except the check is IRISurrogateLenient. 3 = Same as 0, except that percent characters that begin illegal percent-encoding are also encoded.
 
 <b>Return Value:</b>
 
-A string possibly containing escaped characters, or null if s is null.
+A form of the URI or IRI that possibly contains escaped characters, or null if s is null.
 
 <a id="HasScheme_string"></a>
 ### HasScheme
@@ -203,7 +203,7 @@ Determines whether the substring is a valid CURIE reference under RDFA 1.1. (The
 
  * <i>s</i>: A string containing a CURIE reference. Can be null.
 
- * <i>offset</i>: A Index starting at 0 showing where the desired portion of "s" begins.
+ * <i>offset</i>: An index starting at 0 showing where the desired portion of "s" begins.
 
  * <i>length</i>: The number of elements in the desired portion of "s" (but not more than "s" 's length).
 
