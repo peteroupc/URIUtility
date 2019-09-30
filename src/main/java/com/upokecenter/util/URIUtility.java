@@ -183,7 +183,7 @@ private URIUtility() {
   s,
   0,
   s.length(),
-  ParseMode.IRIStrict);
+  URIUtility.ParseMode.IRIStrict);
         if (components == null) {
           return null;
         }
@@ -192,7 +192,7 @@ private URIUtility() {
           s,
           0,
           s.length(),
-          ParseMode.IRISurrogateLenient);
+          URIUtility.ParseMode.IRISurrogateLenient);
       }
       int index = 0;
       int valueSLength = s.length();
@@ -285,7 +285,7 @@ private URIUtility() {
         refValue,
         0,
         refValue.length(),
-        ParseMode.IRIStrict);
+        URIUtility.ParseMode.IRIStrict);
       return segments != null && segments[0] >= 0;
     }
 
@@ -303,7 +303,7 @@ private URIUtility() {
         refValue,
         0,
         refValue.length(),
-        ParseMode.URIStrict);
+        URIUtility.ParseMode.URIStrict);
       return segments != null && segments[0] >= 0;
     }
 
@@ -780,16 +780,16 @@ private URIUtility() {
     s,
     0,
     s.length(),
-    ParseMode.IRIStrict)) != null;
+    URIUtility.ParseMode.IRIStrict)) != null;
     }
 
   /**
    * Returns whether a string is a valid IRI according to the given parse mode.
    * @param s A text string. Can be null.
-   * @param mode The parse mode to use when checking for a valid IRI.
+   * @param parseMode The parse mode to use when checking for a valid IRI.
    * @return True if the string is not null and is a valid IRI; otherwise, false.
    */
-    public static boolean IsValidIRI(String s, ParseMode mode) {
+    public static boolean IsValidIRI(String s, URIUtility.ParseMode parseMode) {
       return ((s == null) ?
   null : SplitIRI(
     s,
@@ -1179,7 +1179,7 @@ private URIUtility() {
    * http://example.com/my/path/dir/file.txt}.
    */
     public static String RelativeResolve(String refValue, String absoluteBase) {
-      return RelativeResolve(refValue, absoluteBase, ParseMode.IRIStrict);
+      return RelativeResolve(refValue, absoluteBase, URIUtility.ParseMode.IRIStrict);
     }
 
   /**
@@ -1199,7 +1199,7 @@ private URIUtility() {
     public static String RelativeResolve(
       String refValue,
       String absoluteBase,
-      ParseMode parseMode) {
+      URIUtility.ParseMode parseMode) {
       int[] segments = (refValue == null) ? null : SplitIRI(
         refValue,
         0,
@@ -1382,7 +1382,7 @@ private URIUtility() {
    * be -1. If the string is null or is not a valid IRI, returns null.
    */
     public static int[] SplitIRI(String s) {
-      return (s == null) ? null : SplitIRI(s, 0, s.length(), ParseMode.IRIStrict);
+      return (s == null) ? null : SplitIRI(s, 0, s.length(), URIUtility.ParseMode.IRIStrict);
     }
 
   /**
@@ -1415,7 +1415,7 @@ private URIUtility() {
       String s,
       int offset,
       int length,
-      ParseMode parseMode) {
+      URIUtility.ParseMode parseMode) {
       if (s == null) {
         return null;
       }
@@ -1445,10 +1445,10 @@ private URIUtility() {
         retval[5] = 0;
         return retval;
       }
-      boolean asciiOnly = parseMode == ParseMode.URILenient || parseMode ==
-        ParseMode.URIStrict;
-      boolean strict = parseMode == ParseMode.URIStrict || parseMode ==
-        ParseMode.IRIStrict;
+      boolean asciiOnly = parseMode == URIUtility.ParseMode.URILenient || parseMode ==
+        URIUtility.ParseMode.URIStrict;
+      boolean strict = parseMode == URIUtility.ParseMode.URIStrict || parseMode ==
+        URIUtility.ParseMode.IRIStrict;
       int index = offset;
       int valueSLength = offset + length;
       boolean scheme = false;
@@ -1500,7 +1500,7 @@ private URIUtility() {
             c = 0x10000 + ((c & 0x3ff) << 10) + (s.charAt(index + 1) & 0x3ff);
             ++index;
           } else if ((c & 0xf800) == 0xd800) {
-            if (parseMode == ParseMode.IRISurrogateLenient) {
+            if (parseMode == URIUtility.ParseMode.IRISurrogateLenient) {
               c = 0xfffd;
             } else {
               return null;
@@ -1676,7 +1676,7 @@ private URIUtility() {
    * respectively. If a component is absent, both indices in that pair will
    * be -1. If the string is null or is not a valid IRI, returns null.
    */
-    public static int[] SplitIRI(String s, ParseMode parseMode) {
+    public static int[] SplitIRI(String s, URIUtility.ParseMode parseMode) {
       return (s == null) ? null : SplitIRI(s, 0, s.length(), parseMode);
     }
 
@@ -1744,7 +1744,7 @@ private URIUtility() {
       return false;
     }
 
-    private static String UriPath(String uri, ParseMode parseMode) {
+    private static String UriPath(String uri, URIUtility.ParseMode parseMode) {
       int[] indexes = SplitIRI(uri, parseMode);
       return (
        indexes == null) ? null : uri.substring(
@@ -1763,7 +1763,7 @@ private URIUtility() {
    * @throws NullPointerException The parameter {@code uref} is null.
    */
     public static String DirectoryPath(String uref) {
-      return DirectoryPath(uref, ParseMode.IRIStrict);
+      return DirectoryPath(uref, URIUtility.ParseMode.IRIStrict);
     }
 
   /**
@@ -1776,7 +1776,7 @@ private URIUtility() {
    * @return The directory path of the URI or IRI. Returns null if {@code uref}
    * is null or not a valid URI or IRI.
    */
-    public static String DirectoryPath(String uref, ParseMode parseMode) {
+    public static String DirectoryPath(String uref, URIUtility.ParseMode parseMode) {
       int[] indexes = SplitIRI(uref, parseMode);
       if (indexes == null) {
         return null;
@@ -1818,7 +1818,7 @@ private URIUtility() {
       String refValue,
       String absoluteBase) {
       if (!((absoluteBase) == null || (absoluteBase).length() == 0) &&
-         SplitIRI(absoluteBase, ParseMode.IRIStrict) == null) {
+         SplitIRI(absoluteBase, URIUtility.ParseMode.IRIStrict) == null) {
         return null;
       }
       String rel = RelativeResolve(refValue, absoluteBase);
@@ -1828,7 +1828,7 @@ private URIUtility() {
       if (refValue == null) {
         throw new IllegalStateException();
       }
-      String relpath = UriPath(refValue, ParseMode.IRIStrict);
+      String relpath = UriPath(refValue, URIUtility.ParseMode.IRIStrict);
       if (PathHasDotComponent(relpath)) {
        // Resolved path has a dot component in it (usually
        // because that component is percent-encoded)

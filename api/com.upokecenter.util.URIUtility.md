@@ -71,7 +71,7 @@ Contains utility methods for processing Uniform Resource Identifiers (URIs)
  Returns whether a string is a valid IRI according to the IRIStrict parse
  mode.
 * `static boolean IsValidIRI​(java.lang.String s,
-          URIUtility.ParseMode mode)`<br>
+          URIUtility.ParseMode parseMode)`<br>
  Returns whether a string is a valid IRI according to the given parse mode.
 * `static java.lang.String PercentDecode​(java.lang.String str)`<br>
  Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
@@ -294,14 +294,14 @@ Returns whether a string is a valid IRI according to the IRIStrict parse
 * True if the string is not null and is a valid IRI; otherwise, false.
 
 ### IsValidIRI
-    public static boolean IsValidIRI​(java.lang.String s, URIUtility.ParseMode mode)
+    public static boolean IsValidIRI​(java.lang.String s, URIUtility.ParseMode parseMode)
 Returns whether a string is a valid IRI according to the given parse mode.
 
 **Parameters:**
 
 * <code>s</code> - A text string. Can be null.
 
-* <code>mode</code> - The parse mode to use when checking for a valid IRI.
+* <code>parseMode</code> - The parse mode to use when checking for a valid IRI.
 
 **Returns:**
 
@@ -324,7 +324,7 @@ Resolves a URI or IRI relative to another URI or IRI.
 * The resolved IRI, or null if <code>refValue</code> is null or is not a
  valid IRI. If <code>absoluteBase</code> is null or is not a valid IRI,
  returns refValue. Example: <code>
- [http://example.com/my/path/dir/file.txt</code>.](http://example.com/my/path/dir/file.txt</code>.)
+ http://example.com/my/path/dir/file.txt</code>.
 
 ### RelativeResolve
     public static java.lang.String RelativeResolve​(java.lang.String refValue, java.lang.String absoluteBase, URIUtility.ParseMode parseMode)

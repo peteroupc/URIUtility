@@ -182,7 +182,7 @@ namespace PeterO {
   s,
   0,
   s.Length,
-  ParseMode.IRIStrict);
+  URIUtility.ParseMode.IRIStrict);
         if (components == null) {
           return null;
         }
@@ -191,7 +191,7 @@ namespace PeterO {
           s,
           0,
           s.Length,
-          ParseMode.IRISurrogateLenient);
+          URIUtility.ParseMode.IRISurrogateLenient);
       }
       var index = 0;
       int valueSLength = s.Length;
@@ -291,7 +291,7 @@ namespace PeterO {
         refValue,
         0,
         refValue.Length,
-        ParseMode.IRIStrict);
+        URIUtility.ParseMode.IRIStrict);
       return segments != null && segments[0] >= 0;
     }
 
@@ -316,7 +316,7 @@ namespace PeterO {
         refValue,
         0,
         refValue.Length,
-        ParseMode.URIStrict);
+        URIUtility.ParseMode.URIStrict);
       return segments != null && segments[0] >= 0;
     }
 
@@ -797,17 +797,17 @@ namespace PeterO {
     s,
     0,
     s.Length,
-    ParseMode.IRIStrict)) != null;
+    URIUtility.ParseMode.IRIStrict)) != null;
     }
 
   /// <summary>Returns whether a string is a valid IRI according to the
   /// given parse mode.</summary>
   /// <param name='s'>A text string. Can be null.</param>
-  /// <param name='mode'>The parse mode to use when checking for a valid
+  /// <param name='parseMode'>The parse mode to use when checking for a valid
   /// IRI.</param>
   /// <returns>True if the string is not null and is a valid IRI;
   /// otherwise, false.</returns>
-    public static bool IsValidIRI(string s, ParseMode mode) {
+    public static bool IsValidIRI(string s, URIUtility.ParseMode parseMode) {
       return ((s == null) ?
   null : SplitIRI(
     s,
@@ -1198,7 +1198,7 @@ namespace PeterO {
   /// is null or is not a valid IRI, returns refValue. Example:
   /// <c>http://example.com/my/path/dir/file.txt</c>.</returns>
     public static string RelativeResolve(string refValue, string absoluteBase) {
-      return RelativeResolve(refValue, absoluteBase, ParseMode.IRIStrict);
+      return RelativeResolve(refValue, absoluteBase, URIUtility.ParseMode.IRIStrict);
     }
 
   /// <summary>Resolves a URI or IRI relative to another URI or
@@ -1220,7 +1220,7 @@ namespace PeterO {
     public static string RelativeResolve(
       string refValue,
       string absoluteBase,
-      ParseMode parseMode) {
+      URIUtility.ParseMode parseMode) {
       int[] segments = (refValue == null) ? null : SplitIRI(
         refValue,
         0,
@@ -1401,7 +1401,7 @@ namespace PeterO {
   /// pair will be -1. If the string is null or is not a valid IRI,
   /// returns null.</returns>
     public static int[] SplitIRI(string s) {
-      return (s == null) ? null : SplitIRI(s, 0, s.Length, ParseMode.IRIStrict);
+      return (s == null) ? null : SplitIRI(s, 0, s.Length, URIUtility.ParseMode.IRIStrict);
     }
 
   /// <summary>Parses a substring that represents an Internationalized
@@ -1436,7 +1436,7 @@ namespace PeterO {
       string s,
       int offset,
       int length,
-      ParseMode parseMode) {
+      URIUtility.ParseMode parseMode) {
       if (s == null) {
         return null;
       }
@@ -1466,10 +1466,10 @@ namespace PeterO {
         retval[5] = 0;
         return retval;
       }
-      bool asciiOnly = parseMode == ParseMode.URILenient || parseMode ==
-        ParseMode.URIStrict;
-      bool strict = parseMode == ParseMode.URIStrict || parseMode ==
-        ParseMode.IRIStrict;
+      bool asciiOnly = parseMode == URIUtility.ParseMode.URILenient || parseMode ==
+        URIUtility.ParseMode.URIStrict;
+      bool strict = parseMode == URIUtility.ParseMode.URIStrict || parseMode ==
+        URIUtility.ParseMode.IRIStrict;
       int index = offset;
       int valueSLength = offset + length;
       var scheme = false;
@@ -1521,7 +1521,7 @@ namespace PeterO {
             c = 0x10000 + ((c & 0x3ff) << 10) + (s[index + 1] & 0x3ff);
             ++index;
           } else if ((c & 0xf800) == 0xd800) {
-            if (parseMode == ParseMode.IRISurrogateLenient) {
+            if (parseMode == URIUtility.ParseMode.IRISurrogateLenient) {
               c = 0xfffd;
             } else {
               return null;
@@ -1697,7 +1697,7 @@ namespace PeterO {
   /// "#", respectively. If a component is absent, both indices in that
   /// pair will be -1. If the string is null or is not a valid IRI,
   /// returns null.</returns>
-    public static int[] SplitIRI(string s, ParseMode parseMode) {
+    public static int[] SplitIRI(string s, URIUtility.ParseMode parseMode) {
       return (s == null) ? null : SplitIRI(s, 0, s.Length, parseMode);
     }
 
@@ -1766,7 +1766,7 @@ namespace PeterO {
       return false;
     }
 
-    private static string UriPath(string uri, ParseMode parseMode) {
+    private static string UriPath(string uri, URIUtility.ParseMode parseMode) {
       int[] indexes = SplitIRI(uri, parseMode);
       return (
        indexes == null) ? null : uri.Substring(
@@ -1786,7 +1786,7 @@ namespace PeterO {
   /// <exception cref='ArgumentNullException'>The parameter <paramref
   /// name='uref'/> is null.</exception>
     public static string DirectoryPath(string uref) {
-      return DirectoryPath(uref, ParseMode.IRIStrict);
+      return DirectoryPath(uref, URIUtility.ParseMode.IRIStrict);
     }
 
   /// <summary>Extracts the scheme, the authority, and the path component
@@ -1800,7 +1800,7 @@ namespace PeterO {
   /// <returns>The directory path of the URI or IRI. Returns null if
   /// <paramref name='uref'/> is null or not a valid URI or
   /// IRI.</returns>
-    public static string DirectoryPath(string uref, ParseMode parseMode) {
+    public static string DirectoryPath(string uref, URIUtility.ParseMode parseMode) {
       int[] indexes = SplitIRI(uref, parseMode);
       if (indexes == null) {
         return null;
@@ -1843,7 +1843,7 @@ namespace PeterO {
       string refValue,
       string absoluteBase) {
       if (!String.IsNullOrEmpty(absoluteBase) &&
-         SplitIRI(absoluteBase, ParseMode.IRIStrict) == null) {
+         SplitIRI(absoluteBase, URIUtility.ParseMode.IRIStrict) == null) {
         return null;
       }
       string rel = RelativeResolve(refValue, absoluteBase);
@@ -1853,7 +1853,7 @@ namespace PeterO {
       if (refValue == null) {
         throw new InvalidOperationException();
       }
-      string relpath = UriPath(refValue, ParseMode.IRIStrict);
+      string relpath = UriPath(refValue, URIUtility.ParseMode.IRIStrict);
       if (PathHasDotComponent(relpath)) {
        // Resolved path has a dot component in it (usually
        // because that component is percent-encoded)
