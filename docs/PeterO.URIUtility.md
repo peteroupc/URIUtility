@@ -173,7 +173,7 @@ A form of the URI or IRI that possibly contains escaped characters, or null if s
 
  Determines whether the string is a valid URI with a scheme component. This can be used to check for relative URI references. The following cases return true:
 
-    http://example/z xx-x:mm example:/ww
+    [http://example/z](http://example/z) xx-x:mm example:/ww
 
  The following cases return false:
 

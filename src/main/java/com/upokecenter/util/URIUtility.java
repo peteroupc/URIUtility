@@ -1179,7 +1179,8 @@ private URIUtility() {
    * http://example.com/my/path/dir/file.txt}.
    */
     public static String RelativeResolve(String refValue, String absoluteBase) {
-      return RelativeResolve(refValue, absoluteBase, URIUtility.ParseMode.IRIStrict);
+      return RelativeResolve(refValue, absoluteBase,
+  URIUtility.ParseMode.IRIStrict);
     }
 
   /**
@@ -1382,7 +1383,8 @@ private URIUtility() {
    * be -1. If the string is null or is not a valid IRI, returns null.
    */
     public static int[] SplitIRI(String s) {
-      return (s == null) ? null : SplitIRI(s, 0, s.length(), URIUtility.ParseMode.IRIStrict);
+      return (s == null) ? null : SplitIRI(s, 0, s.length(),
+  URIUtility.ParseMode.IRIStrict);
     }
 
   /**
@@ -1445,7 +1447,8 @@ private URIUtility() {
         retval[5] = 0;
         return retval;
       }
-      boolean asciiOnly = parseMode == URIUtility.ParseMode.URILenient || parseMode ==
+      boolean asciiOnly = parseMode == URIUtility.ParseMode.URILenient ||
+parseMode ==
         URIUtility.ParseMode.URIStrict;
       boolean strict = parseMode == URIUtility.ParseMode.URIStrict || parseMode ==
         URIUtility.ParseMode.IRIStrict;
@@ -1776,7 +1779,8 @@ private URIUtility() {
    * @return The directory path of the URI or IRI. Returns null if {@code uref}
    * is null or not a valid URI or IRI.
    */
-    public static String DirectoryPath(String uref, URIUtility.ParseMode parseMode) {
+    public static String DirectoryPath(String uref, URIUtility.ParseMode
+parseMode) {
       int[] indexes = SplitIRI(uref, parseMode);
       if (indexes == null) {
         return null;

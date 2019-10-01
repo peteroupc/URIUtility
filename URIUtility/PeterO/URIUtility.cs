@@ -803,8 +803,8 @@ namespace PeterO {
   /// <summary>Returns whether a string is a valid IRI according to the
   /// given parse mode.</summary>
   /// <param name='s'>A text string. Can be null.</param>
-  /// <param name='parseMode'>The parse mode to use when checking for a valid
-  /// IRI.</param>
+  /// <param name='parseMode'>The parse mode to use when checking for a
+  /// valid IRI.</param>
   /// <returns>True if the string is not null and is a valid IRI;
   /// otherwise, false.</returns>
     public static bool IsValidIRI(string s, URIUtility.ParseMode parseMode) {
@@ -1198,7 +1198,8 @@ namespace PeterO {
   /// is null or is not a valid IRI, returns refValue. Example:
   /// <c>http://example.com/my/path/dir/file.txt</c>.</returns>
     public static string RelativeResolve(string refValue, string absoluteBase) {
-      return RelativeResolve(refValue, absoluteBase, URIUtility.ParseMode.IRIStrict);
+      return RelativeResolve(refValue, absoluteBase,
+  URIUtility.ParseMode.IRIStrict);
     }
 
   /// <summary>Resolves a URI or IRI relative to another URI or
@@ -1401,7 +1402,8 @@ namespace PeterO {
   /// pair will be -1. If the string is null or is not a valid IRI,
   /// returns null.</returns>
     public static int[] SplitIRI(string s) {
-      return (s == null) ? null : SplitIRI(s, 0, s.Length, URIUtility.ParseMode.IRIStrict);
+      return (s == null) ? null : SplitIRI(s, 0, s.Length,
+  URIUtility.ParseMode.IRIStrict);
     }
 
   /// <summary>Parses a substring that represents an Internationalized
@@ -1466,7 +1468,8 @@ namespace PeterO {
         retval[5] = 0;
         return retval;
       }
-      bool asciiOnly = parseMode == URIUtility.ParseMode.URILenient || parseMode ==
+      bool asciiOnly = parseMode == URIUtility.ParseMode.URILenient ||
+parseMode ==
         URIUtility.ParseMode.URIStrict;
       bool strict = parseMode == URIUtility.ParseMode.URIStrict || parseMode ==
         URIUtility.ParseMode.IRIStrict;
@@ -1800,7 +1803,8 @@ namespace PeterO {
   /// <returns>The directory path of the URI or IRI. Returns null if
   /// <paramref name='uref'/> is null or not a valid URI or
   /// IRI.</returns>
-    public static string DirectoryPath(string uref, URIUtility.ParseMode parseMode) {
+    public static string DirectoryPath(string uref, URIUtility.ParseMode
+parseMode) {
       int[] indexes = SplitIRI(uref, parseMode);
       if (indexes == null) {
         return null;
