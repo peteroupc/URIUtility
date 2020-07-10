@@ -813,7 +813,7 @@ namespace PeterO {
     s,
     0,
     s.Length,
-    mode)) != null;
+    parseMode)) != null;
     }
 
     private const string ValueDotSlash = "." + "/";
