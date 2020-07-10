@@ -99,9 +99,9 @@ private TestCommon() {
     }
 
     public static void AssertByteArraysEqual(byte[] arr1, byte[] arr2) {
-      if (!ByteArraysEqual(arr1, arr2)) {
-        Assert.fail("Expected " + ToByteArrayString(arr1) + ",\ngot..... " +
-          ToByteArrayString(arr2));
+      if (!ByteArraysEqual (arr1, arr2)) {
+        Assert.fail ("Expected " + ToByteArrayString (arr1) + ",\ngot..... " +
+          ToByteArrayString (arr2));
       }
     }
 
@@ -109,7 +109,7 @@ private TestCommon() {
       if (o == null) {
         throw new NullPointerException("o");
       }
-      if (!o.equals(o2)) {
+      if (!o.equals (o2)) {
         Assert.assertEquals(o, o2);
       }
     }
@@ -118,13 +118,13 @@ private TestCommon() {
       if (o == null) {
         throw new NullPointerException("o");
       }
-      if (o.equals(o2)) {
+      if (o.equals (o2)) {
         if (o2 == null) {
           throw new NullPointerException("o2");
         }
-        if (!o2.equals(o)) {
+        if (!o2.equals (o)) {
           Assert.fail(
-  "" + o + " equals " + o2 + " but not vice versa");
+            "" + o + " equals " + o2 + " but not vice versa");
         }
         // Test for the guarantee that equal objects
         // must have equal hash codes
@@ -132,27 +132,27 @@ private TestCommon() {
           // Don't use Assert.assertEquals directly because it has
           // quite a lot of overhead
           Assert.fail(
-  "" + o + " and " + o2 + " don't have equal hash codes");
+            "" + o + " and " + o2 + " don't have equal hash codes");
         }
       } else {
         if (o2 == null) {
           throw new NullPointerException("o2");
         }
-        if (o2.equals(o)) {
-          Assert.fail("" + o + " does not equal " + o2 +
+        if (o2.equals (o)) {
+          Assert.fail ("" + o + " does not equal " + o2 +
             " but not vice versa");
         }
         // At least check that hashCode doesn't throw
         try {
           o.hashCode();
         } catch (Exception ex) {
-          Assert.fail(ex.toString());
+          Assert.fail (ex.toString());
           throw new IllegalStateException("", ex);
         }
         try {
           o2.hashCode();
         } catch (Exception ex) {
-          Assert.fail(ex.toString());
+          Assert.fail (ex.toString());
           throw new IllegalStateException("", ex);
         }
       }
@@ -168,56 +168,56 @@ private TestCommon() {
       if (o3 == null) {
         throw new NullPointerException("o3");
       }
-      int cmp = CompareTestReciprocal(o1, o2);
-      int cmp2 = CompareTestReciprocal(o2, o3);
-      int cmp3 = CompareTestReciprocal(o1, o3);
-      Assert.assertEquals(cmp == 0, o1.equals(o2));
-      Assert.assertEquals(cmp == 0, o2.equals(o1));
-      Assert.assertEquals(cmp2 == 0, o2.equals(o3));
-      Assert.assertEquals(cmp2 == 0, o3.equals(o2));
-      Assert.assertEquals(cmp3 == 0, o1.equals(o3));
-      Assert.assertEquals(cmp3 == 0, o3.equals(o1));
+      int cmp = CompareTestReciprocal (o1, o2);
+      int cmp2 = CompareTestReciprocal (o2, o3);
+      int cmp3 = CompareTestReciprocal (o1, o3);
+      Assert.assertEquals(cmp == 0, o1.equals (o2));
+      Assert.assertEquals(cmp == 0, o2.equals (o1));
+      Assert.assertEquals(cmp2 == 0, o2.equals (o3));
+      Assert.assertEquals(cmp2 == 0, o3.equals (o2));
+      Assert.assertEquals(cmp3 == 0, o1.equals (o3));
+      Assert.assertEquals(cmp3 == 0, o3.equals (o1));
     }
 
     public static <T extends Comparable<T>> void CompareTestEqual(T o1, T o2) {
-      if (CompareTestReciprocal(o1, o2) != 0) {
-        Assert.fail(ObjectMessages(
-          o1,
-          o2,
-          "Not equal: " + CompareTestReciprocal(o1, o2)));
+      if (CompareTestReciprocal (o1, o2) != 0) {
+        Assert.fail (ObjectMessages(
+            o1,
+            o2,
+            "Not equal: " + CompareTestReciprocal (o1, o2)));
       }
     }
 
     public static <T extends Comparable<T>> void CompareTestEqual(T o1, T o2, String msg) {
-      if (CompareTestReciprocal(o1, o2) != 0) {
+      if (CompareTestReciprocal (o1, o2) != 0) {
         String str = msg + "\r\n" + ObjectMessages(
           o1,
           o2,
-          "Not equal: " + CompareTestReciprocal(o1, o2));
-        Assert.fail(str);
+          "Not equal: " + CompareTestReciprocal (o1, o2));
+        Assert.fail (str);
       }
     }
 
     public static <T extends Comparable<T>> void CompareTestEqualAndConsistent(T o1, T o2) {
-      CompareTestEqualAndConsistent(o1, o2, null);
+      CompareTestEqualAndConsistent (o1, o2, null);
     }
 
     public static <T extends Comparable<T>> void CompareTestEqualAndConsistent(
       T o1,
       T o2,
       String msg) {
-      if (CompareTestReciprocal(o1, o2) != 0) {
+      if (CompareTestReciprocal (o1, o2) != 0) {
         msg = (msg == null ? "" : (msg + "\r\n")) +
-          "Not equal: " + CompareTestReciprocal(o1, o2);
-        Assert.fail(ObjectMessages(
+        "Not equal: " + CompareTestReciprocal (o1, o2);
+        Assert.fail (ObjectMessages(
           o1,
           o2,
           msg));
       }
-      if (!o1.equals(o2)) {
+      if (!o1.equals (o2)) {
         msg = (msg == null ? "" : (msg + "\r\n")) +
-          "Not equal: " + CompareTestReciprocal(o1, o2);
-        Assert.fail(ObjectMessages(
+        "Not equal: " + CompareTestReciprocal (o1, o2);
+        Assert.fail (ObjectMessages(
           o1,
           o2,
           msg));
@@ -225,68 +225,70 @@ private TestCommon() {
     }
 
     public static <T extends Comparable<T>> void CompareTestGreater(T o1, T o2) {
-      CompareTestLess(o2, o1);
+      CompareTestLess (o2, o1);
     }
 
-    public static <T extends Comparable<T>> void CompareTestLess(T o1, T o2) {
-      if (CompareTestReciprocal(o1, o2) >= 0) {
-        Assert.fail(ObjectMessages(
-          o1,
-          o2,
-          "Not less: " + CompareTestReciprocal(o1, o2)));
+    public static <T extends Comparable<T>> void CompareTestLess(T o1,
+      T o2) {
+      if (CompareTestReciprocal (o1, o2) >= 0) {
+        Assert.fail (ObjectMessages(
+            o1,
+            o2,
+            "Not less: " + CompareTestReciprocal (o1, o2)));
       }
     }
 
     public static <T extends Comparable<T>> void CompareTestGreaterEqual(T o1, T o2) {
-      CompareTestLessEqual(o2, o1);
+      CompareTestLessEqual (o2, o1);
     }
 
     public static <T extends Comparable<T>> void CompareTestLessEqual(T o1, T o2) {
-      if (CompareTestReciprocal(o1, o2) > 0) {
-        Assert.fail(ObjectMessages(
-          o1,
-          o2,
-          "Not less or equal: " + CompareTestReciprocal(o1, o2)));
+      if (CompareTestReciprocal (o1, o2) > 0) {
+        Assert.fail (ObjectMessages(
+            o1,
+            o2,
+            "Not less or equal: " + CompareTestReciprocal (o1, o2)));
       }
     }
 
     public static <T extends Comparable<T>> void CompareTestLess(T o1, T o2, String msg) {
-      if (CompareTestReciprocal(o1, o2) >= 0) {
+      if (CompareTestReciprocal (o1, o2) >= 0) {
         String str = msg + "\r\n" + ObjectMessages(
           o1,
           o2,
-          "Not less: " + CompareTestReciprocal(o1, o2));
-        Assert.fail(str);
+          "Not less: " + CompareTestReciprocal (o1, o2));
+        Assert.fail (str);
       }
     }
 
-    public static <T extends Comparable<T>> void CompareTestLessEqual(T o1, T o2, String msg) {
-      if (CompareTestReciprocal(o1, o2) > 0) {
+    public static <T extends Comparable<T>> void CompareTestLessEqual(T o1, T o2,
+      String msg) {
+      if (CompareTestReciprocal (o1, o2) > 0) {
         String str = msg + "\r\n" + ObjectMessages(
           o1,
           o2,
-          "Not less or equal: " + CompareTestReciprocal(o1, o2));
-        Assert.fail(str);
+          "Not less or equal: " + CompareTestReciprocal (o1, o2));
+        Assert.fail (str);
       }
     }
 
     public static <T extends Comparable<T>> void CompareTestGreater(T o1, T o2, String msg) {
-      if (CompareTestReciprocal(o1, o2) <= 0) {
+      if (CompareTestReciprocal (o1, o2) <= 0) {
         String str = msg + "\r\n" + ObjectMessages(
           o1,
           o2,
-          "Not greater: " + CompareTestReciprocal(o1, o2));
-        Assert.fail(str);
+          "Not greater: " + CompareTestReciprocal (o1, o2));
+        Assert.fail (str);
       }
     }
 
     public static <T extends Comparable<T>> void CompareTestGreaterEqual(T o1, T o2, String msg) {
-      if (CompareTestReciprocal(o1, o2) < 0) {
+      if (CompareTestReciprocal (o1, o2) < 0) {
         String str = msg + "\r\n" + ObjectMessages(
           o1,
           o2,
-          "Not greater or equal: " + CompareTestReciprocal(o1, o2));
-        Assert.fail(str);
+          "Not greater or equal: " + CompareTestReciprocal (o1, o2));
+        Assert.fail (str);
       }
     }
 
@@ -298,10 +300,10 @@ private TestCommon() {
         throw new NullPointerException("o2");
       }
       int cmp, cmp2;
-      cmp = ((o1.compareTo(o2) == 0) ? 0 : ((o1.compareTo(o2)< 0) ? -1 : 1));
-      cmp2 = ((o2.compareTo(o1) == 0) ? 0 : ((o2.compareTo(o1)< 0) ? -1 : 1));
+      cmp = Math.signum() (o1.compareTo (o2));
+      cmp2 = Math.signum() (o2.compareTo (o1));
       if (-cmp2 != cmp) {
-        Assert.assertEquals(ObjectMessages(o1, o2, "Not reciprocal"),cmp,-cmp2);
+        Assert.assertEquals(ObjectMessages (o1, o2, "Not reciprocal"),cmp,-cmp2);
       }
       return cmp;
     }
@@ -316,18 +318,18 @@ private TestCommon() {
       if (o3 == null) {
         throw new NullPointerException("o3");
       }
-      if (o1.compareTo(o1) != 0) {
-        Assert.fail(o1.toString());
+      if (o1.compareTo (o1) != 0) {
+        Assert.fail (o1.toString());
       }
-      if (o2.compareTo(o2) != 0) {
-        Assert.fail(o2.toString());
+      if (o2.compareTo (o2) != 0) {
+        Assert.fail (o2.toString());
       }
-      if (o3.compareTo(o3) != 0) {
-        Assert.fail(o3.toString());
+      if (o3.compareTo (o3) != 0) {
+        Assert.fail (o3.toString());
       }
-      int cmp12 = CompareTestReciprocal(o1, o2);
-      int cmp23 = CompareTestReciprocal(o2, o3);
-      int cmp13 = CompareTestReciprocal(o1, o3);
+      int cmp12 = CompareTestReciprocal (o1, o2);
+      int cmp23 = CompareTestReciprocal (o2, o3);
+      int cmp13 = CompareTestReciprocal (o1, o3);
       // CompareTestReciprocal tests compareTo both
       // ways, so shortcutting by negating the values
       // is allowed here
@@ -338,17 +340,17 @@ private TestCommon() {
       for (int i = -1; i <= 1; ++i) {
         if (cmp12 == i) {
           if (cmp23 == i && cmp13 != i) {
-            Assert.fail(ObjectMessages(o1, o2, o3, "Not transitive"));
+            Assert.fail (ObjectMessages (o1, o2, o3, "Not transitive"));
           }
         }
         if (cmp23 == i) {
           if (cmp31 == i && cmp21 != i) {
-            Assert.fail(ObjectMessages(o1, o2, o3, "Not transitive"));
+            Assert.fail (ObjectMessages (o1, o2, o3, "Not transitive"));
           }
         }
         if (cmp31 == i) {
           if (cmp12 == i && cmp32 != i) {
-            Assert.fail(ObjectMessages(o1, o2, o3, "Not transitive"));
+            Assert.fail (ObjectMessages (o1, o2, o3, "Not transitive"));
           }
         }
       }
@@ -479,7 +481,7 @@ private TestCommon() {
     public static String Repeat(char c, int num) {
       StringBuilder sb = new StringBuilder();
       for (int i = 0; i < num; ++i) {
-        sb.append(c);
+        sb.append (c);
       }
       return sb.toString();
     }
@@ -487,7 +489,7 @@ private TestCommon() {
     public static String Repeat(String c, int num) {
       StringBuilder sb = new StringBuilder();
       for (int i = 0; i < num; ++i) {
-        sb.append(c);
+        sb.append (c);
       }
       return sb.toString();
     }
@@ -498,19 +500,19 @@ private TestCommon() {
       }
       StringBuilder sb = new StringBuilder();
       String ValueHex = "0123456789ABCDEF";
-      sb.append("new byte[] { ");
+      sb.append ("new byte[] { ");
       for (int i = 0; i < bytes.length; ++i) {
         if (i > 0) {
-          sb.append(","); }
+          sb.append (","); }
         if ((bytes[i] & 0x80) != 0) {
-          sb.append("(byte)0x");
+          sb.append ("(byte)0x");
         } else {
-          sb.append("0x");
+          sb.append ("0x");
         }
-        sb.append(ValueHex.charAt((bytes[i] >> 4) & 0xf));
-        sb.append(ValueHex.charAt(bytes[i] & 0xf));
+        sb.append (ValueHex.charAt((bytes[i] >> 4) & 0xf));
+        sb.append (ValueHex.charAt(bytes[i] & 0xf));
       }
-      sb.append("}");
+      sb.append ("}");
       return sb.toString();
     }
 

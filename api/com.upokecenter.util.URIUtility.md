@@ -46,13 +46,13 @@ Contains utility methods for processing Uniform Resource Identifiers (URIs)
  Builds an internationalized resource identifier (IRI) from its components.
 * `static java.lang.String DirectoryPath​(java.lang.String uref)`<br>
  Extracts the scheme, the authority, and the path component (up to and
-  including the last "/" in the path if any) from the given URI or IRI,
-  using the IRIStrict parse mode to check the URI or IRI.
+  including the last "/" in the path if any) from the given URI or
+ IRI, using the IRIStrict parse mode to check the URI or IRI.
 * `static java.lang.String DirectoryPath​(java.lang.String uref,
              URIUtility.ParseMode parseMode)`<br>
  Extracts the scheme, the authority, and the path component (up to and
-  including the last "/" in the path if any) from the given URI or IRI,
-  using the given parse mode to check the URI or IRI.
+  including the last "/" in the path if any) from the given URI or
+  IRI, using the given parse mode to check the URI or IRI.
 * `static java.lang.String EncodeStringForURI​(java.lang.String s)`<br>
  Encodes characters other than "unreserved" characters for URIs.
 * `static java.lang.String EscapeURI​(java.lang.String s,
@@ -130,11 +130,12 @@ Checks a text string representing a URI or IRI and escapes characters it has
 
 * <code>mode</code> - Has the following meaning: 0 = Encode reserved code points, code
  points below U+0021, code points above U+007E, and square brackets
- within the authority component, and do the IRISurrogateLenient check.
- 1 = Encode code points above U+007E, and square brackets within the
- authority component, and do the IRIStrict check. 2 = Same as 1, except
- the check is IRISurrogateLenient. 3 = Same as 0, except that percent
- characters that begin illegal percent-encoding are also encoded.
+ within the authority component, and do the IRISurrogateLenient
+ check. 1 = Encode code points above U+007E, and square brackets
+ within the authority component, and do the IRIStrict check. 2 = Same
+ as 1, except the check is IRISurrogateLenient. 3 = Same as 0, except
+ that percent characters that begin illegal percent-encoding are also
+ encoded.
 
 **Returns:**
 
@@ -160,9 +161,9 @@ Determines whether the string is a valid IRI with a scheme component. This
 ### HasSchemeForURI
     public static boolean HasSchemeForURI​(java.lang.String refValue)
 Determines whether the string is a valid URI with a scheme component. This
- can be used to check for relative URI references. The following cases
- return true: <pre>http://example/z xx-x:mm example:/ww</pre> The
- following cases return false: <pre>x@y:/z /x/y/z example.xyz</pre> .
+ can be used to check for relative URI references. The following
+ cases return true: <pre>http://example/z xx-x:mm example:/ww</pre>
+ The following cases return false: <pre>x@y:/z /x/y/z example.xyz</pre> .
 
 **Parameters:**
 
@@ -190,8 +191,8 @@ Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
 ### PercentDecode
     public static java.lang.String PercentDecode​(java.lang.String str, int index, int endIndex)
 Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
- in the given portion of a string. Successive percent-encoded bytes are
- assumed to form characters in UTF-8.
+ in the given portion of a string. Successive percent-encoded bytes
+ are assumed to form characters in UTF-8.
 
 **Parameters:**
 
@@ -249,7 +250,7 @@ Determines whether the substring is a valid CURIE reference under RDFA 1.1.
 **Throws:**
 
 * <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
- than 0 or greater than <code>s</code> 's length, or <code>s</code> ' s length
+ than 0 or greater than <code>s</code> 's length, or <code>s</code> 's length
  minus <code>offset</code> is less than <code>length</code>.
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>s</code> is null.
@@ -324,7 +325,7 @@ Resolves a URI or IRI relative to another URI or IRI.
 * The resolved IRI, or null if <code>refValue</code> is null or is not a
  valid IRI. If <code>absoluteBase</code> is null or is not a valid IRI,
  returns refValue. Example: <code>
- http://example.com/my/path/dir/file.txt</code>.
+ [http://example.com/my/path/dir/file.txt</code>.](http://example.com/my/path/dir/file.txt</code>.)
 
 ### RelativeResolve
     public static java.lang.String RelativeResolve​(java.lang.String refValue, java.lang.String absoluteBase, URIUtility.ParseMode parseMode)
@@ -375,8 +376,8 @@ Parses an Internationalized Resource Identifier (IRI) reference under
     public static int[] SplitIRI​(java.lang.String s)
 Parses an Internationalized Resource Identifier (IRI) reference under
  RFC3987. If the IRI reference is syntactically valid, splits the
- string into its components and returns an array containing the indices
- into the components.
+ string into its components and returns an array containing the
+ indices into the components.
 
 **Parameters:**
 
@@ -390,15 +391,16 @@ Parses an Internationalized Resource Identifier (IRI) reference under
  identifier, respectively. The scheme, authority, query, and fragment
  identifier, if present, will each be given without the ending colon,
   the starting "//", the starting "?", and the starting "#",
- respectively. If a component is absent, both indices in that pair will
- be -1. If the string is null or is not a valid IRI, returns null.
+ respectively. If a component is absent, both indices in that pair
+ will be -1. If the string is null or is not a valid IRI, returns
+ null.
 
 ### SplitIRI
     public static int[] SplitIRI​(java.lang.String s, int offset, int length, URIUtility.ParseMode parseMode)
 Parses a substring that represents an Internationalized Resource Identifier
  (IRI) under RFC3987. If the IRI is syntactically valid, splits the
- string into its components and returns an array containing the indices
- into the components.
+ string into its components and returns an array containing the
+ indices into the components.
 
 **Parameters:**
 
@@ -416,19 +418,19 @@ Parses a substring that represents an Internationalized Resource Identifier
 **Returns:**
 
 * If the string is a valid IRI, returns an array of 10 integers. Each
- of the five pairs corresponds to the start and end index of the IRI's
- scheme, authority, path, query, or fragment component, respectively.
- The scheme, authority, query, and fragment components, if present,
-  will each be given without the ending colon, the starting "//", the
-  starting "?", and the starting "#", respectively. If a component is
- absent, both indices in that pair will be -1 (an index won't be less
- than 0 in any other case). If the string is null or is not a valid
- IRI, returns null.
+ of the five pairs corresponds to the start and end index of the
+ IRI's scheme, authority, path, query, or fragment component,
+ respectively. The scheme, authority, query, and fragment components,
+ if present, will each be given without the ending colon, the
+  starting "//", the starting "?", and the starting "#", respectively.
+ If a component is absent, both indices in that pair will be -1 (an
+ index won't be less than 0 in any other case). If the string is null
+ or is not a valid IRI, returns null.
 
 **Throws:**
 
 * <code>java.lang.IllegalArgumentException</code> - Either <code>offset</code> or <code>length</code> is less
- than 0 or greater than <code>s</code> 's length, or <code>s</code> ' s length
+ than 0 or greater than <code>s</code> 's length, or <code>s</code> 's length
  minus <code>offset</code> is less than <code>length</code>.
 
 * <code>java.lang.NullPointerException</code> - The parameter <code>s</code> is null.
@@ -436,8 +438,8 @@ Parses a substring that represents an Internationalized Resource Identifier
 ### SplitIRI
     public static int[] SplitIRI​(java.lang.String s, URIUtility.ParseMode parseMode)
 Parses an Internationalized Resource Identifier (IRI) reference under
- RFC3987. If the IRI is syntactically valid, splits the string into its
- components and returns an array containing the indices into the
+ RFC3987. If the IRI is syntactically valid, splits the string into
+ its components and returns an array containing the indices into the
  components.
 
 **Parameters:**
@@ -454,15 +456,16 @@ Parses an Internationalized Resource Identifier (IRI) reference under
  identifier, respectively. The scheme, authority, query, and fragment
  identifier, if present, will each be given without the ending colon,
   the starting "//", the starting "?", and the starting "#",
- respectively. If a component is absent, both indices in that pair will
- be -1. If the string is null or is not a valid IRI, returns null.
+ respectively. If a component is absent, both indices in that pair
+ will be -1. If the string is null or is not a valid IRI, returns
+ null.
 
 ### DirectoryPath
     public static java.lang.String DirectoryPath​(java.lang.String uref)
 Extracts the scheme, the authority, and the path component (up to and
-  including the last "/" in the path if any) from the given URI or IRI,
-  using the IRIStrict parse mode to check the URI or IRI. Any "./" or
-  "../" in the path is not condensed.
+  including the last "/" in the path if any) from the given URI or
+ IRI, using the IRIStrict parse mode to check the URI or IRI. Any
+  "./" or "../" in the path is not condensed.
 
 **Parameters:**
 
@@ -480,9 +483,9 @@ Extracts the scheme, the authority, and the path component (up to and
 ### DirectoryPath
     public static java.lang.String DirectoryPath​(java.lang.String uref, URIUtility.ParseMode parseMode)
 Extracts the scheme, the authority, and the path component (up to and
-  including the last "/" in the path if any) from the given URI or IRI,
-  using the given parse mode to check the URI or IRI. Any "./" or "../"
- in the path is not condensed.
+  including the last "/" in the path if any) from the given URI or
+  IRI, using the given parse mode to check the URI or IRI. Any "./" or
+  "../" in the path is not condensed.
 
 **Parameters:**
 
@@ -514,7 +517,7 @@ Resolves a URI or IRI relative to another URI or IRI, but only if the
 * The resolved IRI, or null if <code>refValue</code> is null or is not a
  valid IRI, or <code>refValue</code> if <code>absoluteBase</code> is null or an
  empty string, or null if <code>absoluteBase</code> is neither null nor
- empty and is not a valid IRI. Returns null instead if the resolved IRI
-  has no "." or ".." component in its path or if the resolved URI's
- directory path does not match that of <code>absoluteBase</code>. Example:
- <code>http://example.com/my/path/dir/file.txt</code>.
+ empty and is not a valid IRI. Returns null instead if the resolved
+  IRI has no "." or ".." component in its path or if the resolved
+ URI's directory path does not match that of <code>absoluteBase</code>.
+ Example: <code>http://example.com/my/path/dir/file.txt</code>.

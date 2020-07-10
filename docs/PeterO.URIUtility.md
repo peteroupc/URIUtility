@@ -29,22 +29,22 @@ Contains utility methods for processing Uniform Resource Identifiers (URIs) and 
 ### Member Summary
 * <code>[BuildIRI(string, string, string, string)](#BuildIRI_string_string_string_string)</code> - Builds an internationalized resource identifier (IRI) from its components.
 * <code>[DirectoryPath(string)](#DirectoryPath_string)</code> - Extracts the scheme, the authority, and the path component (up to and including the last "/" in the path if any) from the given URI or IRI, using the IRIStrict parse mode to check the URI or IRI.
-* <code>[DirectoryPath(string, PeterO.ParseMode)](#DirectoryPath_string_PeterO_ParseMode)</code> -
+* <code>[DirectoryPath(string, PeterO.URIUtility.ParseMode)](#DirectoryPath_string_PeterO_URIUtility_ParseMode)</code> - Extracts the scheme, the authority, and the path component (up to and including the last "/" in the path if any) from the given URI or IRI, using the given parse mode to check the URI or IRI.
 * <code>[EncodeStringForURI(string)](#EncodeStringForURI_string)</code> - Encodes characters other than "unreserved" characters for URIs.
 * <code>[EscapeURI(string, int)](#EscapeURI_string_int)</code> - Checks a text string representing a URI or IRI and escapes characters it has that can't appear in URIs or IRIs.
 * <code>[HasScheme(string)](#HasScheme_string)</code> - Determines whether the string is a valid IRI with a scheme component.
 * <code>[HasSchemeForURI(string)](#HasSchemeForURI_string)</code> - Determines whether the string is a valid URI with a scheme component.
 * <code>[IsValidCurieReference(string, int, int)](#IsValidCurieReference_string_int_int)</code> - Determines whether the substring is a valid CURIE reference under RDFA 1.
 * <code>[IsValidIRI(string)](#IsValidIRI_string)</code> - Returns whether a string is a valid IRI according to the IRIStrict parse mode.
-* <code>[IsValidIRI(string, PeterO.ParseMode)](#IsValidIRI_string_PeterO_ParseMode)</code> -
+* <code>[IsValidIRI(string, PeterO.URIUtility.ParseMode)](#IsValidIRI_string_PeterO_URIUtility_ParseMode)</code> - Returns whether a string is a valid IRI according to the given parse mode.
 * <code>[PercentDecode(string)](#PercentDecode_string)</code> - Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit) in the given string.
 * <code>[PercentDecode(string, int, int)](#PercentDecode_string_int_int)</code> - Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit) in the given portion of a string.
 * <code>[RelativeResolve(string, string)](#RelativeResolve_string_string)</code> - Resolves a URI or IRI relative to another URI or IRI.
-* <code>[RelativeResolve(string, string, PeterO.ParseMode)](#RelativeResolve_string_string_PeterO_ParseMode)</code> -
+* <code>[RelativeResolve(string, string, PeterO.URIUtility.ParseMode)](#RelativeResolve_string_string_PeterO_URIUtility_ParseMode)</code> - Resolves a URI or IRI relative to another URI or IRI.
 * <code>[RelativeResolveWithinBaseURI(string, string)](#RelativeResolveWithinBaseURI_string_string)</code> - Resolves a URI or IRI relative to another URI or IRI, but only if the resolved URI has no ".
 * <code>[SplitIRI(string)](#SplitIRI_string)</code> - Parses an Internationalized Resource Identifier (IRI) reference under RFC3987.
-* <code>[SplitIRI(string, int, int, PeterO.ParseMode)](#SplitIRI_string_int_int_PeterO_ParseMode)</code> -
-* <code>[SplitIRI(string, PeterO.ParseMode)](#SplitIRI_string_PeterO_ParseMode)</code> -
+* <code>[SplitIRI(string, int, int, PeterO.URIUtility.ParseMode)](#SplitIRI_string_int_int_PeterO_URIUtility_ParseMode)</code> - Parses a substring that represents an Internationalized Resource Identifier (IRI) under RFC3987.
+* <code>[SplitIRI(string, PeterO.URIUtility.ParseMode)](#SplitIRI_string_PeterO_URIUtility_ParseMode)</code> - Parses an Internationalized Resource Identifier (IRI) reference under RFC3987.
 * <code>[SplitIRIToStrings(string)](#SplitIRIToStrings_string)</code> - Parses an Internationalized Resource Identifier (IRI) reference under RFC3987.
 
 <a id="BuildIRI_string_string_string_string"></a>
@@ -99,6 +99,26 @@ The directory path of the URI or IRI. Returns null if  <i>uref</i>
  * System.ArgumentNullException:
 The parameter  <i>uref</i>
  is null.
+
+<a id="DirectoryPath_string_PeterO_URIUtility_ParseMode"></a>
+### DirectoryPath
+
+    public static string DirectoryPath(
+        string uref,
+        PeterO.URIUtility.ParseMode parseMode);
+
+Extracts the scheme, the authority, and the path component (up to and including the last "/" in the path if any) from the given URI or IRI, using the given parse mode to check the URI or IRI. Any "./" or "../" in the path is not condensed.
+
+<b>Parameters:</b>
+
+ * <i>uref</i>: A text string representing a URI or IRI. Can be null.
+
+ * <i>parseMode</i>: The parse mode to use to check the URI or IRI.
+
+<b>Return Value:</b>
+
+The directory path of the URI or IRI. Returns null if  <i>uref</i>
+ is null or not a valid URI or IRI.
 
 <a id="EncodeStringForURI_string"></a>
 ### EncodeStringForURI
@@ -219,7 +239,7 @@ Either  <i>offset</i>
  or  <i>length</i>
  is less than 0 or greater than  <i>s</i>
  's length, or  <i>s</i>
- ' s length minus  <i>offset</i>
+ 's length minus  <i>offset</i>
  is less than  <i>length</i>
 .
 
@@ -238,6 +258,25 @@ Returns whether a string is a valid IRI according to the IRIStrict parse mode.
 <b>Parameters:</b>
 
  * <i>s</i>: A text string. Can be null.
+
+<b>Return Value:</b>
+
+True if the string is not null and is a valid IRI; otherwise, false.
+
+<a id="IsValidIRI_string_PeterO_URIUtility_ParseMode"></a>
+### IsValidIRI
+
+    public static bool IsValidIRI(
+        string s,
+        PeterO.URIUtility.ParseMode parseMode);
+
+Returns whether a string is a valid IRI according to the given parse mode.
+
+<b>Parameters:</b>
+
+ * <i>s</i>: A text string. Can be null.
+
+ * <i>parseMode</i>: The parse mode to use when checking for a valid IRI.
 
 <b>Return Value:</b>
 
@@ -305,6 +344,39 @@ The resolved IRI, or null if  <i>refValue</i>
  is null or is not a valid IRI. If  <i>absoluteBase</i>
  is null or is not a valid IRI, returns refValue. Example:  `http://example.com/my/path/dir/file.txt` .
 
+<a id="RelativeResolve_string_string_PeterO_URIUtility_ParseMode"></a>
+### RelativeResolve
+
+    public static string RelativeResolve(
+        string refValue,
+        string absoluteBase,
+        PeterO.URIUtility.ParseMode parseMode);
+
+Resolves a URI or IRI relative to another URI or IRI.
+
+<b>Parameters:</b>
+
+ * <i>refValue</i>: A string representing a URI or IRI reference. Example:  `dir/file.txt` . Can be null.
+
+ * <i>absoluteBase</i>: A string representing an absolute URI or IRI reference. Can be null. Example:  `http://example.com/my/path/` .
+
+ * <i>parseMode</i>: Parse mode that specifies whether certain characters are allowed when parsing IRIs and URIs.
+
+<b>Return Value:</b>
+
+The resolved IRI, or null if  <i>refValue</i>
+ is null or is not a valid IRI. If  <i>absoluteBase</i>
+ is null or is not a valid IRI, returns refValue.
+
+<b>Exceptions:</b>
+
+ * System.ArgumentNullException:
+The parameter  <i>refValue</i>
+ or  <i>absoluteBase</i>
+ or  <i>refValue</i>
+ or  <i>refValue</i>
+ is null.
+
 <a id="RelativeResolveWithinBaseURI_string_string"></a>
 ### RelativeResolveWithinBaseURI
 
@@ -340,6 +412,66 @@ Parses an Internationalized Resource Identifier (IRI) reference under RFC3987. I
 <b>Parameters:</b>
 
  * <i>s</i>: A string that contains an IRI. Can be null.
+
+<b>Return Value:</b>
+
+If the string is a valid IRI reference, returns an array of 10 integers. Each of the five pairs corresponds to the start and end index of the IRI's scheme, authority, path, query, or fragment identifier, respectively. The scheme, authority, query, and fragment identifier, if present, will each be given without the ending colon, the starting "//", the starting "?", and the starting "#", respectively. If a component is absent, both indices in that pair will be -1. If the string is null or is not a valid IRI, returns null.
+
+<a id="SplitIRI_string_int_int_PeterO_URIUtility_ParseMode"></a>
+### SplitIRI
+
+    public static int[] SplitIRI(
+        string s,
+        int offset,
+        int length,
+        PeterO.URIUtility.ParseMode parseMode);
+
+Parses a substring that represents an Internationalized Resource Identifier (IRI) under RFC3987. If the IRI is syntactically valid, splits the string into its components and returns an array containing the indices into the components.
+
+<b>Parameters:</b>
+
+ * <i>s</i>: A string that contains an IRI. Can be null.
+
+ * <i>offset</i>: An index starting at 0 showing where the desired portion of "s" begins.
+
+ * <i>length</i>: The length of the desired portion of "s" (but not more than "s" 's length).
+
+ * <i>parseMode</i>: Parse mode that specifies whether certain characters are allowed when parsing IRIs and URIs.
+
+<b>Return Value:</b>
+
+If the string is a valid IRI, returns an array of 10 integers. Each of the five pairs corresponds to the start and end index of the IRI's scheme, authority, path, query, or fragment component, respectively. The scheme, authority, query, and fragment components, if present, will each be given without the ending colon, the starting "//", the starting "?", and the starting "#", respectively. If a component is absent, both indices in that pair will be -1 (an index won't be less than 0 in any other case). If the string is null or is not a valid IRI, returns null.
+
+<b>Exceptions:</b>
+
+ * System.ArgumentException:
+Either  <i>offset</i>
+ or  <i>length</i>
+ is less than 0 or greater than  <i>s</i>
+ 's length, or  <i>s</i>
+ 's length minus  <i>offset</i>
+ is less than  <i>length</i>
+.
+
+ * System.ArgumentNullException:
+The parameter  <i>s</i>
+ is null.
+
+<a id="SplitIRI_string_PeterO_URIUtility_ParseMode"></a>
+### SplitIRI
+
+    public static int[] SplitIRI(
+        string s,
+        PeterO.URIUtility.ParseMode parseMode);
+
+Parses an Internationalized Resource Identifier (IRI) reference under RFC3987. If the IRI is syntactically valid, splits the string into its components and returns an array containing the indices into the components.
+
+<b>Parameters:</b>
+
+ * <i>s</i>: A string representing an IRI. Can be null.
+
+ * <i>parseMode</i>: The parameter  <i>parseMode</i>
+ is a ParseMode object.
 
 <b>Return Value:</b>
 

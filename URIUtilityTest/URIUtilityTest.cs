@@ -9,18 +9,18 @@ namespace Test {
   public class URIUtilityTest {
     public static bool SplitIRIFails(string iri, bool expectedNonNull) {
       return expectedNonNull ? URIUtility.SplitIRI(iri) == null :
-         URIUtility.SplitIRI(iri) != null;
+        URIUtility.SplitIRI(iri) != null;
     }
 
     [Test]
     public void TestIPv6() {
       var resources = new AppResources("Resources");
-      string[] cases = ParseJSONStringArray(
-         resources.GetString("ipv6parse"));
+      string[] cases = ParseJSONStringArray (
+          resources.GetString("ipv6parse"));
       for (var i = 0; i < cases.Length; i += 2) {
-        if (SplitIRIFails(
-          cases[i],
-          cases[i + 1].Equals("1", StringComparison.Ordinal))) {
+        if (SplitIRIFails (
+            cases[i],
+            cases[i + 1].Equals("1", StringComparison.Ordinal))) {
           Assert.Fail(cases[i] + " " + cases[i + 1]);
         }
       }
@@ -59,42 +59,42 @@ namespace Test {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           0);
-        var stringTemp2 = (string)URIUtility.EscapeURI(
-          (string)URIUtility.EscapeURI(s, 0),
-          0);
+        var stringTemp2 = (string)URIUtility.EscapeURI (
+  (string)URIUtility.EscapeURI(s, 0),
+  0);
         Assert.AreEqual(stringTemp, stringTemp2);
       }
       {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           1);
-        var stringTemp2 = (string)URIUtility.EscapeURI(
-          (string)URIUtility.EscapeURI(s, 1),
-          1);
+        var stringTemp2 = (string)URIUtility.EscapeURI (
+  (string)URIUtility.EscapeURI(s, 1),
+  1);
         Assert.AreEqual(stringTemp, stringTemp2);
       }
       {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           2);
-        var stringTemp2 = (string)URIUtility.EscapeURI(
-          (string)URIUtility.EscapeURI(s, 2),
-          2);
+        var stringTemp2 = (string)URIUtility.EscapeURI (
+  (string)URIUtility.EscapeURI(s, 2),
+  2);
         Assert.AreEqual(stringTemp, stringTemp2);
       }
       {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           3);
-        var stringTemp2 = (string)URIUtility.EscapeURI(
-          (string)URIUtility.EscapeURI(s, 3),
-          3);
+        var stringTemp2 = (string)URIUtility.EscapeURI (
+  (string)URIUtility.EscapeURI(s, 3),
+  3);
         Assert.AreEqual(stringTemp, stringTemp2);
       }
     }
 
-    private static void AssertIdempotencyNeg(
-  string s) {
+    private static void AssertIdempotencyNeg (
+      string s) {
       if ((bool)URIUtility.IsValidIRI(s)) {
         Assert.Fail(s);
       }
@@ -103,41 +103,44 @@ namespace Test {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           0);
-        var stringTemp2 = (string)URIUtility.EscapeURI(
-          (string)URIUtility.EscapeURI(s, 0),
-          0);
+        var stringTemp2 = (string)URIUtility.EscapeURI (
+  (string)URIUtility.EscapeURI(s, 0),
+  0);
         Assert.AreEqual(stringTemp, stringTemp2);
       }
       {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           1);
-        var stringTemp2 = (string)URIUtility.EscapeURI(
-          (string)URIUtility.EscapeURI(s, 1),
-          1);
+        var stringTemp2 = (string)URIUtility.EscapeURI (
+  (string)URIUtility.EscapeURI(s, 1),
+  1);
         Assert.AreEqual(stringTemp, stringTemp2);
       }
       {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           2);
-        var stringTemp2 = (string)URIUtility.EscapeURI(
-          (string)URIUtility.EscapeURI(s, 2),
-          2);
+        var stringTemp2 = (string)URIUtility.EscapeURI (
+  (string)URIUtility.EscapeURI(s, 2),
+  2);
         Assert.AreEqual(stringTemp, stringTemp2);
       }
       {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           3);
-        var stringTemp2 = (string)URIUtility.EscapeURI(
-          (string)URIUtility.EscapeURI(s, 3),
-          3);
+        var stringTemp2 = (string)URIUtility.EscapeURI (
+  (string)URIUtility.EscapeURI(s, 3),
+  3);
         Assert.AreEqual(stringTemp, stringTemp2);
       }
     }
 
-    private static void AssertResolve(String src, String baseuri, String dest) {
+    private static void AssertResolve(
+      String src,
+      String baseuri,
+      String dest) {
       AssertIdempotency(src);
       AssertIdempotency(baseuri);
       AssertIdempotency(dest);
@@ -318,15 +321,15 @@ namespace Test {
     /// <exception cref='ArgumentNullException'>The parameter <paramref
     /// name='str'/> is null.</exception>
     public static string[] ParseJSONStringArray(string str) {
-       if (str == null) {
-         throw new ArgumentNullException(nameof(str));
-       }
-       var endPos = new int[] { 0 };
-       string[] ret = ParseJSONStringArray(str, endPos);
-       if (endPos[0] != str.Length) {
-         throw new InvalidOperationException("Invalid JSON");
-       }
-       return ret;
+      if (str == null) {
+        throw new ArgumentNullException(nameof(str));
+      }
+      var endPos = new int[] { 0 };
+      string[] ret = ParseJSONStringArray(str, endPos);
+      if (endPos[0] != str.Length) {
+        throw new InvalidOperationException("Invalid JSON");
+      }
+      return ret;
     }
     public static string[] ParseJSONStringArray(string str, int[] endPos) {
       if (str == null) {
@@ -340,26 +343,26 @@ namespace Test {
       var list = new List<string>();
       var sb = new StringBuilder();
       while (i < str.Length && (
-         str[i] == 0x20 || str[i] == 0x0d || str[i] == 0x0a ||
-         str[i] == 0x09)) {
+          str[i] == 0x20 || str[i] == 0x0d || str[i] == 0x0a ||
+          str[i] == 0x09)) {
         ++i;
       }
       if (i >= str.Length || str[i] != '[') {
         throw new InvalidOperationException("Invalid JSON: " +
-str.Substring(i));
+          str.Substring(i));
       }
       ++i;
       var endValue = false;
       while (true) {
         while (i < str.Length && (
-           str[i] == 0x20 || str[i] == 0x0d || str[i] == 0x0a ||
-           str[i] == 0x09)) {
+            str[i] == 0x20 || str[i] == 0x0d || str[i] == 0x0a ||
+            str[i] == 0x09)) {
           ++i;
         }
         if (i >= str.Length || (
-          str[i] != ']' && str[i] != '"' && str[i] != 0x2c)) {
+            str[i] != ']' && str[i] != '"' && str[i] != 0x2c)) {
           throw new InvalidOperationException("Invalid JSON:" +
-"\u0020" + str.Substring(i));
+            "\u0020" + str.Substring(i));
         }
         var si = (int)str[i];
         switch (si) {
@@ -367,8 +370,8 @@ str.Substring(i));
             // right square bracket
             ++i;
             while (i < str.Length && (
-              str[i] == 0x20 || str[i] == 0x0d || str[i] == 0x0a || str[i]
-              == 0x09)) {
+                str[i] == 0x20 || str[i] == 0x0d || str[i] == 0x0a || str[i]
+                == 0x09)) {
               ++i;
             }
             endPos[0] = i;
@@ -377,7 +380,7 @@ str.Substring(i));
             // comma
             if (!endValue) {
               throw new InvalidOperationException("Invalid JSON:" +
-"\u0020" + str.Substring(i));
+                "\u0020" + str.Substring(i));
             }
             ++i;
             endValue = false;
@@ -388,7 +391,7 @@ str.Substring(i));
             i = ParseJSONString(str, i + 1, sb);
             if (i < 0) {
               throw new InvalidOperationException("Invalid JSON: bad string:" +
-"\u0020" + str.Substring(j));
+                "\u0020" + str.Substring(j));
             }
             endValue = true;
             list.Add(sb.ToString());
@@ -413,14 +416,14 @@ str.Substring(i));
       string str,
       int index,
       StringBuilder sb) {
-#if DEBUG
+      #if DEBUG
       if (str == null) {
         throw new ArgumentNullException(nameof(str));
       }
       if (sb == null) {
         throw new ArgumentNullException(nameof(sb));
       }
-#endif
+      #endif
       int c;
       sb.Remove(0, sb.Length);
       while (index < str.Length) {
@@ -466,81 +469,81 @@ str.Substring(i));
                 sb.Append('\t');
                 break;
               case 'u': { // Unicode escape
-                  c = 0;
-                  // Consists of 4 hex digits
-                  for (var i = 0; i < 4; ++i) {
-                    int ch = index >= str.Length ? -1 : str[index++];
-                    if (ch >= '0' && ch <= '9') {
-                      c <<= 4;
-                      c |= ch - '0';
-                    } else if (ch >= 'A' && ch <= 'F') {
-                      c <<= 4;
-                      c |= ch + 10 - 'A';
-                    } else if (ch >= 'a' && ch <= 'f') {
-                      c <<= 4;
-                      c |= ch + 10 - 'a';
-                    } else {
-                      return -1;
-                    }
-                  }
-                  if ((c & 0xf800) != 0xd800) {
-                    // Non-surrogate
-                    sb.Append((char)c);
-                  } else if ((c & 0xfc00) == 0xd800) {
-                    int ch = index >= str.Length ? -1 : str[index++];
-                    if (ch != '\\' ||
-                       (index >= str.Length ? -1 : str[index++]) != 'u') {
-                      return -1;
-                    }
-                    var c2 = 0;
-                    for (var i = 0; i < 4; ++i) {
-                      ch = index >= str.Length ? -1 : str[index++];
-                      if (ch >= '0' && ch <= '9') {
-                        c2 <<= 4;
-                        c2 |= ch - '0';
-                      } else if (ch >= 'A' && ch <= 'F') {
-                        c2 <<= 4;
-                        c2 |= ch + 10 - 'A';
-                      } else if (ch >= 'a' && ch <= 'f') {
-                        c2 <<= 4;
-                        c2 |= ch + 10 - 'a';
-                      } else {
-                        return -1;
-                      }
-                    }
-                    if ((c2 & 0xfc00) != 0xdc00) {
-                      return -1;
-                    } else {
-                      sb.Append((char)c);
-                      sb.Append((char)c2);
-                    }
+                c = 0;
+                // Consists of 4 hex digits
+                for (var i = 0; i < 4; ++i) {
+                  int ch = index >= str.Length ? -1 : str[index++];
+                  if (ch >= '0' && ch <= '9') {
+                    c <<= 4;
+                    c |= ch - '0';
+                  } else if (ch >= 'A' && ch <= 'F') {
+                    c <<= 4;
+                    c |= ch + 10 - 'A';
+                  } else if (ch >= 'a' && ch <= 'f') {
+                    c <<= 4;
+                    c |= ch + 10 - 'a';
                   } else {
                     return -1;
                   }
-                  break;
                 }
-              default: {
-                  // NOTE: Includes surrogate code
-                  // units
+                if ((c & 0xf800) != 0xd800) {
+                  // Non-surrogate
+                  sb.Append((char)c);
+                } else if ((c & 0xfc00) == 0xd800) {
+                  int ch = index >= str.Length ? -1 : str[index++];
+                  if (ch != '\\' ||
+                    (index >= str.Length ? -1 : str[index++]) != 'u') {
+                    return -1;
+                  }
+                  var c2 = 0;
+                  for (var i = 0; i < 4; ++i) {
+                    ch = index >= str.Length ? -1 : str[index++];
+                    if (ch >= '0' && ch <= '9') {
+                      c2 <<= 4;
+                      c2 |= ch - '0';
+                    } else if (ch >= 'A' && ch <= 'F') {
+                      c2 <<= 4;
+                      c2 |= ch + 10 - 'A';
+                    } else if (ch >= 'a' && ch <= 'f') {
+                      c2 <<= 4;
+                      c2 |= ch + 10 - 'a';
+                    } else {
+                      return -1;
+                    }
+                  }
+                  if ((c2 & 0xfc00) != 0xdc00) {
+                    return -1;
+                  } else {
+                    sb.Append((char)c);
+                    sb.Append((char)c2);
+                  }
+                } else {
                   return -1;
                 }
+                break;
+              }
+              default: {
+                // NOTE: Includes surrogate code
+                // units
+                return -1;
+              }
             }
             break;
           case 0x22: // double quote
             return index;
           default: {
-              // NOTE: Assumes the character reader
-              // throws an error on finding illegal surrogate
-              // pairs in the string or invalid encoding
-              // in the stream
-              if ((c >> 16) == 0) {
-                sb.Append((char)c);
-              } else {
-                sb.Append((char)((((c - 0x10000) >> 10) & 0x3ff) | 0xd800));
-                sb.Append((char)(((c - 0x10000) & 0x3ff) | 0xdc00));
-              }
-              break;
+            // NOTE: Assumes the character reader
+            // throws an error on finding illegal surrogate
+            // pairs in the string or invalid encoding
+            // in the stream
+            if ((c >> 16) == 0) {
+              sb.Append((char)c);
+            } else {
+              sb.Append((char)((((c - 0x10000) >> 10) & 0x3ff) | 0xd800));
+              sb.Append((char)(((c - 0x10000) & 0x3ff) | 0xdc00));
             }
+            break;
+          }
         }
       }
       return -1;

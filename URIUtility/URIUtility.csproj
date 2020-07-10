@@ -15,7 +15,7 @@ Version 1.0:
 
 - First release
     </PackageReleaseNotes>
-    <Copyright>Written by Peter O. in 2019.  Any copyright is released to the Public Domain.</Copyright>
+    <Copyright>Written by Peter O.  Any copyright is released to the Public Domain.</Copyright>
     <PackOnBuild>true</PackOnBuild>
     <Version>1.0.1</Version>
     <Summary>A portable library for .NET for processing URIs (uniform resource identifiers) and IRIs (internationalized resource identifiers).</Summary>
@@ -24,13 +24,13 @@ Version 1.0:
     <AssemblyOriginatorKeyFile>PeterO.snk</AssemblyOriginatorKeyFile>
   <CodeAnalysisRuleSet>rules.ruleset</CodeAnalysisRuleSet></PropertyGroup>
 
-  <PropertyGroup Condition=' &apos;$(Configuration)|$(Platform)&apos; == &apos;Debug|AnyCPU&apos; '>
+  <PropertyGroup Condition=' &apos;$(Configuration)&apos;==&apos;Debug&apos; '>
     <DocumentationFile>bin\Debug\netstandard1.0\URIUtility.xml</DocumentationFile>
   <CodeAnalysisRuleSet>rules.ruleset</CodeAnalysisRuleSet></PropertyGroup>
-  <PropertyGroup Condition=' &apos;$(Configuration)|$(Platform)&apos; == &apos;Release|AnyCPU&apos; '>
+  <PropertyGroup Condition=' &apos;$(Configuration)&apos;==&apos;Release&apos; '>
     <DebugType/>
     <DocumentationFile>bin\Release\netstandard1.0\URIUtility.xml</DocumentationFile>
   <CodeAnalysisRuleSet>rules.ruleset</CodeAnalysisRuleSet></PropertyGroup>
   <ItemGroup>
-  <PackageReference Include='StyleCop.Analyzers' PrivateAssets='All' Version='1.1.118'/><AdditionalFiles Include='stylecop.json'/><AdditionalFiles Include='rules.ruleset'/><PackageReference Include='Microsoft.CodeAnalysis.FxCopAnalyzers' PrivateAssets='All' Version='2.9.4'/></ItemGroup>
+  <PackageReference Include='StyleCop.Analyzers' PrivateAssets='All' Version='1.2.0-beta.164'/><AdditionalFiles Include='stylecop.json'/><AdditionalFiles Include='rules.ruleset'/><PackageReference Include='Microsoft.CodeAnalysis.FxCopAnalyzers' PrivateAssets='All' Version='3.0.0'/></ItemGroup>
    </Project>

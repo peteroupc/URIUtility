@@ -196,7 +196,7 @@
             <returns><c>true</c> if the substring is a valid CURIE reference
             under RDFA 1; otherwise, <c>false</c>. Returns false if <paramref name='s'/> is null.</returns>
             <exception cref='ArgumentException'>Either <paramref name='offset'/> or <paramref name='length'/> is less than 0 or
-            greater than <paramref name='s'/> 's length, or <paramref name='s'/> ' s length minus <paramref name='offset'/> is less than
+            greater than <paramref name='s'/> 's length, or <paramref name='s'/> 's length minus <paramref name='offset'/> is less than
             <paramref name='length'/>.</exception>
             <exception cref='ArgumentNullException'>The parameter <paramref name='s'/> is null.</exception>
 
@@ -214,8 +214,8 @@
             <summary>Returns whether a string is a valid IRI according to the
             given parse mode.</summary>
             <param name='s'>A text string. Can be null.</param>
-            <param name='mode'>The parse mode to use when checking for a valid
-            IRI.</param>
+            <param name='parseMode'>The parse mode to use when checking for a
+            valid IRI.</param>
             <returns><c>true</c> if the string is not null and is a valid IRI; otherwise, <c>false</c>.</returns>
 
 </doc>
@@ -410,7 +410,7 @@
             will be -1 (an index won't be less than 0 in any other case). If
             the string is null or is not a valid IRI, returns null.</returns>
             <exception cref='ArgumentException'>Either <paramref name='offset'/> or <paramref name='length'/> is less than 0 or
-            greater than <paramref name='s'/> 's length, or <paramref name='s'/> ' s length minus <paramref name='offset'/> is less than
+            greater than <paramref name='s'/> 's length, or <paramref name='s'/> 's length minus <paramref name='offset'/> is less than
             <paramref name='length'/>.</exception>
             <exception cref='ArgumentNullException'>The parameter <paramref name='s'/> is null.</exception>
 

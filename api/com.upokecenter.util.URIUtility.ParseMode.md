@@ -8,15 +8,18 @@ Specifies whether certain characters are allowed when parsing IRIs and URIs.
 
 * `IRILenient`<br>
  The rules only check for the appropriate delimiters when splitting the path,
- without checking if all the characters in each component are valid.
+ without checking if all the characters in each component are
+ valid.
 * `IRIStrict`<br>
  The rules follow the syntax for parsing IRIs.
 * `IRISurrogateLenient`<br>
  The rules only check for the appropriate delimiters when splitting the path,
- without checking if all the characters in each component are valid.
+ without checking if all the characters in each component are
+ valid.
 * `URILenient`<br>
  The rules only check for the appropriate delimiters when splitting the path,
- without checking if all the characters in each component are valid.
+ without checking if all the characters in each component are
+ valid.
 * `URIStrict`<br>
  The rules follow the syntax for parsing IRIs, except that code points
  outside the Basic Latin range (U+0000 to U+007F) are not allowed.
@@ -50,8 +53,9 @@ the order they are declared.
 ### IRIStrict
     public static final URIUtility.ParseMode IRIStrict
 The rules follow the syntax for parsing IRIs. In particular, many code
- points outside the Basic Latin range (U+0000 to U+007F) are allowed.
- Strings with unpaired surrogate code points are considered invalid.
+ points outside the Basic Latin range (U+0000 to U+007F) are
+ allowed. Strings with unpaired surrogate code points are
+ considered invalid.
 ### URIStrict
     public static final URIUtility.ParseMode URIStrict
 The rules follow the syntax for parsing IRIs, except that code points
@@ -59,20 +63,20 @@ The rules follow the syntax for parsing IRIs, except that code points
 ### IRILenient
     public static final URIUtility.ParseMode IRILenient
 The rules only check for the appropriate delimiters when splitting the path,
- without checking if all the characters in each component are valid.
- Even with this mode, strings with unpaired surrogate code points are
- considered invalid.
+ without checking if all the characters in each component are
+ valid. Even with this mode, strings with unpaired surrogate code
+ points are considered invalid.
 ### URILenient
     public static final URIUtility.ParseMode URILenient
 The rules only check for the appropriate delimiters when splitting the path,
- without checking if all the characters in each component are valid.
- Code points outside the Basic Latin range (U+0000 to U+007F) are not
- allowed.
+ without checking if all the characters in each component are
+ valid. Code points outside the Basic Latin range (U+0000 to
+ U+007F) are not allowed.
 ### IRISurrogateLenient
     public static final URIUtility.ParseMode IRISurrogateLenient
 The rules only check for the appropriate delimiters when splitting the path,
- without checking if all the characters in each component are valid.
- Unpaired surrogate code points are treated as though they were
- replacement characters instead for the purposes of these rules, so
- that strings with those code points are not considered invalid
- strings.
+ without checking if all the characters in each component are
+ valid. Unpaired surrogate code points are treated as though they
+ were replacement characters instead for the purposes of these
+ rules, so that strings with those code points are not considered
+ invalid strings.
