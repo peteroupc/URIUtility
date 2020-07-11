@@ -15,10 +15,10 @@ namespace Test {
     [Test]
     public void TestIPv6() {
       var resources = new AppResources("Resources");
-      string[] cases = ParseJSONStringArray (
+      string[] cases = ParseJSONStringArray(
           resources.GetString("ipv6parse"));
       for (var i = 0; i < cases.Length; i += 2) {
-        if (SplitIRIFails (
+        if (SplitIRIFails(
             cases[i],
             cases[i + 1].Equals("1", StringComparison.Ordinal))) {
           Assert.Fail(cases[i] + " " + cases[i + 1]);
@@ -59,7 +59,7 @@ namespace Test {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           0);
-        var stringTemp2 = (string)URIUtility.EscapeURI (
+        var stringTemp2 = (string)URIUtility.EscapeURI(
   (string)URIUtility.EscapeURI(s, 0),
   0);
         Assert.AreEqual(stringTemp, stringTemp2);
@@ -68,7 +68,7 @@ namespace Test {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           1);
-        var stringTemp2 = (string)URIUtility.EscapeURI (
+        var stringTemp2 = (string)URIUtility.EscapeURI(
   (string)URIUtility.EscapeURI(s, 1),
   1);
         Assert.AreEqual(stringTemp, stringTemp2);
@@ -77,7 +77,7 @@ namespace Test {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           2);
-        var stringTemp2 = (string)URIUtility.EscapeURI (
+        var stringTemp2 = (string)URIUtility.EscapeURI(
   (string)URIUtility.EscapeURI(s, 2),
   2);
         Assert.AreEqual(stringTemp, stringTemp2);
@@ -86,14 +86,14 @@ namespace Test {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           3);
-        var stringTemp2 = (string)URIUtility.EscapeURI (
+        var stringTemp2 = (string)URIUtility.EscapeURI(
   (string)URIUtility.EscapeURI(s, 3),
   3);
         Assert.AreEqual(stringTemp, stringTemp2);
       }
     }
 
-    private static void AssertIdempotencyNeg (
+    private static void AssertIdempotencyNeg(
       string s) {
       if ((bool)URIUtility.IsValidIRI(s)) {
         Assert.Fail(s);
@@ -103,7 +103,7 @@ namespace Test {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           0);
-        var stringTemp2 = (string)URIUtility.EscapeURI (
+        var stringTemp2 = (string)URIUtility.EscapeURI(
   (string)URIUtility.EscapeURI(s, 0),
   0);
         Assert.AreEqual(stringTemp, stringTemp2);
@@ -112,7 +112,7 @@ namespace Test {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           1);
-        var stringTemp2 = (string)URIUtility.EscapeURI (
+        var stringTemp2 = (string)URIUtility.EscapeURI(
   (string)URIUtility.EscapeURI(s, 1),
   1);
         Assert.AreEqual(stringTemp, stringTemp2);
@@ -121,7 +121,7 @@ namespace Test {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           2);
-        var stringTemp2 = (string)URIUtility.EscapeURI (
+        var stringTemp2 = (string)URIUtility.EscapeURI(
   (string)URIUtility.EscapeURI(s, 2),
   2);
         Assert.AreEqual(stringTemp, stringTemp2);
@@ -130,7 +130,7 @@ namespace Test {
         var stringTemp = (string)URIUtility.EscapeURI(
           s,
           3);
-        var stringTemp2 = (string)URIUtility.EscapeURI (
+        var stringTemp2 = (string)URIUtility.EscapeURI(
   (string)URIUtility.EscapeURI(s, 3),
   3);
         Assert.AreEqual(stringTemp, stringTemp2);
