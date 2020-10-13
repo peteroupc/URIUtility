@@ -32,5 +32,5 @@ Version 1.0:
     <DocumentationFile>bin\Release\netstandard1.0\URIUtility.xml</DocumentationFile>
   <CodeAnalysisRuleSet>rules.ruleset</CodeAnalysisRuleSet></PropertyGroup>
   <ItemGroup>
-  <PackageReference Include='StyleCop.Analyzers' PrivateAssets='All' Version='1.2.0-beta.164'/><AdditionalFiles Include='stylecop.json'/><AdditionalFiles Include='rules.ruleset'/><PackageReference Include='Microsoft.CodeAnalysis.FxCopAnalyzers' PrivateAssets='All' Version='3.0.0'/></ItemGroup>
+  <PackageReference Include='StyleCop.Analyzers' PrivateAssets='All' Version='1.2.0-beta.205'/><AdditionalFiles Include='stylecop.json'/><AdditionalFiles Include='rules.ruleset'/><PackageReference Include='Microsoft.CodeAnalysis.FxCopAnalyzers' PrivateAssets='All' Version='3.3.0'/></ItemGroup>
    </Project>
