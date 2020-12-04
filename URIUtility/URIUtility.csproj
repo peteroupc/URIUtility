@@ -15,7 +15,7 @@ Version 1.0:
 
 - First release
     </PackageReleaseNotes>
-    <Copyright>Written by Peter O.  Any copyright is released to the Public Domain.</Copyright>
+    <Copyright>Written by Peter O.  Any copyright to this work is released to the Public Domain.</Copyright>
     <PackOnBuild>true</PackOnBuild>
     <Version>1.0.1</Version>
     <Summary>A portable library for .NET for processing URIs (uniform resource identifiers) and IRIs (internationalized resource identifiers).</Summary>
