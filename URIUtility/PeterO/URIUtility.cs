@@ -349,6 +349,22 @@ namespace PeterO {
     }
 
     /// <summary>Decodes percent-encoding (of the form "%XX" where X is a
+    /// hexadecimal digit) in the given string, with an option to fail
+    /// rather than replace invalid encoding. Successive percent-encoded
+    /// bytes are assumed to form characters in UTF-8.</summary>
+    /// <param name='str'>A string that may contain percent encoding. May
+    /// be null.</param>
+    /// <param name='replace'>Indicates whether to replace invalid encoding
+    /// with U+FFFD, the replacement character. If false, returns null if
+    /// invalid encoding is found.</param>
+    /// <returns>The string in which percent-encoding was decoded. Returns
+    /// null if "str" is null or if "replace" is true and the string has an
+    /// invalid encoding.</returns>
+    public static string PercentDecode(string str, bool replace) {
+      return (str == null) ? null : PercentDecode(str, 0, str.Length, replace);
+    }
+
+    /// <summary>Decodes percent-encoding (of the form "%XX" where X is a
     /// hexadecimal digit) in the given portion of a string. Successive
     /// percent-encoded bytes are assumed to form characters in
     /// UTF-8.</summary>
@@ -361,14 +377,43 @@ namespace PeterO {
     /// before this index is the last character.</param>
     /// <returns>The portion of the given string in which percent-encoding
     /// was decoded. Returns null if <paramref name='str'/> is
-    /// ull.</returns>
+    /// null.</returns>
     public static string PercentDecode(string str, int index, int endIndex) {
+       return PercentDecode(str, index, endIndex, true);
+    }
+
+    /// <summary>Decodes percent-encoding (of the form "%XX" where X is a
+    /// hexadecimal digit) in the given portion of a string, with an option
+    /// to fail rather than replace invalid encoding. Successive
+    /// percent-encoded bytes are assumed to form characters in
+    /// UTF-8.</summary>
+    /// <param name='str'>A string a portion of which may contain percent
+    /// encoding. May be null.</param>
+    /// <param name='index'>Index starting at 0 showing where the desired
+    /// portion of <paramref name='str'/> begins.</param>
+    /// <param name='endIndex'>Index starting at 0 showing where the
+    /// desired portion of <paramref name='str'/> ends. The character
+    /// before this index is the last character.</param>
+    /// <param name='replace'>Indicates whether to replace invalid encoding
+    /// with U+FFFD, the replacement character. If false, returns null if
+    /// invalid encoding is found.</param>
+    /// <returns>The portion of the given string in which percent-encoding
+    /// was decoded. Returns null if <paramref name='str'/> is null or if
+    /// "replace" is true and the portion of the string has an invalid
+    /// encoding.</returns>
+    /// <exception cref='ArgumentException'>doesn't satisfy
+    /// lastIndex&amp;gt;= index.</exception>
+    public static string PercentDecode(
+      string str,
+      int index,
+      int endIndex,
+      bool replace) {
       if (str == null) {
         return null;
       }
       // Quick check
       var quickCheck = true;
-      var lastIndex = 0;
+      var lastIndex = index;
       int i = index;
       for (; i < endIndex; ++i) {
         if (str[i] >= 0xd800 || str[i] == '%') {
@@ -380,8 +425,14 @@ namespace PeterO {
       if (quickCheck) {
         return str.Substring(index, endIndex - index);
       }
+#if DEBUG
+      if (!(lastIndex >= index)) {
+        throw new ArgumentException("doesn't satisfy lastIndex>= index");
+      }
+#endif
+
       var retString = new StringBuilder();
-      retString.Append(str, index, lastIndex);
+      retString.Append(str, index, lastIndex - index);
       var cp = 0;
       var bytesSeen = 0;
       var bytesNeeded = 0;
@@ -396,6 +447,9 @@ namespace PeterO {
           c = 0x10000 + ((c & 0x3ff) << 10) + (str[i + 1] & 0x3ff);
           ++i;
         } else if ((c & 0xf800) == 0xd800) {
+if (!replace) {
+  return null;
+}
           c = 0xfffd;
         }
         if (c == '%') {
@@ -429,8 +483,11 @@ namespace PeterO {
                   cp = b - 0xf0;
                 } else {
                   // illegal byte in UTF-8
+if (!replace) {
+  return null;
+}
                   retString.Append('\uFFFD');
-                  continue;
+                continue;
                 }
                 cp <<= 6 * bytesNeeded;
                 continue;
@@ -438,12 +495,15 @@ namespace PeterO {
                 // this is a second or further byte
                 if (b < lower || b > upper) {
                   // illegal trailing byte
+if (!replace) {
+  return null;
+}
                   cp = bytesNeeded = bytesSeen = 0;
                   lower = 0x80;
                   upper = 0xbf;
                   i = markedPos; // reset to the last marked position
                   retString.Append('\uFFFD');
-                  continue;
+                continue;
                 }
                 // reset lower and upper for the third
                 // and further bytes
@@ -478,6 +538,9 @@ namespace PeterO {
         if (bytesNeeded > 0) {
           // we expected further bytes here,
           // so emit a replacement character instead
+if (!replace) {
+  return null;
+}
           bytesNeeded = 0;
           retString.Append('\uFFFD');
         }
@@ -494,6 +557,9 @@ namespace PeterO {
       if (bytesNeeded > 0) {
         // we expected further bytes here,
         // so emit a replacement character instead
+if (!replace) {
+  return null;
+}
         bytesNeeded = 0;
         retString.Append('\uFFFD');
       }

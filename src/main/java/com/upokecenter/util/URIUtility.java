@@ -339,6 +339,23 @@ private URIUtility() {
 
     /**
      * Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
+     * in the given string, with an option to fail rather than replace
+     * invalid encoding. Successive percent-encoded bytes are assumed to
+     * form characters in UTF-8.
+     * @param str A string that may contain percent encoding. May be null.
+     * @param replace Indicates whether to replace invalid encoding with U+FFFD,
+     * the replacement character. If false, returns null if invalid
+     * encoding is found.
+     * @return The string in which percent-encoding was decoded. Returns null if
+     *  "str" is null or if "replace" is true and the string has an invalid
+     * encoding.
+     */
+    public static String PercentDecode(String str, boolean replace) {
+      return (str == null) ? null : PercentDecode(str, 0, str.length(), replace);
+    }
+
+    /**
+     * Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
      * in the given portion of a string. Successive percent-encoded bytes
      * are assumed to form characters in UTF-8.
      * @param str A string a portion of which may contain percent encoding. May be
@@ -349,15 +366,43 @@ private URIUtility() {
      * {@code str} ends. The character before this index is the last
      * character.
      * @return The portion of the given string in which percent-encoding was
-     * decoded. Returns null if {@code str} is ull.
+     * decoded. Returns null if {@code str} is null.
      */
     public static String PercentDecode(String str, int index, int endIndex) {
+       return PercentDecode(str, index, endIndex, true);
+    }
+
+    /**
+     * Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
+     * in the given portion of a string, with an option to fail rather than
+     * replace invalid encoding. Successive percent-encoded bytes are
+     * assumed to form characters in UTF-8.
+     * @param str A string a portion of which may contain percent encoding. May be
+     * null.
+     * @param index Index starting at 0 showing where the desired portion of {@code
+     * str} begins.
+     * @param endIndex Index starting at 0 showing where the desired portion of
+     * {@code str} ends. The character before this index is the last
+     * character.
+     * @param replace Indicates whether to replace invalid encoding with U+FFFD,
+     * the replacement character. If false, returns null if invalid
+     * encoding is found.
+     * @return The portion of the given string in which percent-encoding was
+     *  decoded. Returns null if {@code str} is null or if "replace" is true
+     * and the portion of the string has an invalid encoding.
+     * @throws IllegalArgumentException doesn't satisfy lastIndex&gt;= index.
+     */
+    public static String PercentDecode(
+      String str,
+      int index,
+      int endIndex,
+      boolean replace) {
       if (str == null) {
         return null;
       }
       // Quick check
       boolean quickCheck = true;
-      int lastIndex = 0;
+      var lastIndex = index;
       int i = index;
       for (; i < endIndex; ++i) {
         if (str.charAt(i) >= 0xd800 || str.charAt(i) == '%') {
@@ -369,8 +414,9 @@ private URIUtility() {
       if (quickCheck) {
         return str.substring(index, (index)+(endIndex - index));
       }
+
       StringBuilder retString = new StringBuilder();
-      retString.append(str, index, (index)+(lastIndex));
+      retString.append(str, index, (index)+(lastIndex - index));
       int cp = 0;
       int bytesSeen = 0;
       int bytesNeeded = 0;
@@ -385,6 +431,9 @@ private URIUtility() {
           c = 0x10000 + ((c & 0x3ff) << 10) + (str.charAt(i + 1) & 0x3ff);
           ++i;
         } else if ((c & 0xf800) == 0xd800) {
+if (!replace) {
+  return null;
+}
           c = 0xfffd;
         }
         if (c == '%') {
@@ -418,8 +467,11 @@ private URIUtility() {
                   cp = b - 0xf0;
                 } else {
                   // illegal byte in UTF-8
+if (!replace) {
+  return null;
+}
                   retString.append('\uFFFD');
-                  continue;
+                continue;
                 }
                 cp <<= 6 * bytesNeeded;
                 continue;
@@ -427,12 +479,15 @@ private URIUtility() {
                 // this is a second or further byte
                 if (b < lower || b > upper) {
                   // illegal trailing byte
+if (!replace) {
+  return null;
+}
                   cp = bytesNeeded = bytesSeen = 0;
                   lower = 0x80;
                   upper = 0xbf;
                   i = markedPos; // reset to the last marked position
                   retString.append('\uFFFD');
-                  continue;
+                continue;
                 }
                 // reset lower and upper for the third
                 // and further bytes
@@ -467,6 +522,9 @@ private URIUtility() {
         if (bytesNeeded > 0) {
           // we expected further bytes here,
           // so emit a replacement character instead
+if (!replace) {
+  return null;
+}
           bytesNeeded = 0;
           retString.append('\uFFFD');
         }
@@ -483,6 +541,9 @@ private URIUtility() {
       if (bytesNeeded > 0) {
         // we expected further bytes here,
         // so emit a replacement character instead
+if (!replace) {
+  return null;
+}
         bytesNeeded = 0;
         retString.append('\uFFFD');
       }

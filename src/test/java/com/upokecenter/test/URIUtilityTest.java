@@ -302,6 +302,54 @@ import com.upokecenter.util.*;
       AssertIdempotencyNeg("e://[" + str + "%25NA%2ENA]");
     }
 
+    private static void TestPercentDecodeOne(String str, String exp) {
+      Assert.assertEquals(exp, URIUtility.PercentDecode(str));
+      Assert.assertEquals(exp, URIUtility.PercentDecode(str, true));
+      Assert.assertEquals(exp, URIUtility.PercentDecode(str, false));
+      Assert.assertEquals(exp, URIUtility.PercentDecode(str, 0, str.length(), true));
+      Assert.assertEquals(exp, URIUtility.PercentDecode(str, 0, str.length(), false));
+      Assert.assertEquals(
+        exp,
+        URIUtility.PercentDecode("??"+str+"??", 2, 2+str.length(),true));
+      Assert.assertEquals(
+         exp,
+         URIUtility.PercentDecode("??"+str+"??", 2, 2+str.length(),false));
+    }
+
+    private static void TestPercentDecodeOneFail(String str, String exp) {
+      Assert.assertEquals(exp, URIUtility.PercentDecode(str));
+      Assert.assertEquals(exp, URIUtility.PercentDecode(str, true));
+      Assert.assertEquals(null, URIUtility.PercentDecode(str, false));
+      Assert.assertEquals(exp, URIUtility.PercentDecode(str, 0, str.length(), true));
+{
+        Object objectTemp = null;
+        Object objectTemp2 = URIUtility.PercentDecode(
+          str,
+          0,
+          str.length(),
+          false);
+        Assert.assertEquals(objectTemp, objectTemp2);
+      }
+      Assert.assertEquals(
+        exp,
+        URIUtility.PercentDecode("??"+str+"??", 2, 2+str.length(),true));
+      Assert.assertEquals(
+         null,
+         URIUtility.PercentDecode("??"+str+"??", 2, 2+str.length(),false));
+    }
+
+    @Test
+    public void TestPercentDecode() {
+      Assert.assertEquals(null, URIUtility.PercentDecode(null));
+      TestPercentDecodeOne("test", "test");
+      TestPercentDecodeOne("te%23t", "te\u0023t");
+    TestPercentDecodeOne("te%7ft", "te\u007ft");
+  TestPercentDecodeOne("te%04t", "te\u0004t");
+  TestPercentDecodeOne("te%c2%80t", "te\u0080t");
+  TestPercentDecodeOneFail("te%c2%40t", "te\ufffd\u0040t");
+  TestPercentDecodeOneFail("te%c2%c3t", "te\ufffd\ufffdt");
+   }
+
     private static void AssertIPv6(String str) {
       AssertIdempotency("e://[" + str + "]");
 

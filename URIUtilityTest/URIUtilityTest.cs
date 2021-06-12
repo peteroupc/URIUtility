@@ -300,6 +300,54 @@ namespace Test {
       AssertIdempotencyNeg("e://[" + str + "%25NA%2ENA]");
     }
 
+    private static void TestPercentDecodeOne(string str, string exp) {
+      Assert.AreEqual(exp, URIUtility.PercentDecode(str));
+      Assert.AreEqual(exp, URIUtility.PercentDecode(str, true));
+      Assert.AreEqual(exp, URIUtility.PercentDecode(str, false));
+      Assert.AreEqual(exp, URIUtility.PercentDecode(str, 0, str.Length, true));
+      Assert.AreEqual(exp, URIUtility.PercentDecode(str, 0, str.Length, false));
+      Assert.AreEqual(
+        exp,
+        URIUtility.PercentDecode("??"+str+"??", 2, 2+str.Length,true));
+      Assert.AreEqual(
+         exp,
+         URIUtility.PercentDecode("??"+str+"??", 2, 2+str.Length,false));
+    }
+
+    private static void TestPercentDecodeOneFail(string str, string exp) {
+      Assert.AreEqual(exp, URIUtility.PercentDecode(str));
+      Assert.AreEqual(exp, URIUtility.PercentDecode(str, true));
+      Assert.AreEqual(null, URIUtility.PercentDecode(str, false));
+      Assert.AreEqual(exp, URIUtility.PercentDecode(str, 0, str.Length, true));
+{
+        object objectTemp = null;
+        object objectTemp2 = URIUtility.PercentDecode(
+          str,
+          0,
+          str.Length,
+          false);
+        Assert.AreEqual(objectTemp, objectTemp2);
+      }
+      Assert.AreEqual(
+        exp,
+        URIUtility.PercentDecode("??"+str+"??", 2, 2+str.Length,true));
+      Assert.AreEqual(
+         null,
+         URIUtility.PercentDecode("??"+str+"??", 2, 2+str.Length,false));
+    }
+
+    [Test]
+    public void TestPercentDecode() {
+      Assert.AreEqual(null, URIUtility.PercentDecode(null));
+      TestPercentDecodeOne("test", "test");
+      TestPercentDecodeOne("te%23t", "te\u0023t");
+    TestPercentDecodeOne("te%7ft", "te\u007ft");
+  TestPercentDecodeOne("te%04t", "te\u0004t");
+  TestPercentDecodeOne("te%c2%80t", "te\u0080t");
+  TestPercentDecodeOneFail("te%c2%40t", "te\ufffd\u0040t");
+  TestPercentDecodeOneFail("te%c2%c3t", "te\ufffd\ufffdt");
+   }
+
     private static void AssertIPv6(string str) {
       AssertIdempotency("e://[" + str + "]");
 

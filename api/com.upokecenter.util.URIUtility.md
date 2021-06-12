@@ -77,10 +77,22 @@ Contains utility methods for processing Uniform Resource Identifiers (URIs)
  Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
  in the given string.
 * `static java.lang.String PercentDecode​(java.lang.String str,
+             boolean replace)`<br>
+ Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
+ in the given string, with an option to fail rather than replace
+ invalid encoding.
+* `static java.lang.String PercentDecode​(java.lang.String str,
              int index,
              int endIndex)`<br>
  Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
  in the given portion of a string.
+* `static java.lang.String PercentDecode​(java.lang.String str,
+             int index,
+             int endIndex,
+             boolean replace)`<br>
+ Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
+ in the given portion of a string, with an option to fail rather than
+ replace invalid encoding.
 * `static java.lang.String RelativeResolve​(java.lang.String refValue,
                java.lang.String absoluteBase)`<br>
  Resolves a URI or IRI relative to another URI or IRI.
@@ -189,6 +201,27 @@ Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
 * The string in which percent-encoding was decoded.
 
 ### PercentDecode
+    public static java.lang.String PercentDecode​(java.lang.String str, boolean replace)
+Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
+ in the given string, with an option to fail rather than replace
+ invalid encoding. Successive percent-encoded bytes are assumed to
+ form characters in UTF-8.
+
+**Parameters:**
+
+* <code>str</code> - A string that may contain percent encoding. May be null.
+
+* <code>replace</code> - Indicates whether to replace invalid encoding with U+FFFD,
+ the replacement character. If false, returns null if invalid
+ encoding is found.
+
+**Returns:**
+
+* The string in which percent-encoding was decoded. Returns null if
+  "str" is null or if "replace" is true and the string has an invalid
+ encoding.
+
+### PercentDecode
     public static java.lang.String PercentDecode​(java.lang.String str, int index, int endIndex)
 Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
  in the given portion of a string. Successive percent-encoded bytes
@@ -209,7 +242,40 @@ Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
 **Returns:**
 
 * The portion of the given string in which percent-encoding was
- decoded. Returns null if <code>str</code> is ull.
+ decoded. Returns null if <code>str</code> is null.
+
+### PercentDecode
+    public static java.lang.String PercentDecode​(java.lang.String str, int index, int endIndex, boolean replace)
+Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
+ in the given portion of a string, with an option to fail rather than
+ replace invalid encoding. Successive percent-encoded bytes are
+ assumed to form characters in UTF-8.
+
+**Parameters:**
+
+* <code>str</code> - A string a portion of which may contain percent encoding. May be
+ null.
+
+* <code>index</code> - Index starting at 0 showing where the desired portion of <code>
+ str</code> begins.
+
+* <code>endIndex</code> - Index starting at 0 showing where the desired portion of
+ <code>str</code> ends. The character before this index is the last
+ character.
+
+* <code>replace</code> - Indicates whether to replace invalid encoding with U+FFFD,
+ the replacement character. If false, returns null if invalid
+ encoding is found.
+
+**Returns:**
+
+* The portion of the given string in which percent-encoding was
+  decoded. Returns null if <code>str</code> is null or if "replace" is true
+ and the portion of the string has an invalid encoding.
+
+**Throws:**
+
+* <code>java.lang.IllegalArgumentException</code> - doesn't satisfy lastIndex&gt;= index.
 
 ### EncodeStringForURI
     public static java.lang.String EncodeStringForURI​(java.lang.String s)
@@ -325,7 +391,7 @@ Resolves a URI or IRI relative to another URI or IRI.
 * The resolved IRI, or null if <code>refValue</code> is null or is not a
  valid IRI. If <code>absoluteBase</code> is null or is not a valid IRI,
  returns refValue. Example: <code>
- [http://example.com/my/path/dir/file.txt</code>.](http://example.com/my/path/dir/file.txt</code>.)
+ http://example.com/my/path/dir/file.txt</code>.
 
 ### RelativeResolve
     public static java.lang.String RelativeResolve​(java.lang.String refValue, java.lang.String absoluteBase, URIUtility.ParseMode parseMode)
