@@ -308,10 +308,10 @@ namespace Test {
       Assert.AreEqual(exp, URIUtility.PercentDecode(str, 0, str.Length, false));
       Assert.AreEqual(
         exp,
-        URIUtility.PercentDecode("??"+str+"??", 2, 2+str.Length,true));
+        URIUtility.PercentDecode("??" +str + "??", 2, 2+str.Length, true));
       Assert.AreEqual(
          exp,
-         URIUtility.PercentDecode("??"+str+"??", 2, 2+str.Length,false));
+         URIUtility.PercentDecode("??" +str + "??", 2, 2+str.Length, false));
     }
 
     private static void TestPercentDecodeOneFail(string str, string exp) {
@@ -319,7 +319,7 @@ namespace Test {
       Assert.AreEqual(exp, URIUtility.PercentDecode(str, true));
       Assert.AreEqual(null, URIUtility.PercentDecode(str, false));
       Assert.AreEqual(exp, URIUtility.PercentDecode(str, 0, str.Length, true));
-{
+    {
         object objectTemp = null;
         object objectTemp2 = URIUtility.PercentDecode(
           str,
@@ -330,10 +330,10 @@ namespace Test {
       }
       Assert.AreEqual(
         exp,
-        URIUtility.PercentDecode("??"+str+"??", 2, 2+str.Length,true));
+        URIUtility.PercentDecode("??" +str + "??", 2, 2+str.Length, true));
       Assert.AreEqual(
          null,
-         URIUtility.PercentDecode("??"+str+"??", 2, 2+str.Length,false));
+         URIUtility.PercentDecode("??" +str + "??", 2, 2+str.Length, false));
     }
 
     [Test]

@@ -310,10 +310,10 @@ import com.upokecenter.util.*;
       Assert.assertEquals(exp, URIUtility.PercentDecode(str, 0, str.length(), false));
       Assert.assertEquals(
         exp,
-        URIUtility.PercentDecode("??"+str+"??", 2, 2+str.length(),true));
+        URIUtility.PercentDecode("??" +str + "??", 2, 2+str.length(), true));
       Assert.assertEquals(
          exp,
-         URIUtility.PercentDecode("??"+str+"??", 2, 2+str.length(),false));
+         URIUtility.PercentDecode("??" +str + "??", 2, 2+str.length(), false));
     }
 
     private static void TestPercentDecodeOneFail(String str, String exp) {
@@ -321,7 +321,7 @@ import com.upokecenter.util.*;
       Assert.assertEquals(exp, URIUtility.PercentDecode(str, true));
       Assert.assertEquals(null, URIUtility.PercentDecode(str, false));
       Assert.assertEquals(exp, URIUtility.PercentDecode(str, 0, str.length(), true));
-{
+    {
         Object objectTemp = null;
         Object objectTemp2 = URIUtility.PercentDecode(
           str,
@@ -332,10 +332,10 @@ import com.upokecenter.util.*;
       }
       Assert.assertEquals(
         exp,
-        URIUtility.PercentDecode("??"+str+"??", 2, 2+str.length(),true));
+        URIUtility.PercentDecode("??" +str + "??", 2, 2+str.length(), true));
       Assert.assertEquals(
          null,
-         URIUtility.PercentDecode("??"+str+"??", 2, 2+str.length(),false));
+         URIUtility.PercentDecode("??" +str + "??", 2, 2+str.length(), false));
     }
 
     @Test
