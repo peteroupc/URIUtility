@@ -310,10 +310,10 @@ import com.upokecenter.util.*;
       Assert.assertEquals(exp, URIUtility.PercentDecode(str, 0, str.length(), false));
       Assert.assertEquals(
         exp,
-        URIUtility.PercentDecode("??" +str + "??", 2, 2+str.length(), true));
+        URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.length(), true));
       Assert.assertEquals(
          exp,
-         URIUtility.PercentDecode("??" +str + "??", 2, 2+str.length(), false));
+         URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.length(), false));
     }
 
     private static void TestPercentDecodeOneFail(String str, String exp) {
@@ -332,10 +332,10 @@ import com.upokecenter.util.*;
       }
       Assert.assertEquals(
         exp,
-        URIUtility.PercentDecode("??" +str + "??", 2, 2+str.length(), true));
+        URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.length(), true));
       Assert.assertEquals(
          null,
-         URIUtility.PercentDecode("??" +str + "??", 2, 2+str.length(), false));
+         URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.length(), false));
     }
 
     @Test
@@ -367,7 +367,6 @@ import com.upokecenter.util.*;
     }
 
     /**
-     *
      * @param str Not documented yet.
      * @throws NullPointerException The parameter {@code str} is null.
      */
@@ -530,7 +529,7 @@ import com.upokecenter.util.*;
                   }
                 }
                 if ((c & 0xf800) != 0xd800) {
-                  // Non-surrogate
+                  // Nonsurrogate
                   sb.append((char)c);
                 } else if ((c & 0xfc00) == 0xd800) {
                   int ch = index >= str.length() ? -1 : str.charAt(index++);

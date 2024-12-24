@@ -1,38 +1,34 @@
 package com.upokecenter.util;
 
   /**
-   * Contains utility methods for processing Uniform Resource Identifiers (URIs)
-   * and Internationalized Resource Identifiers (IRIs) under RFC3986 and
-   * RFC3987, respectively. In the following documentation, URIs and IRIs
-   * include URI references and IRI references, for convenience. <p>There
-   * are five components to a URI: scheme, authority, path, query, and
-   * fragment identifier. The generic syntax to these components is defined
-   * in RFC3986 and extended in RFC3987. According to RFC3986, different
-   * URI schemes can further restrict the syntax of the authority, path,
-   * and query component (see also RFC 7320). However, the syntax of
-   * fragment identifiers depends on the media type (also known as MIME
-   * type) of the resource a URI references (see also RFC 3986 and RFC
-   * 7320). As of September 3, 2019, only the following media types specify
-   * a syntax for fragment identifiers:</p> <ul> <li>The following
-   * application/* media types: epub + zip, pdf, senml + cbor, senml +
-   * json, senml-exi, sensml + cbor, sensml + json, sensml-exi, smil,
+   * <p>Contains auxiliary methods for processing Uniform Resource Identifiers
+   * (URIs) and Internationalized Resource Identifiers (IRIs) under RFC3986 and
+   * RFC3987, respectively. In the following documentation, URIs and IRIs include
+   * URI references and IRI references, for convenience. </p><p>There are five
+   * components to a URI: scheme, authority, path, query, and fragment
+   * identifier. The generic syntax to these components is defined in RFC3986 and
+   * extended in RFC3987. According to RFC3986, different URI schemes can further
+   * restrict the syntax of the authority, path, and query component (see also
+   * RFC 7320). However, the syntax of fragment identifiers depends on the media
+   * type (also known as MIME type) of the resource a URI references (see also
+   * RFC 3986 and RFC 7320). As of September 3, 2019, only the following media
+   * types specify a syntax for fragment identifiers:</p> <ul> <li>The following
+   * application/* media types: epub + zip, pdf, senml + cbor, senml + json,
+   * senml-exi, sensml + cbor, sensml + json, sensml-exi, smil,
    * vnd.3gpp-v2x-local-service-information, vnd.3gpp.mcdata-signalling,
-   * vnd.collection.doc + json, vnd.hc + json, vnd.hyper + json,
-   * vnd.hyper-item + json, vnd.mason + json,
-   * vnd.microsoft.portable-executable, vnd.oma.bcast.sgdu, vnd.shootproof
-   * + json</li> <li>The following image/* media types: avci, avcs, heic,
-   * heic-sequence, heif, heif-sequence, hej2k, hsj2, jxra, jxrs, jxsi,
-   * jxss</li> <li>The XML media types: application/xml,
+   * vnd.collection.doc + json, vnd.hc + json, vnd.hyper + json, vnd.hyper-item +
+   * json, vnd.mason + json, vnd.microsoft.portable-executable,
+   * vnd.oma.bcast.sgdu, vnd.shootproof + json</li><li>The following image/*
+   * media types: avci, avcs, heic, heic-sequence, heif, heif-sequence, hej2k,
+   * hsj2, jxra, jxrs, jxsi, jxss</li><li>The XML media types: application/xml,
    * application/xml-external-parsed-entity, text/xml,
-   * text/xml-external-parsed-entity, application/xml-dtd</li> <li>All
-   *  media types with subtypes ending in "+xml" (see RFC 7303) use XPointer
-   * Framework syntax as fragment identifiers, except the following
-   * application/* media types: dicom + xml (syntax not defined), senml +
-   * xml (own syntax), sensml + xml (own syntax), ttml + xml (own syntax),
-   * xliff + xml (own syntax), yang-data + xml (syntax not defined)</li>
-   * <li>font/collection</li> <li>multipart/x-mixed-replace</li>
-   * <li>text/plain</li> <li>text/csv</li> <li>text/html</li>
-   * <li>text/markdown</li> <li>text/vnd.a</li></ul>
+   * text/xml-external-parsed-entity, application/xml-dtd</li><li>All media types
+   * with subtypes ending in "+xml" (see RFC 7303) use XPointer Framework syntax
+   * as fragment identifiers, except the following application/* media types:
+   * dicom + xml (syntax not defined), senml + xml (own syntax), sensml + xml
+   * (own syntax), ttml + xml (own syntax), xliff + xml (own syntax), yang-data +
+   * xml (syntax not
+   * defined)</li><li>font/collection</li><li>multipart/x-mixed-replace</li><li>text/plain</li><li>text/csv</li><li>text/html</li><li>text/markdown</li><li>text/vnd.a</li></ul>
    */
   public final class URIUtility {
 private URIUtility() {
@@ -43,9 +39,8 @@ private URIUtility() {
     public enum ParseMode {
       /**
        * The rules follow the syntax for parsing IRIs. In particular, many code
-       * points outside the Basic Latin range (U+0000 to U+007F) are
-       * allowed. Strings with unpaired surrogate code points are
-       * considered invalid.
+       * points outside the Basic Latin range (U+0000 to U+007F) are allowed. Strings
+       * with unpaired surrogate code points are considered invalid.
        */
       IRIStrict,
 
@@ -57,27 +52,25 @@ private URIUtility() {
 
       /**
        * The rules only check for the appropriate delimiters when splitting the path,
-       * without checking if all the characters in each component are
-       * valid. Even with this mode, strings with unpaired surrogate code
-       * points are considered invalid.
+       * without checking if all the characters in each component are valid. Even
+       * with this mode, strings with unpaired surrogate code points are considered
+       * invalid.
        */
       IRILenient,
 
       /**
        * The rules only check for the appropriate delimiters when splitting the path,
-       * without checking if all the characters in each component are
-       * valid. Code points outside the Basic Latin range (U+0000 to
-       * U+007F) are not allowed.
+       * without checking if all the characters in each component are valid. Code
+       * points outside the Basic Latin range (U+0000 to U+007F) are not allowed.
        */
       URILenient,
 
       /**
        * The rules only check for the appropriate delimiters when splitting the path,
-       * without checking if all the characters in each component are
-       * valid. Unpaired surrogate code points are treated as though they
-       * were replacement characters instead for the purposes of these
-       * rules, so that strings with those code points are not considered
-       * invalid strings.
+       * without checking if all the characters in each component are valid. Unpaired
+       * surrogate code points are treated as though they were replacement characters
+       * instead for the purposes of these rules, so that strings with those code
+       * points are not considered invalid strings.
        */
       IRISurrogateLenient,
     }
@@ -159,18 +152,17 @@ private URIUtility() {
 
     /**
      * Checks a text string representing a URI or IRI and escapes characters it has
-     * that can't appear in URIs or IRIs. The function is idempotent; that
-     * is, calling the function again on the result with the same mode
-     * doesn't change the result.
+     * that can't appear in URIs or IRIs. The function is idempotent; that is,
+     * calling the function again on the result with the same mode doesn't change
+     * the result.
      * @param s A text string representing a URI or IRI. Can be null.
      * @param mode Has the following meaning: 0 = Encode reserved code points, code
-     * points below U+0021, code points above U+007E, and square brackets
-     * within the authority component, and do the IRISurrogateLenient
-     * check. 1 = Encode code points above U+007E, and square brackets
-     * within the authority component, and do the IRIStrict check. 2 = Same
-     * as 1, except the check is IRISurrogateLenient. 3 = Same as 0, except
-     * that percent characters that begin illegal percent-encoding are also
-     * encoded.
+     * points below U+0021, code points above U+007E, and square brackets within
+     * the authority component, and do the IRISurrogateLenient check. 1 = Encode
+     * code points above U+007E, and square brackets within the authority
+     * component, and do the IRIStrict check. 2 = Same as 1, except the check is
+     * IRISurrogateLenient. 3 = Same as 0, except that percent characters that
+     * begin illegal percent-encoding are also encoded.
      * @return A form of the URI or IRI that possibly contains escaped characters,
      * or null if s is null.
      */
@@ -276,10 +268,10 @@ private URIUtility() {
     }
 
     /**
-     * Determines whether the string is a valid IRI with a scheme component. This
-     * can be used to check for relative IRI references. <p>The following
-     * cases return true:</p> <pre>xx-x:mm example:/ww</pre> The following
-     * cases return false: <pre>x@y:/z /x/y/z example.xyz</pre>.
+     * <p>Determines whether the string is a valid IRI with a scheme component.
+     * This can be used to check for relative IRI references. </p><p>The following
+     * cases return true:</p> <pre>xx-x:mm example:/ww</pre> The following cases
+     * return false: <pre>x@y:/z /x/y/z example.xyz</pre>.
      * @param refValue A string representing an IRI to check.
      * @return {@code true} if the string is a valid IRI with a scheme component;
      * otherwise, {@code false}.
@@ -294,10 +286,10 @@ private URIUtility() {
     }
 
     /**
-     * Determines whether the string is a valid URI with a scheme component. This
-     * can be used to check for relative URI references. The following
-     * cases return true: <pre>http://example/z xx-x:mm example:/ww</pre>
-     * The following cases return false: <pre>x@y:/z /x/y/z example.xyz</pre> .
+     * <p>Determines whether the string is a valid URI with a scheme component.
+     * This can be used to check for relative URI references. The following cases
+     * return true: </p><pre>http://example/z xx-x:mm example:/ww</pre> The
+     * following cases return false: <pre>x@y:/z /x/y/z example.xyz</pre> .
      * @param refValue A string representing an IRI to check.
      * @return {@code true} if the string is a valid URI with a scheme component;
      * otherwise, {@code false}.
@@ -327,9 +319,9 @@ private URIUtility() {
     }
 
     /**
-     * Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
-     * in the given string. Successive percent-encoded bytes are assumed to
-     * form characters in UTF-8.
+     * Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
+     * (base-16) digit) in the given string. Successive percent-encoded bytes are
+     * assumed to form characters in UTF-8.
      * @param str A string that may contain percent encoding. May be null.
      * @return The string in which percent-encoding was decoded.
      */
@@ -338,16 +330,16 @@ private URIUtility() {
     }
 
     /**
-     * Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
-     * in the given string, with an option to fail rather than replace
-     * invalid encoding. Successive percent-encoded bytes are assumed to
+     * Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
+     * (base-16) digit) in the given string, with an option to fail rather than
+     * replace invalid encoding. Successive percent-encoded bytes are assumed to
      * form characters in UTF-8.
      * @param str A string that may contain percent encoding. May be null.
      * @param replace Indicates whether to replace invalid encoding with U+FFFD,
-     * the replacement character. If false, returns null if invalid
-     * encoding is found.
+     * the replacement character. If false, returns null if invalid encoding is
+     * found.
      * @return The string in which percent-encoding was decoded. Returns null if
-     *  "str" is null or if "replace" is true and the string has an invalid
+     * "str" is null or if "replace" is true and the string has an invalid
      * encoding.
      */
     public static String PercentDecode(String str, boolean replace) {
@@ -355,16 +347,15 @@ private URIUtility() {
     }
 
     /**
-     * Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
-     * in the given portion of a string. Successive percent-encoded bytes
-     * are assumed to form characters in UTF-8.
+     * Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
+     * (base-16) digit) in the given portion of a string. Successive
+     * percent-encoded bytes are assumed to form characters in UTF-8.
      * @param str A string a portion of which may contain percent encoding. May be
      * null.
      * @param index Index starting at 0 showing where the desired portion of {@code
      * str} begins.
      * @param endIndex Index starting at 0 showing where the desired portion of
-     * {@code str} ends. The character before this index is the last
-     * character.
+     * {@code str} ends. The character before this index is the last character.
      * @return The portion of the given string in which percent-encoding was
      * decoded. Returns null if {@code str} is null.
      */
@@ -373,23 +364,22 @@ private URIUtility() {
     }
 
     /**
-     * Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit)
-     * in the given portion of a string, with an option to fail rather than
-     * replace invalid encoding. Successive percent-encoded bytes are
+     * Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
+     * (base-16) digit) in the given portion of a string, with an option to fail
+     * rather than replace invalid encoding. Successive percent-encoded bytes are
      * assumed to form characters in UTF-8.
      * @param str A string a portion of which may contain percent encoding. May be
      * null.
      * @param index Index starting at 0 showing where the desired portion of {@code
      * str} begins.
      * @param endIndex Index starting at 0 showing where the desired portion of
-     * {@code str} ends. The character before this index is the last
-     * character.
+     * {@code str} ends. The character before this index is the last character.
      * @param replace Indicates whether to replace invalid encoding with U+FFFD,
-     * the replacement character. If false, returns null if invalid
-     * encoding is found.
+     * the replacement character. If false, returns null if invalid encoding is
+     * found.
      * @return The portion of the given string in which percent-encoding was
-     *  decoded. Returns null if {@code str} is null or if "replace" is true
-     * and the portion of the string has an invalid encoding.
+     * decoded. Returns null if {@code str} is null or if "replace" is true and the
+     * portion of the string has an invalid encoding.
      * @throws IllegalArgumentException doesn't satisfy lastIndex&gt;= index.
      */
     public static String PercentDecode(
@@ -652,14 +642,14 @@ if (!replace) {
      * (The CURIE reference is the part after the colon.).
      * @param s A string containing a CURIE reference. Can be null.
      * @param offset An index starting at 0 showing where the desired portion of
-     *  "s" begins.
+     * "s" begins.
      * @param length The number of elements in the desired portion of "s" (but not
-     *  more than "s" 's length).
+     * more than "s" 's length).
      * @return {@code true} if the substring is a valid CURIE reference under RDFA
      * 1; otherwise, {@code false}. Returns false if {@code s} is null.
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
-     * than 0 or greater than {@code s} 's length, or {@code s} 's length
-     * minus {@code offset} is less than {@code length}.
+     * than 0 or greater than {@code s} 's length, or {@code s} 's length minus
+     * {@code offset} is less than {@code length}.
      * @throws NullPointerException The parameter {@code s} is null.
      */
     public static boolean IsValidCurieReference(
@@ -752,8 +742,8 @@ if (!replace) {
      * Builds an internationalized resource identifier (IRI) from its components.
      * @param schemeAndAuthority string representing a scheme component, an
      * authority component, or both. Examples of this parameter include
-     *  "example://example", "example:", and "//example", but not "example".
-     * Can be null or empty.
+     * "example://example", "example:", and "//example", but not "example". Can be
+     * null or empty.
      * @param path A string representing a path component. Can be null or empty.
      * @param query The query string. Can be null or empty.
      * @param fragment The fragment identifier. Can be null or empty.
@@ -1246,9 +1236,8 @@ if (!replace) {
      * @param absoluteBase A string representing an absolute URI or IRI reference.
      * Can be null. Example: {@code http://example.com/my/path/}.
      * @return The resolved IRI, or null if {@code refValue} is null or is not a
-     * valid IRI. If {@code absoluteBase} is null or is not a valid IRI,
-     * returns refValue. Example: {@code
-     * http://example.com/my/path/dir/file.txt}.
+     * valid IRI. If {@code absoluteBase} is null or is not a valid IRI, returns
+     * refValue. Example: {@code http://example.com/my/path/dir/file.txt}.
      */
     public static String RelativeResolve(String refValue,
       String absoluteBase) {
@@ -1267,8 +1256,8 @@ if (!replace) {
      * @param parseMode Parse mode that specifies whether certain characters are
      * allowed when parsing IRIs and URIs.
      * @return The resolved IRI, or null if {@code refValue} is null or is not a
-     * valid IRI. If {@code absoluteBase} is null or is not a valid IRI,
-     * returns refValue.
+     * valid IRI. If {@code absoluteBase} is null or is not a valid IRI, returns
+     * refValue.
      * @throws NullPointerException The parameter {@code refValue} or {@code
      * absoluteBase} or {@code refValue} or {@code refValue} is null.
      */
@@ -1401,15 +1390,14 @@ if (!replace) {
 
     /**
      * Parses an Internationalized Resource Identifier (IRI) reference under
-     * RFC3987. If the IRI reference is syntactically valid, splits the
-     * string into its components and returns an array containing those
-     * components.
+     * RFC3987. If the IRI reference is syntactically valid, splits the string into
+     * its components and returns an array containing those components.
      * @param s A string that contains an IRI. Can be null.
      * @return If the string is a valid IRI reference, returns an array of five
-     * strings. Each of the five pairs corresponds to the IRI's scheme,
-     * authority, path, query, or fragment identifier, respectively. If a
-     * component is absent, the corresponding element will be null. If the
-     * string is null or is not a valid IRI, returns null.
+     * strings. Each of the five pairs corresponds to the IRI's scheme, authority,
+     * path, query, or fragment identifier, respectively. If a component is absent,
+     * the corresponding element will be null. If the string is null or is not a
+     * valid IRI, returns null.
      */
     public static String[] SplitIRIToStrings(String s) {
       int[] indexes = SplitIRI(s);
@@ -1444,19 +1432,18 @@ if (!replace) {
 
     /**
      * Parses an Internationalized Resource Identifier (IRI) reference under
-     * RFC3987. If the IRI reference is syntactically valid, splits the
-     * string into its components and returns an array containing the
-     * indices into the components.
+     * RFC3987. If the IRI reference is syntactically valid, splits the string into
+     * its components and returns an array containing the indices into the
+     * components.
      * @param s A string that contains an IRI. Can be null.
      * @return If the string is a valid IRI reference, returns an array of 10
-     * integers. Each of the five pairs corresponds to the start and end
-     * index of the IRI's scheme, authority, path, query, or fragment
-     * identifier, respectively. The scheme, authority, query, and fragment
-     * identifier, if present, will each be given without the ending colon,
-     *  the starting "//", the starting "?", and the starting "#",
-     * respectively. If a component is absent, both indices in that pair
-     * will be -1. If the string is null or is not a valid IRI, returns
-     * null.
+     * integers. Each of the five pairs corresponds to the start and end index of
+     * the IRI's scheme, authority, path, query, or fragment identifier,
+     * respectively. The scheme, authority, query, and fragment identifier, if
+     * present, will each be given without the ending colon, the starting "//", the
+     * starting "?", and the starting "#", respectively. If a component is absent,
+     * both indices in that pair will be -1. If the string is null or is not a
+     * valid IRI, returns null.
      */
     public static int[] SplitIRI(String s) {
       return (s == null) ? null : SplitIRI(
@@ -1468,28 +1455,27 @@ if (!replace) {
 
     /**
      * Parses a substring that represents an Internationalized Resource Identifier
-     * (IRI) under RFC3987. If the IRI is syntactically valid, splits the
-     * string into its components and returns an array containing the
-     * indices into the components.
+     * (IRI) under RFC3987. If the IRI is syntactically valid, splits the string
+     * into its components and returns an array containing the indices into the
+     * components.
      * @param s A string that contains an IRI. Can be null.
      * @param offset An index starting at 0 showing where the desired portion of
-     *  "s" begins.
+     * "s" begins.
      * @param length The length of the desired portion of "s" (but not more than
-     *  "s" 's length).
+     * "s" 's length).
      * @param parseMode Parse mode that specifies whether certain characters are
      * allowed when parsing IRIs and URIs.
      * @return If the string is a valid IRI, returns an array of 10 integers. Each
-     * of the five pairs corresponds to the start and end index of the
-     * IRI's scheme, authority, path, query, or fragment component,
-     * respectively. The scheme, authority, query, and fragment components,
-     * if present, will each be given without the ending colon, the
-     *  starting "//", the starting "?", and the starting "#", respectively.
-     * If a component is absent, both indices in that pair will be -1 (an
-     * index won't be less than 0 in any other case). If the string is null
-     * or is not a valid IRI, returns null.
+     * of the five pairs corresponds to the start and end index of the IRI's
+     * scheme, authority, path, query, or fragment component, respectively. The
+     * scheme, authority, query, and fragment components, if present, will each be
+     * given without the ending colon, the starting "//", the starting "?", and the
+     * starting "#", respectively. If a component is absent, both indices in that
+     * pair will be -1 (an index won't be less than 0 in any other case). If the
+     * string is null or is not a valid IRI, returns null.
      * @throws IllegalArgumentException Either {@code offset} or {@code length} is less
-     * than 0 or greater than {@code s} 's length, or {@code s} 's length
-     * minus {@code offset} is less than {@code length}.
+     * than 0 or greater than {@code s} 's length, or {@code s} 's length minus
+     * {@code offset} is less than {@code length}.
      * @throws NullPointerException The parameter {@code s} is null.
      */
     public static int[] SplitIRI(
@@ -1743,20 +1729,18 @@ if (!replace) {
 
     /**
      * Parses an Internationalized Resource Identifier (IRI) reference under
-     * RFC3987. If the IRI is syntactically valid, splits the string into
-     * its components and returns an array containing the indices into the
-     * components.
+     * RFC3987. If the IRI is syntactically valid, splits the string into its
+     * components and returns an array containing the indices into the components.
      * @param s A string representing an IRI. Can be null.
      * @param parseMode The parameter {@code parseMode} is a ParseMode object.
      * @return If the string is a valid IRI reference, returns an array of 10
-     * integers. Each of the five pairs corresponds to the start and end
-     * index of the IRI's scheme, authority, path, query, or fragment
-     * identifier, respectively. The scheme, authority, query, and fragment
-     * identifier, if present, will each be given without the ending colon,
-     *  the starting "//", the starting "?", and the starting "#",
-     * respectively. If a component is absent, both indices in that pair
-     * will be -1. If the string is null or is not a valid IRI, returns
-     * null.
+     * integers. Each of the five pairs corresponds to the start and end index of
+     * the IRI's scheme, authority, path, query, or fragment identifier,
+     * respectively. The scheme, authority, query, and fragment identifier, if
+     * present, will each be given without the ending colon, the starting "//", the
+     * starting "?", and the starting "#", respectively. If a component is absent,
+     * both indices in that pair will be -1. If the string is null or is not a
+     * valid IRI, returns null.
      */
     public static int[] SplitIRI(String s, URIUtility.ParseMode parseMode) {
       return (s == null) ? null : SplitIRI(s, 0, s.length(), parseMode);
@@ -1836,9 +1820,9 @@ if (!replace) {
 
     /**
      * Extracts the scheme, the authority, and the path component (up to and
-     *  including the last "/" in the path if any) from the given URI or
-     * IRI, using the IRIStrict parse mode to check the URI or IRI. Any
-     *  "./" or "../" in the path is not condensed.
+     * including the last "/" in the path if any) from the given URI or IRI, using
+     * the IRIStrict parse mode to check the URI or IRI. Any "./" or "../" in the
+     * path is not condensed.
      * @param uref A text string representing a URI or IRI. Can be null.
      * @return The directory path of the URI or IRI. Returns null if {@code uref}
      * is null or not a valid URI or IRI.
@@ -1850,9 +1834,9 @@ if (!replace) {
 
     /**
      * Extracts the scheme, the authority, and the path component (up to and
-     *  including the last "/" in the path if any) from the given URI or
-     *  IRI, using the given parse mode to check the URI or IRI. Any "./" or
-     *  "../" in the path is not condensed.
+     * including the last "/" in the path if any) from the given URI or IRI, using
+     * the given parse mode to check the URI or IRI. Any "./" or "../" in the path
+     * is not condensed.
      * @param uref A text string representing a URI or IRI. Can be null.
      * @param parseMode The parse mode to use to check the URI or IRI.
      * @return The directory path of the URI or IRI. Returns null if {@code uref}
@@ -1883,19 +1867,19 @@ if (!replace) {
 
     /**
      * Resolves a URI or IRI relative to another URI or IRI, but only if the
-     *  resolved URI has no "." or ".." component in its path and only if
-     * resolved URI's directory path matches that of the second URI or IRI.
+     * resolved URI has no "." or ".." component in its path and only if resolved
+     * URI's directory path matches that of the second URI or IRI.
      * @param refValue A string representing a URI or IRI reference. Example:
      * {@code dir/file.txt}.
      * @param absoluteBase A string representing an absolute URI reference.
      * Example: {@code http://example.com/my/path/}.
      * @return The resolved IRI, or null if {@code refValue} is null or is not a
-     * valid IRI, or {@code refValue} if {@code absoluteBase} is null or an
-     * empty string, or null if {@code absoluteBase} is neither null nor
-     * empty and is not a valid IRI. Returns null instead if the resolved
-     *  IRI has no "." or ".." component in its path or if the resolved
-     * URI's directory path does not match that of {@code absoluteBase}.
-     * Example: {@code http://example.com/my/path/dir/file.txt}.
+     * valid IRI, or {@code refValue} if {@code absoluteBase} is null or an empty
+     * string, or null if {@code absoluteBase} is neither null nor empty and is not
+     * a valid IRI. Returns null instead if the resolved IRI has no "." or ".."
+     * component in its path or if the resolved URI's directory path does not match
+     * that of {@code absoluteBase}. Example: {@code
+     * http://example.com/my/path/dir/file.txt}.
      */
     public static String RelativeResolveWithinBaseURI(
       String refValue,

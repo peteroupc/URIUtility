@@ -27,7 +27,7 @@ project, add the following to the `dependencies` section in your `pom.xml` file:
     </dependency>
 
 In other Java-based environments, the library can be referred to by its
-group ID (`com.github.peteroupc`), artifact ID (`uriutility`), and version, as given above.
+group ID (`com.github.peteroupc`), artifact ID (`uriutility`), and version, as given earlier.
 
 Documentation
 ------------
@@ -55,5 +55,4 @@ Written by Peter O.
 
 Any copyright to this work is released to the Public Domain.
 In case this is not possible, this work is also
-licensed under Creative Commons Zero (CC0):
-[https://creativecommons.org/publicdomain/zero/1.0/](https://creativecommons.org/publicdomain/zero/1.0/)
+licensed under the Unlicense: [https://unlicense.org/](https://unlicense.org/)

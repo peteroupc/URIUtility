@@ -308,10 +308,10 @@ namespace Test {
       Assert.AreEqual(exp, URIUtility.PercentDecode(str, 0, str.Length, false));
       Assert.AreEqual(
         exp,
-        URIUtility.PercentDecode("??" +str + "??", 2, 2+str.Length, true));
+        URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.Length, true));
       Assert.AreEqual(
          exp,
-         URIUtility.PercentDecode("??" +str + "??", 2, 2+str.Length, false));
+         URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.Length, false));
     }
 
     private static void TestPercentDecodeOneFail(string str, string exp) {
@@ -330,10 +330,10 @@ namespace Test {
       }
       Assert.AreEqual(
         exp,
-        URIUtility.PercentDecode("??" +str + "??", 2, 2+str.Length, true));
+        URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.Length, true));
       Assert.AreEqual(
          null,
-         URIUtility.PercentDecode("??" +str + "??", 2, 2+str.Length, false));
+         URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.Length, false));
     }
 
     [Test]
@@ -535,7 +535,7 @@ namespace Test {
                   }
                 }
                 if ((c & 0xf800) != 0xd800) {
-                  // Non-surrogate
+                  // Nonsurrogate
                   sb.Append((char)c);
                 } else if ((c & 0xfc00) == 0xd800) {
                   int ch = index >= str.Length ? -1 : str[index++];

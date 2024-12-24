@@ -2,7 +2,7 @@ using System;
 using System.Text;
 
 namespace PeterO {
-  /// <summary>Contains utility methods for processing Uniform Resource
+  /// <summary>Contains auxiliary methods for processing Uniform Resource
   /// Identifiers (URIs) and Internationalized Resource Identifiers
   /// (IRIs) under RFC3986 and RFC3987, respectively. In the following
   /// documentation, URIs and IRIs include URI references and IRI
@@ -338,8 +338,9 @@ namespace PeterO {
     }
 
     /// <summary>Decodes percent-encoding (of the form "%XX" where X is a
-    /// hexadecimal digit) in the given string. Successive percent-encoded
-    /// bytes are assumed to form characters in UTF-8.</summary>
+    /// hexadecimal (base-16) digit) in the given string. Successive
+    /// percent-encoded bytes are assumed to form characters in
+    /// UTF-8.</summary>
     /// <param name='str'>A string that may contain percent encoding. May
     /// be null.</param>
     /// <returns>The string in which percent-encoding was
@@ -349,9 +350,10 @@ namespace PeterO {
     }
 
     /// <summary>Decodes percent-encoding (of the form "%XX" where X is a
-    /// hexadecimal digit) in the given string, with an option to fail
-    /// rather than replace invalid encoding. Successive percent-encoded
-    /// bytes are assumed to form characters in UTF-8.</summary>
+    /// hexadecimal (base-16) digit) in the given string, with an option to
+    /// fail rather than replace invalid encoding. Successive
+    /// percent-encoded bytes are assumed to form characters in
+    /// UTF-8.</summary>
     /// <param name='str'>A string that may contain percent encoding. May
     /// be null.</param>
     /// <param name='replace'>Indicates whether to replace invalid encoding
@@ -365,8 +367,8 @@ namespace PeterO {
     }
 
     /// <summary>Decodes percent-encoding (of the form "%XX" where X is a
-    /// hexadecimal digit) in the given portion of a string. Successive
-    /// percent-encoded bytes are assumed to form characters in
+    /// hexadecimal (base-16) digit) in the given portion of a string.
+    /// Successive percent-encoded bytes are assumed to form characters in
     /// UTF-8.</summary>
     /// <param name='str'>A string a portion of which may contain percent
     /// encoding. May be null.</param>
@@ -383,8 +385,8 @@ namespace PeterO {
     }
 
     /// <summary>Decodes percent-encoding (of the form "%XX" where X is a
-    /// hexadecimal digit) in the given portion of a string, with an option
-    /// to fail rather than replace invalid encoding. Successive
+    /// hexadecimal (base-16) digit) in the given portion of a string, with
+    /// an option to fail rather than replace invalid encoding. Successive
     /// percent-encoded bytes are assumed to form characters in
     /// UTF-8.</summary>
     /// <param name='str'>A string a portion of which may contain percent

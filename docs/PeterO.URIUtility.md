@@ -2,7 +2,7 @@
 
     public static class URIUtility
 
-Contains utility methods for processing Uniform Resource Identifiers (URIs) and Internationalized Resource Identifiers (IRIs) under RFC3986 and RFC3987, respectively. In the following documentation, URIs and IRIs include URI references and IRI references, for convenience. There are five components to a URI: scheme, authority, path, query, and fragment identifier. The generic syntax to these components is defined in RFC3986 and extended in RFC3987. According to RFC3986, different URI schemes can further restrict the syntax of the authority, path, and query component (see also RFC 7320). However, the syntax of fragment identifiers depends on the media type (also known as MIME type) of the resource a URI references (see also RFC 3986 and RFC 7320). As of September 3, 2019, only the following media types specify a syntax for fragment identifiers:
+Contains auxiliary methods for processing Uniform Resource Identifiers (URIs) and Internationalized Resource Identifiers (IRIs) under RFC3986 and RFC3987, respectively. In the following documentation, URIs and IRIs include URI references and IRI references, for convenience. There are five components to a URI: scheme, authority, path, query, and fragment identifier. The generic syntax to these components is defined in RFC3986 and extended in RFC3987. According to RFC3986, different URI schemes can further restrict the syntax of the authority, path, and query component (see also RFC 7320). However, the syntax of fragment identifiers depends on the media type (also known as MIME type) of the resource a URI references (see also RFC 3986 and RFC 7320). As of September 3, 2019, only the following media types specify a syntax for fragment identifiers:
 
  * The following application/* media types: epub + zip, pdf, senml + cbor, senml + json, senml-exi, sensml + cbor, sensml + json, sensml-exi, smil, vnd.3gpp-v2x-local-service-information, vnd.3gpp.mcdata-signalling, vnd.collection.doc + json, vnd.hc + json, vnd.hyper + json, vnd.hyper-item + json, vnd.mason + json, vnd.microsoft.portable-executable, vnd.oma.bcast.sgdu, vnd.shootproof + json
 
@@ -37,8 +37,8 @@ Contains utility methods for processing Uniform Resource Identifiers (URIs) and 
 * <code>[IsValidCurieReference(string, int, int)](#IsValidCurieReference_string_int_int)</code> - Determines whether the substring is a valid CURIE reference under RDFA 1.
 * <code>[IsValidIRI(string)](#IsValidIRI_string)</code> - Returns whether a string is a valid IRI according to the IRIStrict parse mode.
 * <code>[IsValidIRI(string, PeterO.URIUtility.ParseMode)](#IsValidIRI_string_PeterO_URIUtility_ParseMode)</code> - Returns whether a string is a valid IRI according to the given parse mode.
-* <code>[PercentDecode(string)](#PercentDecode_string)</code> - Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit) in the given string.
-* <code>[PercentDecode(string, int, int)](#PercentDecode_string_int_int)</code> - Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit) in the given portion of a string.
+* <code>[PercentDecode(string)](#PercentDecode_string)</code> - Decodes percent-encoding (of the form "%XX" where X is a hexadecimal (base-16) digit) in the given string.
+* <code>[PercentDecode(string, int, int)](#PercentDecode_string_int_int)</code> - Decodes percent-encoding (of the form "%XX" where X is a hexadecimal (base-16) digit) in the given portion of a string.
 * <code>[RelativeResolve(string, string)](#RelativeResolve_string_string)</code> - Resolves a URI or IRI relative to another URI or IRI.
 * <code>[RelativeResolve(string, string, PeterO.URIUtility.ParseMode)](#RelativeResolve_string_string_PeterO_URIUtility_ParseMode)</code> - Resolves a URI or IRI relative to another URI or IRI.
 * <code>[RelativeResolveWithinBaseURI(string, string)](#RelativeResolveWithinBaseURI_string_string)</code> - Resolves a URI or IRI relative to another URI or IRI, but only if the resolved URI has no ".
@@ -193,7 +193,7 @@ A form of the URI or IRI that possibly contains escaped characters, or null if s
 
  Determines whether the string is a valid URI with a scheme component. This can be used to check for relative URI references. The following cases return true:
 
-    http://example/z xx-x:mm example:/ww
+    [http://example/z](http://example/z) xx-x:mm example:/ww
 
  The following cases return false:
 
@@ -288,7 +288,7 @@ True if the string is not null and is a valid IRI; otherwise, false.
     public static string PercentDecode(
         string str);
 
-Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit) in the given string. Successive percent-encoded bytes are assumed to form characters in UTF-8.
+Decodes percent-encoding (of the form "%XX" where X is a hexadecimal (base-16) digit) in the given string. Successive percent-encoded bytes are assumed to form characters in UTF-8.
 
 <b>Parameters:</b>
 
@@ -306,7 +306,7 @@ The string in which percent-encoding was decoded.
         int index,
         int endIndex);
 
-Decodes percent-encoding (of the form "%XX" where X is a hexadecimal digit) in the given portion of a string. Successive percent-encoded bytes are assumed to form characters in UTF-8.
+Decodes percent-encoding (of the form "%XX" where X is a hexadecimal (base-16) digit) in the given portion of a string. Successive percent-encoded bytes are assumed to form characters in UTF-8.
 
 <b>Parameters:</b>
 
