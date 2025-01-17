@@ -39,6 +39,9 @@ the order they are declared.
 ## Method Details
 
 ### values
+
     public static URIUtility.ParseMode[] values()
+
 ### valueOf
+
     public static URIUtility.ParseMode valueOf(String name)

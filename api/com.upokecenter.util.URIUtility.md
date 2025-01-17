@@ -144,7 +144,9 @@
 ## Method Details
 
 ### EscapeURI
+
     public static String EscapeURI(String s, int mode)
+
 Checks a text string representing a URI or IRI and escapes characters it has
  that can't appear in URIs or IRIs. The function is idempotent; that is,
  calling the function again on the result with the same mode doesn't change
@@ -168,7 +170,9 @@ Checks a text string representing a URI or IRI and escapes characters it has
  or null if s is null.
 
 ### HasScheme
+
     public static boolean HasScheme(String refValue)
+
 <p>Determines whether the string is a valid IRI with a scheme component.
  This can be used to check for relative IRI references. </p><p>The following
  cases return true:</p> <pre>xx-x:mm example:/ww</pre> The following cases
@@ -184,7 +188,9 @@ Checks a text string representing a URI or IRI and escapes characters it has
  otherwise, <code>false</code>.
 
 ### HasSchemeForURI
+
     public static boolean HasSchemeForURI(String refValue)
+
 <p>Determines whether the string is a valid URI with a scheme component.
  This can be used to check for relative URI references. The following cases
  return true: </p><pre>http://example/z xx-x:mm example:/ww</pre> The
@@ -200,7 +206,9 @@ Checks a text string representing a URI or IRI and escapes characters it has
  otherwise, <code>false</code>.
 
 ### PercentDecode
+
     public static String PercentDecode(String str)
+
 Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
  (base-16) digit) in the given string. Successive percent-encoded bytes are
  assumed to form characters in UTF-8.
@@ -214,7 +222,9 @@ Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
 * The string in which percent-encoding was decoded.
 
 ### PercentDecode
+
     public static String PercentDecode(String str, boolean replace)
+
 Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
  (base-16) digit) in the given string, with an option to fail rather than
  replace invalid encoding. Successive percent-encoded bytes are assumed to
@@ -235,7 +245,9 @@ Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
  encoding.
 
 ### PercentDecode
+
     public static String PercentDecode(String str, int index, int endIndex)
+
 Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
  (base-16) digit) in the given portion of a string. Successive
  percent-encoded bytes are assumed to form characters in UTF-8.
@@ -257,7 +269,9 @@ Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
  decoded. Returns null if <code>str</code> is null.
 
 ### PercentDecode
+
     public static String PercentDecode(String str, int index, int endIndex, boolean replace)
+
 Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
  (base-16) digit) in the given portion of a string, with an option to fail
  rather than replace invalid encoding. Successive percent-encoded bytes are
@@ -289,7 +303,9 @@ Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
 * <code>IllegalArgumentException</code> - doesn't satisfy lastIndex&gt;= index.
 
 ### EncodeStringForURI
+
     public static String EncodeStringForURI(String s)
+
 Encodes characters other than "unreserved" characters for URIs.
 
 **Parameters:**
@@ -305,7 +321,9 @@ Encodes characters other than "unreserved" characters for URIs.
 * <code>NullPointerException</code> - The parameter <code>s</code> is null.
 
 ### IsValidCurieReference
+
     public static boolean IsValidCurieReference(String s, int offset, int length)
+
 Determines whether the substring is a valid CURIE reference under RDFA 1.1.
  (The CURIE reference is the part after the colon.).
 
@@ -333,7 +351,9 @@ Determines whether the substring is a valid CURIE reference under RDFA 1.1.
 * <code>NullPointerException</code> - The parameter <code>s</code> is null.
 
 ### BuildIRI
+
     public static String BuildIRI(String schemeAndAuthority, String path, String query, String fragment)
+
 Builds an internationalized resource identifier (IRI) from its components.
 
 **Parameters:**
@@ -359,7 +379,9 @@ Builds an internationalized resource identifier (IRI) from its components.
  arguments result in an invalid IRI.
 
 ### IsValidIRI
+
     public static boolean IsValidIRI(String s)
+
 Returns whether a string is a valid IRI according to the IRIStrict parse
  mode.
 
@@ -372,7 +394,9 @@ Returns whether a string is a valid IRI according to the IRIStrict parse
 * True if the string is not null and is a valid IRI; otherwise, false.
 
 ### IsValidIRI
+
     public static boolean IsValidIRI(String s, URIUtility.ParseMode parseMode)
+
 Returns whether a string is a valid IRI according to the given parse mode.
 
 **Parameters:**
@@ -386,7 +410,9 @@ Returns whether a string is a valid IRI according to the given parse mode.
 * True if the string is not null and is a valid IRI; otherwise, false.
 
 ### RelativeResolve
+
     public static String RelativeResolve(String refValue, String absoluteBase)
+
 Resolves a URI or IRI relative to another URI or IRI.
 
 **Parameters:**
@@ -404,7 +430,9 @@ Resolves a URI or IRI relative to another URI or IRI.
  refValue. Example: <code>http://example.com/my/path/dir/file.txt</code>.
 
 ### RelativeResolve
+
     public static String RelativeResolve(String refValue, String absoluteBase, URIUtility.ParseMode parseMode)
+
 Resolves a URI or IRI relative to another URI or IRI.
 
 **Parameters:**
@@ -430,7 +458,9 @@ Resolves a URI or IRI relative to another URI or IRI.
  absoluteBase</code> or <code>refValue</code> or <code>refValue</code> is null.
 
 ### SplitIRIToStrings
+
     public static String[] SplitIRIToStrings(String s)
+
 Parses an Internationalized Resource Identifier (IRI) reference under
  RFC3987. If the IRI reference is syntactically valid, splits the string into
  its components and returns an array containing those components.
@@ -448,7 +478,9 @@ Parses an Internationalized Resource Identifier (IRI) reference under
  valid IRI, returns null.
 
 ### SplitIRI
+
     public static int[] SplitIRI(String s)
+
 Parses an Internationalized Resource Identifier (IRI) reference under
  RFC3987. If the IRI reference is syntactically valid, splits the string into
  its components and returns an array containing the indices into the
@@ -470,7 +502,9 @@ Parses an Internationalized Resource Identifier (IRI) reference under
  valid IRI, returns null.
 
 ### SplitIRI
+
     public static int[] SplitIRI(String s, int offset, int length, URIUtility.ParseMode parseMode)
+
 Parses a substring that represents an Internationalized Resource Identifier
  (IRI) under RFC3987. If the IRI is syntactically valid, splits the string
  into its components and returns an array containing the indices into the
@@ -509,7 +543,9 @@ Parses a substring that represents an Internationalized Resource Identifier
 * <code>NullPointerException</code> - The parameter <code>s</code> is null.
 
 ### SplitIRI
+
     public static int[] SplitIRI(String s, URIUtility.ParseMode parseMode)
+
 Parses an Internationalized Resource Identifier (IRI) reference under
  RFC3987. If the IRI is syntactically valid, splits the string into its
  components and returns an array containing the indices into the components.
@@ -532,7 +568,9 @@ Parses an Internationalized Resource Identifier (IRI) reference under
  valid IRI, returns null.
 
 ### DirectoryPath
+
     public static String DirectoryPath(String uref)
+
 Extracts the scheme, the authority, and the path component (up to and
  including the last "/" in the path if any) from the given URI or IRI, using
  the IRIStrict parse mode to check the URI or IRI. Any "./" or "../" in the
@@ -552,7 +590,9 @@ Extracts the scheme, the authority, and the path component (up to and
 * <code>NullPointerException</code> - The parameter <code>uref</code> is null.
 
 ### DirectoryPath
+
     public static String DirectoryPath(String uref, URIUtility.ParseMode parseMode)
+
 Extracts the scheme, the authority, and the path component (up to and
  including the last "/" in the path if any) from the given URI or IRI, using
  the given parse mode to check the URI or IRI. Any "./" or "../" in the path
@@ -570,7 +610,9 @@ Extracts the scheme, the authority, and the path component (up to and
  is null or not a valid URI or IRI.
 
 ### RelativeResolveWithinBaseURI
+
     public static String RelativeResolveWithinBaseURI(String refValue, String absoluteBase)
+
 Resolves a URI or IRI relative to another URI or IRI, but only if the
  resolved URI has no "." or ".." component in its path and only if resolved
  URI's directory path matches that of the second URI or IRI.
