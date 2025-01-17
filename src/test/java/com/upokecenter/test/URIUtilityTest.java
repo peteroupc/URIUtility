@@ -8,8 +8,8 @@ import com.upokecenter.util.*;
 
   public class URIUtilityTest {
     public static boolean SplitIRIFails(String iri, boolean expectedNonNull) {
-      return expectedNonNull ? URIUtility.SplitIRI(iri) == null :
-        URIUtility.SplitIRI(iri) != null;
+      return expectedNonNull ? com.upokecenter.util.URIUtility.SplitIRI(iri) == null :
+        com.upokecenter.util.URIUtility.SplitIRI(iri) != null;
     }
 
     @Test
@@ -27,7 +27,7 @@ import com.upokecenter.util.*;
     }
 
     private static void TestEmptyPathOne(String uri) {
-      int[] iriPositions = URIUtility.SplitIRI(uri);
+      int[] iriPositions = com.upokecenter.util.URIUtility.SplitIRI(uri);
       if (iriPositions == null) {
         Assert.fail();
       }
@@ -54,7 +54,7 @@ import com.upokecenter.util.*;
     }
 
     private static void AssertIdempotency(String s) {
-      boolean cond = URIUtility.IsValidIRI(s);
+      boolean cond = com.upokecenter.util.URIUtility.IsValidIRI(s);
 
       if (!(cond)) {
  Assert.fail(s);
@@ -303,27 +303,27 @@ import com.upokecenter.util.*;
     }
 
     private static void TestPercentDecodeOne(String str, String exp) {
-      Assert.assertEquals(exp, URIUtility.PercentDecode(str));
-      Assert.assertEquals(exp, URIUtility.PercentDecode(str, true));
-      Assert.assertEquals(exp, URIUtility.PercentDecode(str, false));
-      Assert.assertEquals(exp, URIUtility.PercentDecode(str, 0, str.length(), true));
-      Assert.assertEquals(exp, URIUtility.PercentDecode(str, 0, str.length(), false));
+      Assert.assertEquals(exp, com.upokecenter.util.URIUtility.PercentDecode(str));
+      Assert.assertEquals(exp, com.upokecenter.util.URIUtility.PercentDecode(str, true));
+      Assert.assertEquals(exp, com.upokecenter.util.URIUtility.PercentDecode(str, false));
+      Assert.assertEquals(exp, com.upokecenter.util.URIUtility.PercentDecode(str, 0, str.length(), true));
+      Assert.assertEquals(exp, com.upokecenter.util.URIUtility.PercentDecode(str, 0, str.length(), false));
       Assert.assertEquals(
         exp,
-        URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.length(), true));
+        com.upokecenter.util.URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.length(), true));
       Assert.assertEquals(
          exp,
-         URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.length(), false));
+         com.upokecenter.util.URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.length(), false));
     }
 
     private static void TestPercentDecodeOneFail(String str, String exp) {
-      Assert.assertEquals(exp, URIUtility.PercentDecode(str));
-      Assert.assertEquals(exp, URIUtility.PercentDecode(str, true));
-      Assert.assertEquals(null, URIUtility.PercentDecode(str, false));
-      Assert.assertEquals(exp, URIUtility.PercentDecode(str, 0, str.length(), true));
+      Assert.assertEquals(exp, com.upokecenter.util.URIUtility.PercentDecode(str));
+      Assert.assertEquals(exp, com.upokecenter.util.URIUtility.PercentDecode(str, true));
+      Assert.assertEquals(null, com.upokecenter.util.URIUtility.PercentDecode(str, false));
+      Assert.assertEquals(exp, com.upokecenter.util.URIUtility.PercentDecode(str, 0, str.length(), true));
     {
         Object objectTemp = null;
-        Object objectTemp2 = URIUtility.PercentDecode(
+        Object objectTemp2 = com.upokecenter.util.URIUtility.PercentDecode(
           str,
           0,
           str.length(),
@@ -332,15 +332,15 @@ import com.upokecenter.util.*;
       }
       Assert.assertEquals(
         exp,
-        URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.length(), true));
+        com.upokecenter.util.URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.length(), true));
       Assert.assertEquals(
          null,
-         URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.length(), false));
+         com.upokecenter.util.URIUtility.PercentDecode("??" + str + "??", 2, 2 + str.length(), false));
     }
 
     @Test
     public void TestPercentDecode() {
-      Assert.assertEquals(null, URIUtility.PercentDecode(null));
+      Assert.assertEquals(null, com.upokecenter.util.URIUtility.PercentDecode(null));
       TestPercentDecodeOne("test", "test");
       TestPercentDecodeOne("te%23t", "te\u0023t");
     TestPercentDecodeOne("te%7ft", "te\u007ft");

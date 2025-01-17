@@ -415,8 +415,9 @@ namespace PeterO {
       }
       // Quick check
       var quickCheck = true;
-      var lastIndex = index;
+      int lastIndex;
       int i = index;
+      lastIndex = index;
       for (; i < endIndex; ++i) {
         if (str[i] >= 0xd800 || str[i] == '%') {
           quickCheck = false;

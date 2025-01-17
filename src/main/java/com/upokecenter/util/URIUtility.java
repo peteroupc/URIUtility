@@ -177,7 +177,7 @@ private URIUtility() {
             s,
             0,
             s.length(),
-            URIUtility.ParseMode.IRIStrict);
+            com.upokecenter.util.URIUtility.ParseMode.getIRIStrict());
         if (components == null) {
           return null;
         }
@@ -186,7 +186,7 @@ private URIUtility() {
           s,
           0,
           s.length(),
-          URIUtility.ParseMode.IRISurrogateLenient);
+          com.upokecenter.util.URIUtility.ParseMode.getIRISurrogateLenient());
       }
       int index = 0;
       int valueSLength = s.length();
@@ -281,7 +281,7 @@ private URIUtility() {
         refValue,
         0,
         refValue.length(),
-        URIUtility.ParseMode.IRIStrict);
+        com.upokecenter.util.URIUtility.ParseMode.getIRIStrict());
       return segments != null && segments[0] >= 0;
     }
 
@@ -299,7 +299,7 @@ private URIUtility() {
         refValue,
         0,
         refValue.length(),
-        URIUtility.ParseMode.URIStrict);
+        com.upokecenter.util.URIUtility.ParseMode.getURIStrict());
       return segments != null && segments[0] >= 0;
     }
 
@@ -392,8 +392,9 @@ private URIUtility() {
       }
       // Quick check
       boolean quickCheck = true;
-      var lastIndex = index;
+      int lastIndex;
       int i = index;
+      lastIndex = index;
       for (; i < endIndex; ++i) {
         if (str.charAt(i) >= 0xd800 || str.charAt(i) == '%') {
           quickCheck = false;
@@ -843,7 +844,7 @@ if (!replace) {
         s,
         0,
         s.length(),
-        URIUtility.ParseMode.IRIStrict)) != null;
+        com.upokecenter.util.URIUtility.ParseMode.getIRIStrict())) != null;
     }
 
     /**
@@ -852,7 +853,7 @@ if (!replace) {
      * @param parseMode The parse mode to use when checking for a valid IRI.
      * @return True if the string is not null and is a valid IRI; otherwise, false.
      */
-    public static boolean IsValidIRI(String s, URIUtility.ParseMode parseMode) {
+    public static boolean IsValidIRI(String s, com.upokecenter.util.URIUtility.ParseMode parseMode) {
       return ((s == null) ? null : SplitIRI(
         s,
         0,
@@ -1244,7 +1245,7 @@ if (!replace) {
       return RelativeResolve(
         refValue,
         absoluteBase,
-        URIUtility.ParseMode.IRIStrict);
+        com.upokecenter.util.URIUtility.ParseMode.getIRIStrict());
     }
 
     /**
@@ -1264,7 +1265,7 @@ if (!replace) {
     public static String RelativeResolve(
       String refValue,
       String absoluteBase,
-      URIUtility.ParseMode parseMode) {
+      com.upokecenter.util.URIUtility.ParseMode parseMode) {
       int[] segments = (refValue == null) ? null : SplitIRI(
         refValue,
         0,
@@ -1450,7 +1451,7 @@ if (!replace) {
           s,
           0,
           s.length(),
-          URIUtility.ParseMode.IRIStrict);
+          com.upokecenter.util.URIUtility.ParseMode.getIRIStrict());
     }
 
     /**
@@ -1482,7 +1483,7 @@ if (!replace) {
       String s,
       int offset,
       int length,
-      URIUtility.ParseMode parseMode) {
+      com.upokecenter.util.URIUtility.ParseMode parseMode) {
       if (s == null) {
         return null;
       }
@@ -1512,10 +1513,9 @@ if (!replace) {
         retval[5] = 0;
         return retval;
       }
-      boolean asciiOnly = parseMode == URIUtility.ParseMode.URILenient ||
-        parseMode == URIUtility.ParseMode.URIStrict;
-      boolean strict = parseMode == URIUtility.ParseMode.URIStrict || parseMode ==
-        URIUtility.ParseMode.IRIStrict;
+      boolean asciiOnly = parseMode == com.upokecenter.util.URIUtility.ParseMode.getURILenient() ||
+        parseMode == com.upokecenter.util.URIUtility.ParseMode.getURIStrict();
+      boolean strict = parseMode == com.upokecenter.util.URIUtility.ParseMode.getURIStrict() || parseMode == com.upokecenter.util.URIUtility.ParseMode.getIRIStrict();
       int index = offset;
       int valueSLength = offset + length;
       boolean scheme = false;
@@ -1567,7 +1567,7 @@ if (!replace) {
             c = 0x10000 + ((c & 0x3ff) << 10) + (s.charAt(index + 1) & 0x3ff);
             ++index;
           } else if ((c & 0xf800) == 0xd800) {
-            if (parseMode == URIUtility.ParseMode.IRISurrogateLenient) {
+            if (parseMode == com.upokecenter.util.URIUtility.ParseMode.getIRISurrogateLenient()) {
               c = 0xfffd;
             } else {
               return null;
@@ -1742,7 +1742,7 @@ if (!replace) {
      * both indices in that pair will be -1. If the string is null or is not a
      * valid IRI, returns null.
      */
-    public static int[] SplitIRI(String s, URIUtility.ParseMode parseMode) {
+    public static int[] SplitIRI(String s, com.upokecenter.util.URIUtility.ParseMode parseMode) {
       return (s == null) ? null : SplitIRI(s, 0, s.length(), parseMode);
     }
 
@@ -1810,7 +1810,7 @@ if (!replace) {
       return false;
     }
 
-    private static String UriPath(String uri, URIUtility.ParseMode parseMode) {
+    private static String UriPath(String uri, com.upokecenter.util.URIUtility.ParseMode parseMode) {
       int[] indexes = SplitIRI(uri, parseMode);
       return (
           indexes == null) ? null : uri.substring(
@@ -1829,7 +1829,7 @@ if (!replace) {
      * @throws NullPointerException The parameter {@code uref} is null.
      */
     public static String DirectoryPath(String uref) {
-      return DirectoryPath(uref, URIUtility.ParseMode.IRIStrict);
+      return DirectoryPath(uref, com.upokecenter.util.URIUtility.ParseMode.getIRIStrict());
     }
 
     /**
@@ -1842,7 +1842,7 @@ if (!replace) {
      * @return The directory path of the URI or IRI. Returns null if {@code uref}
      * is null or not a valid URI or IRI.
      */
-    public static String DirectoryPath(String uref, URIUtility.ParseMode
+    public static String DirectoryPath(String uref, com.upokecenter.util.URIUtility.ParseMode
       parseMode) {
       int[] indexes = SplitIRI(uref, parseMode);
       if (indexes == null) {
@@ -1885,7 +1885,7 @@ if (!replace) {
       String refValue,
       String absoluteBase) {
       if (!((absoluteBase) == null || (absoluteBase).length() == 0) &&
-        SplitIRI(absoluteBase, URIUtility.ParseMode.IRIStrict) == null) {
+        SplitIRI(absoluteBase, com.upokecenter.util.URIUtility.ParseMode.getIRIStrict()) == null) {
         return null;
       }
       String rel = RelativeResolve(refValue, absoluteBase);
@@ -1895,7 +1895,7 @@ if (!replace) {
       if (refValue == null) {
         throw new IllegalStateException();
       }
-      String relpath = UriPath(refValue, URIUtility.ParseMode.IRIStrict);
+      String relpath = UriPath(refValue, com.upokecenter.util.URIUtility.ParseMode.getIRIStrict());
       if (PathHasDotComponent(relpath)) {
         // Resolved path has a dot component in it (usually
         // because that component is percent-encoded)
