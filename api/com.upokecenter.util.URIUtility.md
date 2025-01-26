@@ -46,14 +46,14 @@
 
 * `static String DirectoryPath(String uref)`<br>
  Extracts the scheme, the authority, and the path component (up to and
- including the last "/" in the path if any) from the given URI or IRI, using
- the IRIStrict parse mode to check the URI or IRI.
+ including the last "/" in the path if any) from the specified URI or IRI,
+ using the IRIStrict parse mode to check the URI or IRI.
 
 * `static String DirectoryPath(String uref,
  URIUtility.ParseMode parseMode)`<br>
  Extracts the scheme, the authority, and the path component (up to and
- including the last "/" in the path if any) from the given URI or IRI, using
- the given parse mode to check the URI or IRI.
+ including the last "/" in the path if any) from the specified URI or IRI,
+ using the specified parse mode to check the URI or IRI.
 
 * `static String EncodeStringForURI(String s)`<br>
  Encodes characters other than "unreserved" characters for URIs.
@@ -80,31 +80,32 @@
 
 * `static boolean IsValidIRI(String s,
  URIUtility.ParseMode parseMode)`<br>
- Returns whether a string is a valid IRI according to the given parse mode.
+ Returns whether a string is a valid IRI according to the specified parse
+ mode.
 
 * `static String PercentDecode(String str)`<br>
  Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
- (base-16) digit) in the given string.
+ (base-16) digit) in the specified string.
 
 * `static String PercentDecode(String str,
  boolean replace)`<br>
  Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
- (base-16) digit) in the given string, with an option to fail rather than
+ (base-16) digit) in the specified string, with an option to fail rather than
  replace invalid encoding.
 
 * `static String PercentDecode(String str,
  int index,
  int endIndex)`<br>
  Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
- (base-16) digit) in the given portion of a string.
+ (base-16) digit) in the specified portion of a string.
 
 * `static String PercentDecode(String str,
  int index,
  int endIndex,
  boolean replace)`<br>
  Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
- (base-16) digit) in the given portion of a string, with an option to fail
- rather than replace invalid encoding.
+ (base-16) digit) in the specified portion of a string, with an option to
+ fail rather than replace invalid encoding.
 
 * `static String RelativeResolve(String refValue,
  String absoluteBase)`<br>
@@ -210,8 +211,8 @@ Checks a text string representing a URI or IRI and escapes characters it has
     public static String PercentDecode(String str)
 
 Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
- (base-16) digit) in the given string. Successive percent-encoded bytes are
- assumed to form characters in UTF-8.
+ (base-16) digit) in the specified string. Successive percent-encoded bytes
+ are assumed to form characters in UTF-8.
 
 **Parameters:**
 
@@ -226,7 +227,7 @@ Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
     public static String PercentDecode(String str, boolean replace)
 
 Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
- (base-16) digit) in the given string, with an option to fail rather than
+ (base-16) digit) in the specified string, with an option to fail rather than
  replace invalid encoding. Successive percent-encoded bytes are assumed to
  form characters in UTF-8.
 
@@ -249,7 +250,7 @@ Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
     public static String PercentDecode(String str, int index, int endIndex)
 
 Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
- (base-16) digit) in the given portion of a string. Successive
+ (base-16) digit) in the specified portion of a string. Successive
  percent-encoded bytes are assumed to form characters in UTF-8.
 
 **Parameters:**
@@ -265,7 +266,7 @@ Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
 
 **Returns:**
 
-* The portion of the given string in which percent-encoding was
+* The portion of the specified string in which percent-encoding was
  decoded. Returns null if <code>str</code> is null.
 
 ### PercentDecode
@@ -273,9 +274,9 @@ Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
     public static String PercentDecode(String str, int index, int endIndex, boolean replace)
 
 Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
- (base-16) digit) in the given portion of a string, with an option to fail
- rather than replace invalid encoding. Successive percent-encoded bytes are
- assumed to form characters in UTF-8.
+ (base-16) digit) in the specified portion of a string, with an option to
+ fail rather than replace invalid encoding. Successive percent-encoded bytes
+ are assumed to form characters in UTF-8.
 
 **Parameters:**
 
@@ -294,7 +295,7 @@ Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
 
 **Returns:**
 
-* The portion of the given string in which percent-encoding was
+* The portion of the specified string in which percent-encoding was
  decoded. Returns null if <code>str</code> is null or if "replace" is true and the
  portion of the string has an invalid encoding.
 
@@ -371,7 +372,7 @@ Builds an internationalized resource identifier (IRI) from its components.
 
 **Returns:**
 
-* A URI built from the given components.
+* A URI built from the specified components.
 
 **Throws:**
 
@@ -397,7 +398,8 @@ Returns whether a string is a valid IRI according to the IRIStrict parse
 
     public static boolean IsValidIRI(String s, URIUtility.ParseMode parseMode)
 
-Returns whether a string is a valid IRI according to the given parse mode.
+Returns whether a string is a valid IRI according to the specified parse
+ mode.
 
 **Parameters:**
 
@@ -572,9 +574,9 @@ Parses an Internationalized Resource Identifier (IRI) reference under
     public static String DirectoryPath(String uref)
 
 Extracts the scheme, the authority, and the path component (up to and
- including the last "/" in the path if any) from the given URI or IRI, using
- the IRIStrict parse mode to check the URI or IRI. Any "./" or "../" in the
- path is not condensed.
+ including the last "/" in the path if any) from the specified URI or IRI,
+ using the IRIStrict parse mode to check the URI or IRI. Any "./" or "../" in
+ the path is not condensed.
 
 **Parameters:**
 
@@ -594,9 +596,9 @@ Extracts the scheme, the authority, and the path component (up to and
     public static String DirectoryPath(String uref, URIUtility.ParseMode parseMode)
 
 Extracts the scheme, the authority, and the path component (up to and
- including the last "/" in the path if any) from the given URI or IRI, using
- the given parse mode to check the URI or IRI. Any "./" or "../" in the path
- is not condensed.
+ including the last "/" in the path if any) from the specified URI or IRI,
+ using the specified parse mode to check the URI or IRI. Any "./" or "../" in
+ the path is not condensed.
 
 **Parameters:**
 

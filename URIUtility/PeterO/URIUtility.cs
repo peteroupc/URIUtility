@@ -338,7 +338,7 @@ namespace PeterO {
     }
 
     /// <summary>Decodes percent-encoding (of the form "%XX" where X is a
-    /// hexadecimal (base-16) digit) in the given string. Successive
+    /// hexadecimal (base-16) digit) in the specified string. Successive
     /// percent-encoded bytes are assumed to form characters in
     /// UTF-8.</summary>
     /// <param name='str'>A string that may contain percent encoding. May
@@ -350,8 +350,8 @@ namespace PeterO {
     }
 
     /// <summary>Decodes percent-encoding (of the form "%XX" where X is a
-    /// hexadecimal (base-16) digit) in the given string, with an option to
-    /// fail rather than replace invalid encoding. Successive
+    /// hexadecimal (base-16) digit) in the specified string, with an
+    /// option to fail rather than replace invalid encoding. Successive
     /// percent-encoded bytes are assumed to form characters in
     /// UTF-8.</summary>
     /// <param name='str'>A string that may contain percent encoding. May
@@ -367,7 +367,7 @@ namespace PeterO {
     }
 
     /// <summary>Decodes percent-encoding (of the form "%XX" where X is a
-    /// hexadecimal (base-16) digit) in the given portion of a string.
+    /// hexadecimal (base-16) digit) in the specified portion of a string.
     /// Successive percent-encoded bytes are assumed to form characters in
     /// UTF-8.</summary>
     /// <param name='str'>A string a portion of which may contain percent
@@ -377,17 +377,17 @@ namespace PeterO {
     /// <param name='endIndex'>Index starting at 0 showing where the
     /// desired portion of <paramref name='str'/> ends. The character
     /// before this index is the last character.</param>
-    /// <returns>The portion of the given string in which percent-encoding
-    /// was decoded. Returns null if <paramref name='str'/> is
-    /// null.</returns>
+    /// <returns>The portion of the specified string in which
+    /// percent-encoding was decoded. Returns null if <paramref
+    /// name='str'/> is null.</returns>
     public static string PercentDecode(string str, int index, int endIndex) {
        return PercentDecode(str, index, endIndex, true);
     }
 
     /// <summary>Decodes percent-encoding (of the form "%XX" where X is a
-    /// hexadecimal (base-16) digit) in the given portion of a string, with
-    /// an option to fail rather than replace invalid encoding. Successive
-    /// percent-encoded bytes are assumed to form characters in
+    /// hexadecimal (base-16) digit) in the specified portion of a string,
+    /// with an option to fail rather than replace invalid encoding.
+    /// Successive percent-encoded bytes are assumed to form characters in
     /// UTF-8.</summary>
     /// <param name='str'>A string a portion of which may contain percent
     /// encoding. May be null.</param>
@@ -399,10 +399,10 @@ namespace PeterO {
     /// <param name='replace'>Indicates whether to replace invalid encoding
     /// with U+FFFD, the replacement character. If false, returns null if
     /// invalid encoding is found.</param>
-    /// <returns>The portion of the given string in which percent-encoding
-    /// was decoded. Returns null if <paramref name='str'/> is null or if
-    /// "replace" is true and the portion of the string has an invalid
-    /// encoding.</returns>
+    /// <returns>The portion of the specified string in which
+    /// percent-encoding was decoded. Returns null if <paramref
+    /// name='str'/> is null or if "replace" is true and the portion of the
+    /// string has an invalid encoding.</returns>
     /// <exception cref='ArgumentException'>doesn't satisfy
     /// lastIndex&amp;gt;= index.</exception>
     public static string PercentDecode(
@@ -782,7 +782,7 @@ if (!replace) {
     /// <param name='query'>The query string. Can be null or empty.</param>
     /// <param name='fragment'>The fragment identifier. Can be null or
     /// empty.</param>
-    /// <returns>A URI built from the given components.</returns>
+    /// <returns>A URI built from the specified components.</returns>
     /// <exception cref='ArgumentException'>Invalid schemeAndAuthority
     /// parameter, or the arguments result in an invalid IRI.</exception>
     public static string BuildIRI(
@@ -880,7 +880,7 @@ if (!replace) {
     }
 
     /// <summary>Returns whether a string is a valid IRI according to the
-    /// given parse mode.</summary>
+    /// specified parse mode.</summary>
     /// <param name='s'>A text string. Can be null.</param>
     /// <param name='parseMode'>The parse mode to use when checking for a
     /// valid IRI.</param>
@@ -1862,8 +1862,9 @@ if (!replace) {
 
     /// <summary>Extracts the scheme, the authority, and the path component
     /// (up to and including the last "/" in the path if any) from the
-    /// given URI or IRI, using the IRIStrict parse mode to check the URI
-    /// or IRI. Any "./" or "../" in the path is not condensed.</summary>
+    /// specified URI or IRI, using the IRIStrict parse mode to check the
+    /// URI or IRI. Any "./" or "../" in the path is not
+    /// condensed.</summary>
     /// <param name='uref'>A text string representing a URI or IRI. Can be
     /// null.</param>
     /// <returns>The directory path of the URI or IRI. Returns null if
@@ -1877,8 +1878,9 @@ if (!replace) {
 
     /// <summary>Extracts the scheme, the authority, and the path component
     /// (up to and including the last "/" in the path if any) from the
-    /// given URI or IRI, using the given parse mode to check the URI or
-    /// IRI. Any "./" or "../" in the path is not condensed.</summary>
+    /// specified URI or IRI, using the specified parse mode to check the
+    /// URI or IRI. Any "./" or "../" in the path is not
+    /// condensed.</summary>
     /// <param name='uref'>A text string representing a URI or IRI. Can be
     /// null.</param>
     /// <param name='parseMode'>The parse mode to use to check the URI or

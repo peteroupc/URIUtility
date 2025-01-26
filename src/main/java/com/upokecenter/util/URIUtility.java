@@ -320,8 +320,8 @@ private URIUtility() {
 
     /**
      * Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
-     * (base-16) digit) in the given string. Successive percent-encoded bytes are
-     * assumed to form characters in UTF-8.
+     * (base-16) digit) in the specified string. Successive percent-encoded bytes
+     * are assumed to form characters in UTF-8.
      * @param str A string that may contain percent encoding. May be null.
      * @return The string in which percent-encoding was decoded.
      */
@@ -331,7 +331,7 @@ private URIUtility() {
 
     /**
      * Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
-     * (base-16) digit) in the given string, with an option to fail rather than
+     * (base-16) digit) in the specified string, with an option to fail rather than
      * replace invalid encoding. Successive percent-encoded bytes are assumed to
      * form characters in UTF-8.
      * @param str A string that may contain percent encoding. May be null.
@@ -348,7 +348,7 @@ private URIUtility() {
 
     /**
      * Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
-     * (base-16) digit) in the given portion of a string. Successive
+     * (base-16) digit) in the specified portion of a string. Successive
      * percent-encoded bytes are assumed to form characters in UTF-8.
      * @param str A string a portion of which may contain percent encoding. May be
      * null.
@@ -356,7 +356,7 @@ private URIUtility() {
      * str} begins.
      * @param endIndex Index starting at 0 showing where the desired portion of
      * {@code str} ends. The character before this index is the last character.
-     * @return The portion of the given string in which percent-encoding was
+     * @return The portion of the specified string in which percent-encoding was
      * decoded. Returns null if {@code str} is null.
      */
     public static String PercentDecode(String str, int index, int endIndex) {
@@ -365,9 +365,9 @@ private URIUtility() {
 
     /**
      * Decodes percent-encoding (of the form "%XX" where X is a hexadecimal
-     * (base-16) digit) in the given portion of a string, with an option to fail
-     * rather than replace invalid encoding. Successive percent-encoded bytes are
-     * assumed to form characters in UTF-8.
+     * (base-16) digit) in the specified portion of a string, with an option to
+     * fail rather than replace invalid encoding. Successive percent-encoded bytes
+     * are assumed to form characters in UTF-8.
      * @param str A string a portion of which may contain percent encoding. May be
      * null.
      * @param index Index starting at 0 showing where the desired portion of {@code
@@ -377,7 +377,7 @@ private URIUtility() {
      * @param replace Indicates whether to replace invalid encoding with U+FFFD,
      * the replacement character. If false, returns null if invalid encoding is
      * found.
-     * @return The portion of the given string in which percent-encoding was
+     * @return The portion of the specified string in which percent-encoding was
      * decoded. Returns null if {@code str} is null or if "replace" is true and the
      * portion of the string has an invalid encoding.
      * @throws IllegalArgumentException doesn't satisfy lastIndex&gt;= index.
@@ -748,7 +748,7 @@ if (!replace) {
      * @param path A string representing a path component. Can be null or empty.
      * @param query The query string. Can be null or empty.
      * @param fragment The fragment identifier. Can be null or empty.
-     * @return A URI built from the given components.
+     * @return A URI built from the specified components.
      * @throws IllegalArgumentException Invalid schemeAndAuthority parameter, or the
      * arguments result in an invalid IRI.
      */
@@ -848,7 +848,8 @@ if (!replace) {
     }
 
     /**
-     * Returns whether a string is a valid IRI according to the given parse mode.
+     * Returns whether a string is a valid IRI according to the specified parse
+     * mode.
      * @param s A text string. Can be null.
      * @param parseMode The parse mode to use when checking for a valid IRI.
      * @return True if the string is not null and is a valid IRI; otherwise, false.
@@ -1820,9 +1821,9 @@ if (!replace) {
 
     /**
      * Extracts the scheme, the authority, and the path component (up to and
-     * including the last "/" in the path if any) from the given URI or IRI, using
-     * the IRIStrict parse mode to check the URI or IRI. Any "./" or "../" in the
-     * path is not condensed.
+     * including the last "/" in the path if any) from the specified URI or IRI,
+     * using the IRIStrict parse mode to check the URI or IRI. Any "./" or "../" in
+     * the path is not condensed.
      * @param uref A text string representing a URI or IRI. Can be null.
      * @return The directory path of the URI or IRI. Returns null if {@code uref}
      * is null or not a valid URI or IRI.
@@ -1834,9 +1835,9 @@ if (!replace) {
 
     /**
      * Extracts the scheme, the authority, and the path component (up to and
-     * including the last "/" in the path if any) from the given URI or IRI, using
-     * the given parse mode to check the URI or IRI. Any "./" or "../" in the path
-     * is not condensed.
+     * including the last "/" in the path if any) from the specified URI or IRI,
+     * using the specified parse mode to check the URI or IRI. Any "./" or "../" in
+     * the path is not condensed.
      * @param uref A text string representing a URI or IRI. Can be null.
      * @param parseMode The parse mode to use to check the URI or IRI.
      * @return The directory path of the URI or IRI. Returns null if {@code uref}
