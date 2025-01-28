@@ -374,7 +374,7 @@ import com.upokecenter.util.*;
       if (str == null) {
         throw new NullPointerException("str");
       }
-      int[] endPos = new int[] { 0 };
+      int endPos = new int[] { 0 };
       String[] ret = ParseJSONStringArray(str, endPos);
       if (endPos[0] != str.length()) {
         throw new IllegalStateException("Invalid JSON");

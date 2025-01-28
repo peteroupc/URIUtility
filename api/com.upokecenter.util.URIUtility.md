@@ -635,4 +635,4 @@ Resolves a URI or IRI relative to another URI or IRI, but only if the
  a valid IRI. Returns null instead if the resolved IRI has no "." or ".."
  component in its path or if the resolved URI's directory path does not match
  that of <code>absoluteBase</code>. Example: <code>
- [http://example.com/my/path/dir/file.txt</code>.](http://example.com/my/path/dir/file.txt</code>.)
+ http://example.com/my/path/dir/file.txt</code>.

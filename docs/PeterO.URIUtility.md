@@ -28,17 +28,17 @@ Contains auxiliary methods for processing Uniform Resource Identifiers (URIs) an
 
 ### Member Summary
 * <code>[BuildIRI(string, string, string, string)](#BuildIRI_string_string_string_string)</code> - Builds an internationalized resource identifier (IRI) from its components.
-* <code>[DirectoryPath(string)](#DirectoryPath_string)</code> - Extracts the scheme, the authority, and the path component (up to and including the last "/" in the path if any) from the given URI or IRI, using the IRIStrict parse mode to check the URI or IRI.
-* <code>[DirectoryPath(string, PeterO.URIUtility.ParseMode)](#DirectoryPath_string_PeterO_URIUtility_ParseMode)</code> - Extracts the scheme, the authority, and the path component (up to and including the last "/" in the path if any) from the given URI or IRI, using the given parse mode to check the URI or IRI.
+* <code>[DirectoryPath(string)](#DirectoryPath_string)</code> - Extracts the scheme, the authority, and the path component (up to and including the last "/" in the path if any) from the specified URI or IRI, using the IRIStrict parse mode to check the URI or IRI.
+* <code>[DirectoryPath(string, PeterO.URIUtility.ParseMode)](#DirectoryPath_string_PeterO_URIUtility_ParseMode)</code> - Extracts the scheme, the authority, and the path component (up to and including the last "/" in the path if any) from the specified URI or IRI, using the specified parse mode to check the URI or IRI.
 * <code>[EncodeStringForURI(string)](#EncodeStringForURI_string)</code> - Encodes characters other than "unreserved" characters for URIs.
 * <code>[EscapeURI(string, int)](#EscapeURI_string_int)</code> - Checks a text string representing a URI or IRI and escapes characters it has that can't appear in URIs or IRIs.
 * <code>[HasScheme(string)](#HasScheme_string)</code> - Determines whether the string is a valid IRI with a scheme component.
 * <code>[HasSchemeForURI(string)](#HasSchemeForURI_string)</code> - Determines whether the string is a valid URI with a scheme component.
 * <code>[IsValidCurieReference(string, int, int)](#IsValidCurieReference_string_int_int)</code> - Determines whether the substring is a valid CURIE reference under RDFA 1.
 * <code>[IsValidIRI(string)](#IsValidIRI_string)</code> - Returns whether a string is a valid IRI according to the IRIStrict parse mode.
-* <code>[IsValidIRI(string, PeterO.URIUtility.ParseMode)](#IsValidIRI_string_PeterO_URIUtility_ParseMode)</code> - Returns whether a string is a valid IRI according to the given parse mode.
-* <code>[PercentDecode(string)](#PercentDecode_string)</code> - Decodes percent-encoding (of the form "%XX" where X is a hexadecimal (base-16) digit) in the given string.
-* <code>[PercentDecode(string, int, int)](#PercentDecode_string_int_int)</code> - Decodes percent-encoding (of the form "%XX" where X is a hexadecimal (base-16) digit) in the given portion of a string.
+* <code>[IsValidIRI(string, PeterO.URIUtility.ParseMode)](#IsValidIRI_string_PeterO_URIUtility_ParseMode)</code> - Returns whether a string is a valid IRI according to the specified parse mode.
+* <code>[PercentDecode(string)](#PercentDecode_string)</code> - Decodes percent-encoding (of the form "%XX" where X is a hexadecimal (base-16) digit) in the specified string.
+* <code>[PercentDecode(string, int, int)](#PercentDecode_string_int_int)</code> - Decodes percent-encoding (of the form "%XX" where X is a hexadecimal (base-16) digit) in the specified portion of a string.
 * <code>[RelativeResolve(string, string)](#RelativeResolve_string_string)</code> - Resolves a URI or IRI relative to another URI or IRI.
 * <code>[RelativeResolve(string, string, PeterO.URIUtility.ParseMode)](#RelativeResolve_string_string_PeterO_URIUtility_ParseMode)</code> - Resolves a URI or IRI relative to another URI or IRI.
 * <code>[RelativeResolveWithinBaseURI(string, string)](#RelativeResolveWithinBaseURI_string_string)</code> - Resolves a URI or IRI relative to another URI or IRI, but only if the resolved URI has no ".
@@ -70,7 +70,7 @@ Builds an internationalized resource identifier (IRI) from its components.
 
 <b>Return Value:</b>
 
-A URI built from the given components.
+A URI built from the specified components.
 
 <b>Exceptions:</b>
 
@@ -83,7 +83,7 @@ Invalid schemeAndAuthority parameter, or the arguments result in an invalid IRI.
     public static string DirectoryPath(
         string uref);
 
-Extracts the scheme, the authority, and the path component (up to and including the last "/" in the path if any) from the given URI or IRI, using the IRIStrict parse mode to check the URI or IRI. Any "./" or "../" in the path is not condensed.
+Extracts the scheme, the authority, and the path component (up to and including the last "/" in the path if any) from the specified URI or IRI, using the IRIStrict parse mode to check the URI or IRI. Any "./" or "../" in the path is not condensed.
 
 <b>Parameters:</b>
 
@@ -107,7 +107,7 @@ The parameter  <i>uref</i>
         string uref,
         PeterO.URIUtility.ParseMode parseMode);
 
-Extracts the scheme, the authority, and the path component (up to and including the last "/" in the path if any) from the given URI or IRI, using the given parse mode to check the URI or IRI. Any "./" or "../" in the path is not condensed.
+Extracts the scheme, the authority, and the path component (up to and including the last "/" in the path if any) from the specified URI or IRI, using the specified parse mode to check the URI or IRI. Any "./" or "../" in the path is not condensed.
 
 <b>Parameters:</b>
 
@@ -270,7 +270,7 @@ True if the string is not null and is a valid IRI; otherwise, false.
         string s,
         PeterO.URIUtility.ParseMode parseMode);
 
-Returns whether a string is a valid IRI according to the given parse mode.
+Returns whether a string is a valid IRI according to the specified parse mode.
 
 <b>Parameters:</b>
 
@@ -288,7 +288,7 @@ True if the string is not null and is a valid IRI; otherwise, false.
     public static string PercentDecode(
         string str);
 
-Decodes percent-encoding (of the form "%XX" where X is a hexadecimal (base-16) digit) in the given string. Successive percent-encoded bytes are assumed to form characters in UTF-8.
+Decodes percent-encoding (of the form "%XX" where X is a hexadecimal (base-16) digit) in the specified string. Successive percent-encoded bytes are assumed to form characters in UTF-8.
 
 <b>Parameters:</b>
 
@@ -306,7 +306,7 @@ The string in which percent-encoding was decoded.
         int index,
         int endIndex);
 
-Decodes percent-encoding (of the form "%XX" where X is a hexadecimal (base-16) digit) in the given portion of a string. Successive percent-encoded bytes are assumed to form characters in UTF-8.
+Decodes percent-encoding (of the form "%XX" where X is a hexadecimal (base-16) digit) in the specified portion of a string. Successive percent-encoded bytes are assumed to form characters in UTF-8.
 
 <b>Parameters:</b>
 
@@ -320,7 +320,7 @@ Decodes percent-encoding (of the form "%XX" where X is a hexadecimal (base-16) d
 
 <b>Return Value:</b>
 
-The portion of the given string in which percent-encoding was decoded. Returns null if  <i>str</i>
+The portion of the specified string in which percent-encoding was decoded. Returns null if  <i>str</i>
  is ull.
 
 <a id="RelativeResolve_string_string"></a>

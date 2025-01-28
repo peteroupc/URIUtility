@@ -366,7 +366,7 @@ private TestCommon() {
         return "0";
       }
       boolean neg = value < 0;
-      char[] chars = new char[12];
+      char chars = new char[12];
       int count = 11;
       if (neg) {
         value = -value;

@@ -1021,7 +1021,7 @@ if (!replace) {
           return -1;
         }
         // NOTE: Array is initialized to zeros
-        int[] addressParts = new int[8];
+        int addressParts = new int[8];
         int ipEndIndex = index;
         boolean doubleColon = false;
         int doubleColonPos = 0;
@@ -1060,7 +1060,7 @@ if (!replace) {
             index = curindex;
             break;
           }
-          addressParts[part] = hex;
+          addressParts.set(part, hex);
           ++totalParts;
           if (index < ipEndIndex && s.charAt(index) != ':') {
             return -1;
@@ -1079,7 +1079,7 @@ if (!replace) {
         }
         if (doubleColon || ipv4part) {
           if (ipv4part) {
-            int[] ipparts = new int[4];
+            int ipparts = new int[4];
             for (int part = 0; part < 4; ++part) {
               if (part > 0) {
                 if (index < ipEndIndex && s.charAt(index) == '.') {
@@ -1107,13 +1107,13 @@ if (!replace) {
               if (!haveDec || dec > 255) {
                 return -1;
               }
-              ipparts[part] = dec;
+              ipparts.set(part, dec);
             }
             if (index != ipEndIndex) {
               return -1;
             }
-            addressParts[totalParts] = (ipparts[0] << 8) | ipparts[1];
-            addressParts[totalParts + 1] = (ipparts[2] << 8) | ipparts[3];
+            addressParts.set(totalParts, (ipparts.get(0) << 8) | ipparts.get(1));
+            addressParts.set(totalParts + 1, (ipparts.get(2) << 8) | ipparts.get(3));
             totalParts += 2;
             if (!doubleColon && totalParts != 8) {
               return -1;
@@ -1126,7 +1126,7 @@ if (!replace) {
               // 8 parts and a double colon
               return -1;
             }
-            int[] newAddressParts = new int[8];
+            int newAddressParts = new int[8];
             System.arraycopy(addressParts, 0, newAddressParts, 0, doubleColonPos);
             System.arraycopy(
               addressParts,
@@ -1143,12 +1143,12 @@ if (!replace) {
         // System.out.println("{0:X4}:{0:X4}:{0:X4}:{0:X4}:{0:X4}:" +
         // "{0:X4}:{0:X4}:{0:X4}"
         // ,
-        // addressParts[0], addressParts[1], addressParts[2],
-        // addressParts[3], addressParts[4], addressParts[5],
-        // addressParts[6], addressParts[7]);
+        // addressParts.get(0), addressParts.get(1), addressParts.get(2),
+        // addressParts.get(3), addressParts.get(4), addressParts.get(5),
+        // addressParts.get(6), addressParts.get(7));
         if (s.charAt(index) == '%') {
           if (index + 2 < endOffset && s.charAt(index + 1) == '2' &&
-            s.charAt(index + 2) == '5' && (addressParts[0] & 0xFFC0) == 0xFE80) {
+            s.charAt(index + 2) == '5' && (addressParts.get(0) & 0xFFC0) == 0xFE80) {
             // Zone identifier in an IPv6 address
             // (see RFC6874)
             // NOTE: Allowed only if address has prefix fe80::/10

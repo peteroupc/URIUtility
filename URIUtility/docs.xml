@@ -89,7 +89,7 @@
             <param name='query'>The query string. Can be null or empty.</param>
             <param name='fragment'>The fragment identifier. Can be null or
             empty.</param>
-            <returns>A URI built from the given components.</returns>
+            <returns>A URI built from the specified components.</returns>
             <exception cref='ArgumentException'>Invalid schemeAndAuthority
             parameter, or the arguments result in an invalid IRI.</exception>
 
@@ -97,8 +97,7 @@
 <doc name="M:PeterO.URIUtility.DirectoryPath(System.String)">
 
             <summary>Extracts the scheme, the authority, and the path component
-            (up to and including the last "/" in the path if any) from the
-            given URI or IRI, using the IRIStrict parse mode to check the URI
+            (up to and including the last "/" in the path if any) from the specified URI or IRI, using the IRIStrict parse mode to check the URI
             or IRI. Any "./" or "../" in the path is not condensed.</summary>
             <param name='uref'>A text string representing a URI or IRI. Can be
             null.</param>
@@ -111,8 +110,7 @@
 <doc name="M:PeterO.URIUtility.DirectoryPath(System.String,PeterO.URIUtility.ParseMode)">
 
             <summary>Extracts the scheme, the authority, and the path component
-            (up to and including the last "/" in the path if any) from the
-            given URI or IRI, using the given parse mode to check the URI or
+            (up to and including the last "/" in the path if any) from the specified URI or IRI, using the specified parse mode to check the URI or
             IRI. Any "./" or "../" in the path is not condensed.</summary>
             <param name='uref'>A text string representing a URI or IRI. Can be
             null.</param>
@@ -211,8 +209,7 @@
 </doc>
 <doc name="M:PeterO.URIUtility.IsValidIRI(System.String,PeterO.URIUtility.ParseMode)">
 
-            <summary>Returns whether a string is a valid IRI according to the
-            given parse mode.</summary>
+            <summary>Returns whether a string is a valid IRI according to the specified parse mode.</summary>
             <param name='s'>A text string. Can be null.</param>
             <param name='parseMode'>The parse mode to use when checking for a
             valid IRI.</param>
@@ -269,7 +266,7 @@
 <doc name="M:PeterO.URIUtility.PercentDecode(System.String)">
 
             <summary>Decodes percent-encoding (of the form "%XX" where X is a
-            hexadecimal (base-16) digit) in the given string. Successive percent-encoded
+            hexadecimal (base-16) digit) in the specified string. Successive percent-encoded
             bytes are assumed to form characters in UTF-8.</summary>
             <param name='str'>A string that may contain percent encoding. May
             be null.</param>
@@ -280,7 +277,7 @@
 <doc name="M:PeterO.URIUtility.PercentDecode(System.String,System.Int32,System.Int32)">
 
             <summary>Decodes percent-encoding (of the form "%XX" where X is a
-            hexadecimal (base-16) digit) in the given portion of a string. Successive
+            hexadecimal (base-16) digit) in the specified portion of a string. Successive
             percent-encoded bytes are assumed to form characters in
             UTF-8.</summary>
             <param name='str'>A string a portion of which may contain percent
@@ -290,7 +287,7 @@
             <param name='endIndex'>Index starting at 0 showing where the
             desired portion of <paramref name='str'/> ends. The character
             before this index is the last character.</param>
-            <returns>The portion of the given string in which percent-encoding
+            <returns>The portion of the specified string in which percent-encoding
             was decoded. Returns null if <paramref name='str'/> is
             ull.</returns>
 
